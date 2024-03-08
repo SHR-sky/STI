@@ -1,111 +1,124 @@
-#include "stm32f4xx.h"
-#include <stdio.h>
+#include "Timer.h"
+#include "LED.h"
+#include "usart.h"
 
-void get_time_de(uint32_t time1, uint32_t time2, uint32_t time3);
-void exchange(uint32_t *a, uint32_t *b);
+volatile uint32_t capture1 = 0;
+volatile uint32_t capture2 = 0;
+volatile uint32_t capture3 = 0;
+volatile uint8_t capture_flag [3] = {0,0,0};
+volatile uint32_t ovf_count = 0;
 
 
-// 全局变量，存储三个个上升沿触发的时间戳
-volatile uint32_t time1 = 0;
-volatile uint32_t time2 = 0;
-volatile uint32_t time3 = 0;
+//定时器5通道1输入捕获配置
+//初始化定时器5的结构体
+TIM_ICInitTypeDef  TIM5_ICInitStructure;
 
-//全局变量，时间差
-uint32_t s1;
-uint32_t s2;
+void TIM5_Init(void)
+{	 
+	GPIO_InitTypeDef GPIO_InitStructure;
+	TIM_TimeBaseInitTypeDef  TIM_TimeBaseStructure;
+   	NVIC_InitTypeDef NVIC_InitStructure;
 
-int main(void)
-{
-    // 初始化定时器2
-    RCC_APB1PeriphClockCmd(RCC_APB1Periph_TIM2, ENABLE);
-    TIM_TimeBaseInitTypeDef TIM_InitStruct;
-    TIM_InitStruct.TIM_Prescaler = 84 - 1; // 定时器时钟为84 MHz，84分频，得一微秒的分辨率
-    TIM_InitStruct.TIM_CounterMode = TIM_CounterMode_Up;
-    TIM_InitStruct.TIM_Period = 0xFFFFFFFF; // 设定定时器周期为最大值
-    TIM_TimeBaseInit(TIM2, &TIM_InitStruct);
-    TIM_Cmd(TIM2, ENABLE);
+	RCC_APB1PeriphClockCmd(RCC_APB1Periph_TIM5, ENABLE);	//使能TIM5时钟
+ 	RCC_APB2PeriphClockCmd(RCC_APB2Periph_GPIOA, ENABLE);   //使能GPIOA时钟
+	
+	GPIO_InitStructure.GPIO_Speed = GPIO_Speed_50MHz;
 
-    // 配置用于检测第信号的引脚，三路输入，上升沿触发
-    RCC_AHB1PeriphClockCmd(RCC_AHB1Periph_GPIOA, ENABLE);
-    GPIO_InitTypeDef GPIO_InitStruct;
-    GPIO_InitStruct.GPIO_Pin = GPIO_Pin_0 | GPIO_Pin_1 | GPIO_Pin_2;
-    GPIO_InitStruct.GPIO_Mode = GPIO_Mode_IN;
-    GPIO_InitStruct.GPIO_PuPd = GPIO_PuPd_UP;
-    GPIO_InitStruct.GPIO_Speed = GPIO_Speed_100MHz;
-    GPIO_Init(GPIOA, &GPIO_InitStruct);
+	GPIO_InitStructure.GPIO_Pin  = GPIO_Pin_0;  			//PA0 清除之前设置  
+	GPIO_InitStructure.GPIO_Mode = GPIO_Mode_IPD; 			//PA0 输入  
+	GPIO_Init(GPIOA, &GPIO_InitStructure);					//PA0 下拉
+	
+	GPIO_InitStructure.GPIO_Pin  = GPIO_Pin_1;  			//PA1 清除之前设置  
+	GPIO_InitStructure.GPIO_Mode = GPIO_Mode_IPD; 			//PA1 输入  
+	GPIO_Init(GPIOA, &GPIO_InitStructure);
 
-    //结构体初始化定义
-    EXTI_InitTypeDef EXTI_InitStruct;
-    NVIC_InitTypeDef NVIC_InitStruct;
+	
+	GPIO_InitStructure.GPIO_Pin  = GPIO_Pin_2;  			//PA2 清除之前设置  
+	GPIO_InitStructure.GPIO_Mode = GPIO_Mode_IPD; 			//PA2 输入  
+	GPIO_Init(GPIOA, &GPIO_InitStructure);
+	
+	//初始化定时器5 TIM5	 
+	TIM_TimeBaseStructure.TIM_Period = 36; 							    //设定计数器自动重装值 
+	TIM_TimeBaseStructure.TIM_Prescaler =2-1; 							//预分频器,由于系统时钟为72M，最终分辨率为1微秒  
+	TIM_TimeBaseStructure.TIM_ClockDivision = TIM_CKD_DIV1; 			//设置时钟分割:TDTS = Tck_tim
+	TIM_TimeBaseStructure.TIM_CounterMode = TIM_CounterMode_Up;  		//TIM向上计数模式
+	TIM_TimeBaseInit(TIM5, &TIM_TimeBaseStructure); 					//根据TIM_TimeBaseInitStruct中指定的参数初始化TIMx的时间基数单位
+  
+	//初始化TIM5输入捕获参数
+	TIM5_ICInitStructure.TIM_Channel = TIM_Channel_1; 					//CC1S=01，CC1通道被配置为输入，IC1映射到TI1上
+  	TIM5_ICInitStructure.TIM_ICPolarity = TIM_ICPolarity_Rising;		//上升沿捕获
+  	TIM5_ICInitStructure.TIM_ICSelection = TIM_ICSelection_DirectTI; 	//映射到TI1上,若映射到TI2上为TIM_ICSelection_IndirectTI
+  	TIM5_ICInitStructure.TIM_ICPrescaler = TIM_ICPSC_DIV1;	 			//配置输入分频,不分频，每个边沿都触发一次捕获 
+  	TIM5_ICInitStructure.TIM_ICFilter = 0x0F;							//IC1F配置输入滤波器，最大滤波
+  	TIM_ICInit(TIM5, &TIM5_ICInitStructure);
+	
+	TIM5_ICInitStructure.TIM_Channel = TIM_Channel_2;          			
+  	TIM5_ICInitStructure.TIM_ICPolarity = TIM_ICPolarity_Rising;		
+  	TIM5_ICInitStructure.TIM_ICSelection = TIM_ICSelection_DirectTI; 	
+  	TIM5_ICInitStructure.TIM_ICPrescaler = TIM_ICPSC_DIV1;	 			
+  	TIM5_ICInitStructure.TIM_ICFilter = 0x0F;							
+  	TIM_ICInit(TIM5, &TIM5_ICInitStructure);
+	
+	TIM5_ICInitStructure.TIM_Channel = TIM_Channel_3; 
+  	TIM5_ICInitStructure.TIM_ICPolarity = TIM_ICPolarity_Rising;	
+  	TIM5_ICInitStructure.TIM_ICSelection = TIM_ICSelection_DirectTI; 
+  	TIM5_ICInitStructure.TIM_ICPrescaler = TIM_ICPSC_DIV1;	 
+  	TIM5_ICInitStructure.TIM_ICFilter = 0x0F;
+  	TIM_ICInit(TIM5, &TIM5_ICInitStructure);
+	
+	//中断分组初始化
+	NVIC_InitStructure.NVIC_IRQChannel = TIM5_IRQn;  			//TIM5中断
+	NVIC_InitStructure.NVIC_IRQChannelPreemptionPriority = 2;  	//先占优先级2级
+	NVIC_InitStructure.NVIC_IRQChannelSubPriority = 0;  		//从优先级0级
+	NVIC_InitStructure.NVIC_IRQChannelCmd = ENABLE; 			//IRQ通道被使能
+	NVIC_Init(&NVIC_InitStructure);  							//根据NVIC_InitStruct中指定的参数初始化外设NVIC寄存器 
+	
+	TIM_ITConfig(TIM5,TIM_IT_Update|TIM_IT_CC1|TIM_IT_CC2|TIM_IT_CC3 ,ENABLE);//允许更新中（计数器溢出计数中断）,允许CC1IE捕获中断	
+	
+   	TIM_Cmd(TIM5,ENABLE ); 										//使能定时器5
+   
 
-    // 配置外部中断线0
-    EXTI_InitStruct.EXTI_Line = EXTI_Line0;
-    EXTI_InitStruct.EXTI_Mode = EXTI_Mode_Interrupt;
-    EXTI_InitStruct.EXTI_Trigger = EXTI_Trigger_Rising;
-    EXTI_InitStruct.EXTI_LineCmd = ENABLE;
-    EXTI_Init(&EXTI_InitStruct);
-
-    // 配置中断
-    NVIC_InitStruct.NVIC_IRQChannel = EXTI0_IRQn;
-    NVIC_InitStruct.NVIC_IRQChannelPreemptionPriority = 0x01;
-    NVIC_InitStruct.NVIC_IRQChannelSubPriority = 0x01;
-    NVIC_InitStruct.NVIC_IRQChannelCmd = ENABLE;
-    NVIC_Init(&NVIC_InitStruct);
-
-    // 防跑飞
-    while (1);
 }
 
-//数字交换
-void exchange(uint32_t *a, uint32_t *b)
+
+
+void TIM2_IRQHandler(void) 
 {
-    uint32_t temp;
-    temp = *a;
-    *a = *b;
-    *b = temp; 
-}
-
-//大小排序
-void get_time_de(uint32_t time1, uint32_t time2, uint32_t time3)
-{
-    if(time1 > time2) exchange(time1, time2);
-    if(time2 > time3) exchange(time2, time3);
-    if(time1 > time2) exchange(time1, time2);
-
-    s1 = time3 - time2;
-    s2 = time2 - time1;
-
-}
-
-
-void EXTI0_IRQHandler(void)
-{
-    if (EXTI_GetITStatus(EXTI_Line0) != RESET)
-    {
-        /*此处的gpio_read，我觉得要根据现实，加一点去抖的处理*/
-        if (GPIO_ReadInputDataBit(GPIOA, GPIO_Pin_0) == Bit_SET)
-        {
-            // 检测到第一个脉冲信号
-            time1 = TIM_GetCounter(TIM2);
+	
+    if (TIM_GetITStatus(TIM2, TIM_IT_CC1) != RESET)
+	{
+        if (capture_flag[0] == 0)
+		{
+            capture1 = TIM_GetCapture1(TIM2) + ovf_count * 0x10000;
+            capture_flag[0]++;	//防止干扰，防止再次使用
         }
-
-        if (GPIO_ReadInputDataBit(GPIOB, GPIO_Pin_1) == Bit_SET)
-        {
-            // 检测到第二个脉冲信号
-            time2 = TIM_GetCounter(TIM2);
-
-        }
-        if (GPIO_ReadInputDataBit(GPIOB, GPIO_Pin_3) == Bit_SET)
-        {
-            // 检测到第三个脉冲信号
-            time2 = TIM_GetCounter(TIM2);
-
-        }
-        get_time_de(time1, time2, time3);
-        //时间戳记录复位
-        time1 = 0;
-        time2 = 0;
-        time3 = 0;
-        EXTI_ClearITPendingBit(EXTI_Line0);
+        TIM_ClearITPendingBit(TIM2, TIM_IT_CC1);
     }
+
+    if (TIM_GetITStatus(TIM2, TIM_IT_CC2) != RESET)
+	{
+        if (capture_flag[1] == 0) 
+		{
+            capture2 = TIM_GetCapture2(TIM2) + ovf_count * 0x10000;
+            capture_flag[1]++;
+        }
+        TIM_ClearITPendingBit(TIM2, TIM_IT_CC2);
+    }
+
+    if (TIM_GetITStatus(TIM2, TIM_IT_CC3) != RESET)
+	{
+        if (capture_flag[2] == 0) 
+		{
+            capture3 = TIM_GetCapture3(TIM2) + ovf_count * 0x10000;
+            capture_flag[2]++;
+        }
+        TIM_ClearITPendingBit(TIM2, TIM_IT_CC3);
+    }
+
+    if (TIM_GetITStatus(TIM2, TIM_IT_Update) != RESET) //计数器溢出
+	{
+        ovf_count++;
+        TIM_ClearITPendingBit(TIM2, TIM_IT_Update);
+    }
+	
 }
