@@ -340,7 +340,7 @@
               <MiscControls></MiscControls>
               <Define>USE_STDPERIPH_DRIVER USE_STM324xG_EVAL</Define>
               <Undefine></Undefine>
-              <IncludePath>..\..\Libraries\CMSIS\Include;..\..\Libraries\CMSIS\Device\ST\STM32F4xx\Include;..\..\Libraries\STM32F4xx_StdPeriph_Driver\inc;..\..\User;..\..\User\GPIO;..\..\User\Serial;..\..\User\IC;..\..\User\TIM</IncludePath>
+              <IncludePath>..\..\Libraries\CMSIS\Include;..\..\Libraries\CMSIS\Device\ST\STM32F4xx\Include;..\..\Libraries\STM32F4xx_StdPeriph_Driver\inc;..\..\User;..\..\User\GPIO;..\..\User\Serial;..\..\User\IC;..\..\User\TIM;..\..\User\ADS1118</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -433,6 +433,16 @@
               <FileName>TIM.h</FileName>
               <FileType>5</FileType>
               <FilePath>..\..\User\TIM\TIM.h</FilePath>
+            </File>
+            <File>
+              <FileName>ADS1118.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\User\ADS1118\ADS1118.c</FilePath>
+            </File>
+            <File>
+              <FileName>ADS1118.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>..\..\User\ADS1118\ADS1118.h</FilePath>
             </File>
           </Files>
         </Group>
