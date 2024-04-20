@@ -310,8 +310,8 @@
       <tvExp>0</tvExp>
       <tvExpOptDlg>0</tvExpOptDlg>
       <bDave2>0</bDave2>
-      <PathWithFileName>..\..\User\ADS1118\ADS1118.c</PathWithFileName>
-      <FilenameWithoutPath>ADS1118.c</FilenameWithoutPath>
+      <PathWithFileName>..\..\User\TODA\TODA .c</PathWithFileName>
+      <FilenameWithoutPath>TODA .c</FilenameWithoutPath>
       <RteFlg>0</RteFlg>
       <bShared>0</bShared>
     </File>
@@ -322,8 +322,8 @@
       <tvExp>0</tvExp>
       <tvExpOptDlg>0</tvExpOptDlg>
       <bDave2>0</bDave2>
-      <PathWithFileName>..\..\User\ADS1118\ADS1118.h</PathWithFileName>
-      <FilenameWithoutPath>ADS1118.h</FilenameWithoutPath>
+      <PathWithFileName>..\..\User\TODA\TODA.h</PathWithFileName>
+      <FilenameWithoutPath>TODA.h</FilenameWithoutPath>
       <RteFlg>0</RteFlg>
       <bShared>0</bShared>
     </File>

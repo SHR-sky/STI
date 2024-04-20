@@ -31,7 +31,7 @@ void GPIO_Config(void) {
 	GPIO_Init(GPIOD,&GPIO_InitStruct);
 	
 	// Input Capture
-	// PB6~PB9 -> TIM4CH1~CH4
+	// PB6 ~PB9 -> TIM4CH1~CH4
 	RCC_AHB1PeriphClockCmd(RCC_AHB1Periph_GPIOB,ENABLE);
 	GPIO_InitStruct.GPIO_PuPd = GPIO_PuPd_NOPULL;
 	GPIO_PinAFConfig(GPIOB,GPIO_PinSource6,GPIO_AF_TIM4);

@@ -94,3 +94,11 @@ void USART2_IRQHandler(void)
 		// Write you code
 	}
 }
+
+void Serial_End(void)
+{
+	Serial_SendByte(0xff);
+	Serial_SendByte(0xff);
+	Serial_SendByte(0xff);
+}
+

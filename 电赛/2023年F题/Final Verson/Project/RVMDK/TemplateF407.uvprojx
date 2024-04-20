@@ -327,7 +327,7 @@
             <uThumb>0</uThumb>
             <uSurpInc>0</uSurpInc>
             <uC99>1</uC99>
-            <uGnu>1</uGnu>
+            <uGnu>0</uGnu>
             <useXO>0</useXO>
             <v6Lang>3</v6Lang>
             <v6LangP>1</v6LangP>
@@ -340,7 +340,7 @@
               <MiscControls></MiscControls>
               <Define>USE_STDPERIPH_DRIVER USE_STM324xG_EVAL</Define>
               <Undefine></Undefine>
-              <IncludePath>..\..\Libraries\CMSIS\Include;..\..\Libraries\CMSIS\Device\ST\STM32F4xx\Include;..\..\Libraries\STM32F4xx_StdPeriph_Driver\inc;..\..\User;..\..\User\GPIO;..\..\User\Serial;..\..\User\IC;..\..\User\TIM;..\..\User\ADS1118</IncludePath>
+              <IncludePath>..\..\Libraries\CMSIS\Include;..\..\Libraries\CMSIS\Device\ST\STM32F4xx\Include;..\..\Libraries\STM32F4xx_StdPeriph_Driver\inc;..\..\User;..\..\User\GPIO;..\..\User\Serial;..\..\User\IC;..\..\User\TIM;..\..\User\TODA</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -353,7 +353,7 @@
             <NoWarn>0</NoWarn>
             <uSurpInc>0</uSurpInc>
             <useXO>0</useXO>
-            <ClangAsOpt>1</ClangAsOpt>
+            <ClangAsOpt>4</ClangAsOpt>
             <VariousControls>
               <MiscControls></MiscControls>
               <Define></Define>
@@ -435,14 +435,14 @@
               <FilePath>..\..\User\TIM\TIM.h</FilePath>
             </File>
             <File>
-              <FileName>ADS1118.c</FileName>
+              <FileName>TODA .c</FileName>
               <FileType>1</FileType>
-              <FilePath>..\..\User\ADS1118\ADS1118.c</FilePath>
+              <FilePath>..\..\User\TODA\TODA .c</FilePath>
             </File>
             <File>
-              <FileName>ADS1118.h</FileName>
+              <FileName>TODA.h</FileName>
               <FileType>5</FileType>
-              <FilePath>..\..\User\ADS1118\ADS1118.h</FilePath>
+              <FilePath>..\..\User\TODA\TODA.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -841,14 +841,5 @@
     <components/>
     <files/>
   </RTE>
-
-  <LayerInfo>
-    <Layers>
-      <Layer>
-        <LayName>TemplateF407</LayName>
-        <LayPrjMark>1</LayPrjMark>
-      </Layer>
-    </Layers>
-  </LayerInfo>
 
 </Project>
