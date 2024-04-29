@@ -1,0 +1,50 @@
+[
+{
+  "directory": "F:/STI/电赛/2023年F题/软件算法/build",
+  "command": "D:\\vscode\\mingw-x64\\x86_64-12.2.0-release-win32-seh-rt_v10-rev0\\mingw64\\bin\\gcc.exe  @CMakeFiles/sta_send.dir/includes_C.rsp -g -pthread -O3 -o CMakeFiles\\sta_send.dir\\sta\\send.c.obj -c F:\\wifi_mlo\\sta\\send.c",
+  "file": "F:/wifi_mlo/sta/send.c",
+  "output": "CMakeFiles/sta_send.dir/sta/send.c.obj"
+},
+{
+  "directory": "F:/STI/电赛/2023年F题/软件算法/build",
+  "command": "D:\\vscode\\mingw-x64\\x86_64-12.2.0-release-win32-seh-rt_v10-rev0\\mingw64\\bin\\gcc.exe  @CMakeFiles/sta_send.dir/includes_C.rsp -g -pthread -O3 -o CMakeFiles\\sta_send.dir\\sta\\sta.c.obj -c F:\\wifi_mlo\\sta\\sta.c",
+  "file": "F:/wifi_mlo/sta/sta.c",
+  "output": "CMakeFiles/sta_send.dir/sta/sta.c.obj"
+},
+{
+  "directory": "F:/STI/电赛/2023年F题/软件算法/build",
+  "command": "D:\\vscode\\mingw-x64\\x86_64-12.2.0-release-win32-seh-rt_v10-rev0\\mingw64\\bin\\gcc.exe  @CMakeFiles/sta_send.dir/includes_C.rsp -g -pthread -O3 -o CMakeFiles\\sta_send.dir\\src\\netlink_request.c.obj -c F:\\wifi_mlo\\src\\netlink_request.c",
+  "file": "F:/wifi_mlo/src/netlink_request.c",
+  "output": "CMakeFiles/sta_send.dir/src/netlink_request.c.obj"
+},
+{
+  "directory": "F:/STI/电赛/2023年F题/软件算法/build",
+  "command": "D:\\vscode\\mingw-x64\\x86_64-12.2.0-release-win32-seh-rt_v10-rev0\\mingw64\\bin\\gcc.exe  @CMakeFiles/sta_send.dir/includes_C.rsp -g -pthread -O3 -o CMakeFiles\\sta_send.dir\\src\\packet.c.obj -c F:\\wifi_mlo\\src\\packet.c",
+  "file": "F:/wifi_mlo/src/packet.c",
+  "output": "CMakeFiles/sta_send.dir/src/packet.c.obj"
+},
+{
+  "directory": "F:/STI/电赛/2023年F题/软件算法/build",
+  "command": "D:\\vscode\\mingw-x64\\x86_64-12.2.0-release-win32-seh-rt_v10-rev0\\mingw64\\bin\\gcc.exe  @CMakeFiles/ap_recv.dir/includes_C.rsp -g -pthread -O3 -o CMakeFiles\\ap_recv.dir\\ap\\ap.c.obj -c F:\\wifi_mlo\\ap\\ap.c",
+  "file": "F:/wifi_mlo/ap/ap.c",
+  "output": "CMakeFiles/ap_recv.dir/ap/ap.c.obj"
+},
+{
+  "directory": "F:/STI/电赛/2023年F题/软件算法/build",
+  "command": "D:\\vscode\\mingw-x64\\x86_64-12.2.0-release-win32-seh-rt_v10-rev0\\mingw64\\bin\\gcc.exe  @CMakeFiles/ap_recv.dir/includes_C.rsp -g -pthread -O3 -o CMakeFiles\\ap_recv.dir\\ap\\recv.c.obj -c F:\\wifi_mlo\\ap\\recv.c",
+  "file": "F:/wifi_mlo/ap/recv.c",
+  "output": "CMakeFiles/ap_recv.dir/ap/recv.c.obj"
+},
+{
+  "directory": "F:/STI/电赛/2023年F题/软件算法/build",
+  "command": "D:\\vscode\\mingw-x64\\x86_64-12.2.0-release-win32-seh-rt_v10-rev0\\mingw64\\bin\\gcc.exe  @CMakeFiles/ap_recv.dir/includes_C.rsp -g -pthread -O3 -o CMakeFiles\\ap_recv.dir\\src\\netlink_request.c.obj -c F:\\wifi_mlo\\src\\netlink_request.c",
+  "file": "F:/wifi_mlo/src/netlink_request.c",
+  "output": "CMakeFiles/ap_recv.dir/src/netlink_request.c.obj"
+},
+{
+  "directory": "F:/STI/电赛/2023年F题/软件算法/build",
+  "command": "D:\\vscode\\mingw-x64\\x86_64-12.2.0-release-win32-seh-rt_v10-rev0\\mingw64\\bin\\gcc.exe  @CMakeFiles/ap_recv.dir/includes_C.rsp -g -pthread -O3 -o CMakeFiles\\ap_recv.dir\\src\\packet.c.obj -c F:\\wifi_mlo\\src\\packet.c",
+  "file": "F:/wifi_mlo/src/packet.c",
+  "output": "CMakeFiles/ap_recv.dir/src/packet.c.obj"
+}
+]

@@ -1,0 +1,140 @@
+{
+	"kind" : "toolchains",
+	"toolchains" : 
+	[
+		{
+			"compiler" : 
+			{
+				"id" : "GNU",
+				"implicit" : 
+				{
+					"includeDirectories" : 
+					[
+						"D:/vscode/mingw-x64/x86_64-12.2.0-release-win32-seh-rt_v10-rev0/mingw64/lib/gcc/x86_64-w64-mingw32/12.2.0/include",
+						"D:/vscode/mingw-x64/x86_64-12.2.0-release-win32-seh-rt_v10-rev0/mingw64/lib/gcc/x86_64-w64-mingw32/12.2.0/include-fixed",
+						"D:/vscode/mingw-x64/x86_64-12.2.0-release-win32-seh-rt_v10-rev0/mingw64/x86_64-w64-mingw32/include"
+					],
+					"linkDirectories" : 
+					[
+						"D:/vscode/mingw-x64/x86_64-12.2.0-release-win32-seh-rt_v10-rev0/mingw64/lib/gcc/x86_64-w64-mingw32/12.2.0",
+						"D:/vscode/mingw-x64/x86_64-12.2.0-release-win32-seh-rt_v10-rev0/mingw64/lib/gcc",
+						"D:/vscode/mingw-x64/x86_64-12.2.0-release-win32-seh-rt_v10-rev0/mingw64/x86_64-w64-mingw32/lib",
+						"D:/vscode/mingw-x64/x86_64-12.2.0-release-win32-seh-rt_v10-rev0/mingw64/lib"
+					],
+					"linkFrameworkDirectories" : [],
+					"linkLibraries" : 
+					[
+						"mingw32",
+						"gcc",
+						"moldname",
+						"mingwex",
+						"kernel32",
+						"advapi32",
+						"shell32",
+						"user32",
+						"kernel32",
+						"iconv",
+						"mingw32",
+						"gcc",
+						"moldname",
+						"mingwex",
+						"kernel32"
+					]
+				},
+				"path" : "D:/vscode/mingw-x64/x86_64-12.2.0-release-win32-seh-rt_v10-rev0/mingw64/bin/gcc.exe",
+				"version" : "12.2.0"
+			},
+			"language" : "C",
+			"sourceFileExtensions" : 
+			[
+				"c",
+				"m"
+			]
+		},
+		{
+			"compiler" : 
+			{
+				"id" : "GNU",
+				"implicit" : 
+				{
+					"includeDirectories" : 
+					[
+						"D:/vscode/mingw-x64/x86_64-12.2.0-release-win32-seh-rt_v10-rev0/mingw64/lib/gcc/x86_64-w64-mingw32/12.2.0/include/c++",
+						"D:/vscode/mingw-x64/x86_64-12.2.0-release-win32-seh-rt_v10-rev0/mingw64/lib/gcc/x86_64-w64-mingw32/12.2.0/include/c++/x86_64-w64-mingw32",
+						"D:/vscode/mingw-x64/x86_64-12.2.0-release-win32-seh-rt_v10-rev0/mingw64/lib/gcc/x86_64-w64-mingw32/12.2.0/include/c++/backward",
+						"D:/vscode/mingw-x64/x86_64-12.2.0-release-win32-seh-rt_v10-rev0/mingw64/lib/gcc/x86_64-w64-mingw32/12.2.0/include",
+						"D:/vscode/mingw-x64/x86_64-12.2.0-release-win32-seh-rt_v10-rev0/mingw64/lib/gcc/x86_64-w64-mingw32/12.2.0/include-fixed",
+						"D:/vscode/mingw-x64/x86_64-12.2.0-release-win32-seh-rt_v10-rev0/mingw64/x86_64-w64-mingw32/include"
+					],
+					"linkDirectories" : 
+					[
+						"D:/vscode/mingw-x64/x86_64-12.2.0-release-win32-seh-rt_v10-rev0/mingw64/lib/gcc/x86_64-w64-mingw32/12.2.0",
+						"D:/vscode/mingw-x64/x86_64-12.2.0-release-win32-seh-rt_v10-rev0/mingw64/lib/gcc",
+						"D:/vscode/mingw-x64/x86_64-12.2.0-release-win32-seh-rt_v10-rev0/mingw64/x86_64-w64-mingw32/lib",
+						"D:/vscode/mingw-x64/x86_64-12.2.0-release-win32-seh-rt_v10-rev0/mingw64/lib"
+					],
+					"linkFrameworkDirectories" : [],
+					"linkLibraries" : 
+					[
+						"stdc++",
+						"mingw32",
+						"gcc_s",
+						"gcc",
+						"moldname",
+						"mingwex",
+						"kernel32",
+						"advapi32",
+						"shell32",
+						"user32",
+						"kernel32",
+						"iconv",
+						"mingw32",
+						"gcc_s",
+						"gcc",
+						"moldname",
+						"mingwex",
+						"kernel32"
+					]
+				},
+				"path" : "D:/vscode/mingw-x64/x86_64-12.2.0-release-win32-seh-rt_v10-rev0/mingw64/bin/g++.exe",
+				"version" : "12.2.0"
+			},
+			"language" : "CXX",
+			"sourceFileExtensions" : 
+			[
+				"C",
+				"M",
+				"c++",
+				"cc",
+				"cpp",
+				"cxx",
+				"mm",
+				"mpp",
+				"CPP",
+				"ixx",
+				"cppm",
+				"ccm",
+				"cxxm",
+				"c++m"
+			]
+		},
+		{
+			"compiler" : 
+			{
+				"implicit" : {},
+				"path" : "D:/vscode/mingw-x64/x86_64-12.2.0-release-win32-seh-rt_v10-rev0/mingw64/bin/windres.exe"
+			},
+			"language" : "RC",
+			"sourceFileExtensions" : 
+			[
+				"rc",
+				"RC"
+			]
+		}
+	],
+	"version" : 
+	{
+		"major" : 1,
+		"minor" : 0
+	}
+}

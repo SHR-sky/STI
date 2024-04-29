@@ -1,0 +1,4 @@
+F:/STI/电赛/2023年F题/软件算法/build/CMakeFiles/sta_send.dir
+F:/STI/电赛/2023年F题/软件算法/build/CMakeFiles/ap_recv.dir
+F:/STI/电赛/2023年F题/软件算法/build/CMakeFiles/edit_cache.dir
+F:/STI/电赛/2023年F题/软件算法/build/CMakeFiles/rebuild_cache.dir

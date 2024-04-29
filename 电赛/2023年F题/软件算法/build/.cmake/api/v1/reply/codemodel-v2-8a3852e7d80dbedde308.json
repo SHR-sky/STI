@@ -1,0 +1,69 @@
+{
+	"configurations" : 
+	[
+		{
+			"directories" : 
+			[
+				{
+					"build" : ".",
+					"jsonFile" : "directory-.-Debug-d0094a50bb2071803777.json",
+					"minimumCMakeVersion" : 
+					{
+						"string" : "3.10"
+					},
+					"projectIndex" : 0,
+					"source" : ".",
+					"targetIndexes" : 
+					[
+						0,
+						1
+					]
+				}
+			],
+			"name" : "Debug",
+			"projects" : 
+			[
+				{
+					"directoryIndexes" : 
+					[
+						0
+					],
+					"name" : "mini_mlo",
+					"targetIndexes" : 
+					[
+						0,
+						1
+					]
+				}
+			],
+			"targets" : 
+			[
+				{
+					"directoryIndex" : 0,
+					"id" : "ap_recv::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-ap_recv-Debug-0ad1e44f57e85ace2f60.json",
+					"name" : "ap_recv",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 0,
+					"id" : "sta_send::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-sta_send-Debug-67517d7072c737e96073.json",
+					"name" : "sta_send",
+					"projectIndex" : 0
+				}
+			]
+		}
+	],
+	"kind" : "codemodel",
+	"paths" : 
+	{
+		"build" : "F:/STI/\u7535\u8d5b/2023\u5e74F\u9898/\u8f6f\u4ef6\u7b97\u6cd5/build",
+		"source" : "F:/wifi_mlo"
+	},
+	"version" : 
+	{
+		"major" : 2,
+		"minor" : 6
+	}
+}

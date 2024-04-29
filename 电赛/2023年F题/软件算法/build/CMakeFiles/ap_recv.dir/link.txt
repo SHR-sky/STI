@@ -1,0 +1,3 @@
+F:\CMake\bin\cmake.exe -E rm -f CMakeFiles\ap_recv.dir/objects.a
+D:\vscode\mingw-x64\x86_64-12.2.0-release-win32-seh-rt_v10-rev0\mingw64\bin\ar.exe qc CMakeFiles\ap_recv.dir/objects.a @CMakeFiles\ap_recv.dir\objects1.rsp
+D:\vscode\mingw-x64\x86_64-12.2.0-release-win32-seh-rt_v10-rev0\mingw64\bin\gcc.exe -g -Wl,--whole-archive CMakeFiles\ap_recv.dir/objects.a -Wl,--no-whole-archive -o ap_recv.exe -Wl,--out-implib,libap_recv.dll.a -Wl,--major-image-version,0,--minor-image-version,0 @CMakeFiles\ap_recv.dir\linkLibs.rsp
