@@ -425,14 +425,14 @@
               <FilePath>..\..\User\Serial\Serial.h</FilePath>
             </File>
             <File>
-              <FileName>TIM.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\..\User\TIM\TIM.c</FilePath>
-            </File>
-            <File>
               <FileName>TIM.h</FileName>
               <FileType>5</FileType>
               <FilePath>..\..\User\TIM\TIM.h</FilePath>
+            </File>
+            <File>
+              <FileName>TIM.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\User\TIM\TIM.c</FilePath>
             </File>
             <File>
               <FileName>TODA .c</FileName>
