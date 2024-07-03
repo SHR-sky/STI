@@ -5,10 +5,15 @@
 
 uint8_t flag = 0;
 
+const float R0 = 6.6; // 6.6M
+float Cf = 0; 
+
 float length = 0;
 float length_result[100];
 float C_result[100];
 float R_result[100];
+
+float angle_direct = 0;
 
 float Av;
 float phi;
@@ -18,6 +23,7 @@ float fre;
 
 float C;
 float R;
+uint8_t CorR;
 
 void Mea_Length(void);
 float Cal_Length(float lambda);
@@ -26,14 +32,25 @@ float Cal_Length(float lambda);
 void Mea_C(void);
 void Cal_C(void);
 
+uint8_t compare(float c1, float c2, float c3);
+float average(float *num);
+
+// 20.0MHZ 对应波长 10.5m 可测量最长2.625m
+
 int main(void)
 {
 	// 初始化
 	Adc_Init();
 	ADF4351Init();
 
-	// 接入10.5m 就行标定
-	ADF4351WriteFreq(90.0); // 20.0MHZ 对应波长 10.5m 可测量最长2.625m
+	// 接入90MHZ，进行标定
+	fre = 90.0;
+	ADF4351WriteFreq(fre); 
+
+	// 需要上网络分析仪
+	angle_direct = (float)12.0 - GetPhs();
+	
+	// 长度已知，此处反解出来
 
 	while (1)
 	{
@@ -42,6 +59,8 @@ int main(void)
 			Serial_SendByte(0x11); // 使串口屏显示测量中
 
 			Mea_Length();
+			// 需要细化小数问题
+			Serial_Printf("n2.val=%d",length);
 
 			Serial_SendByte(0x22); // 使串口屏显示结果
 			flag = 0;
@@ -51,15 +70,17 @@ int main(void)
 			Serial_SendByte(0x11); // 使串口屏显示测量中
 
 			Mea_C();
-
+			Serial_Printf("n0.val=%d",CorR);
+			
+			if(CorR == 1)
+				Serial_Printf("n1.val=%f",C);
+			else if(CorR == 2)
+				Serial_Printf("n1.val=%f",R);
+			
 			Serial_SendByte(0x33); // 使串口屏显示结果
 			flag = 0;
 		}
 	}
-}
-
-void TIM2_IRQHandler(void)
-{
 }
 
 // 中断接收串口数据
@@ -81,6 +102,7 @@ void USART3_IRQHandler(void)
 void Mea_Length(void)
 {
 	// DDS输入固定频率信号，首先粗估1次，确定频率，然后100次取平均
+
 
 	// 10m以上
 	fre = 2.5;
@@ -131,12 +153,13 @@ void Mea_Length(void)
 			}
 		}
 	}
+	length = average(length_result);
 }
 
 float Cal_Length(float lambda)
 {
-	float angel = GetPhs();
-	float result = (angel * lambda) / (float)(360 * 2);
+	float angle = GetPhs() + angle_direct;
+	float result = (angle * lambda) / (float)(360 * 2);
 	return result;
 }
 
@@ -146,41 +169,48 @@ void Mea_C(void)
 	// DDS输入固定频率1信号
 	fre = 60;
 	ADF4351WriteFreq(fre);
+	Cal_C();
 	C1 = C;
-
-	// 角度计算
 
 	// DDS输入固定频率2信号
 	fre = 60;
 	ADF4351WriteFreq(fre);
+	Cal_C();
 	C2 = C;
-
-	// 角度计算
 
 	// DDS输入固定频率3信号
 	fre = 60;
 	ADF4351WriteFreq(fre);
+	Cal_C();
 	C3 = C;
 
 	// 比较
-	uint8_t flag = (C1, C2, C3);	
+	uint8_t same_flag = compare(C1, C2, C3);	
 
-	if(flag)
+	if(same_flag)
 	{
+		CorR = 1;
 		// 电容测量100次，队列取平均
-
-
+		for(int i=0; i<100; i++)
+		{
+			Cal_C();
+			C_result[i] = C;
+		}
+		C = average(C_result);
 	}
 	else
 	{
+		CorR = 2;
 		// 电阻测量100次，队列取平均
-		R = R0/Av;
+		for(int i=0; i<100; i++)
+		{
+			R = R0/Av;
+			R_result[i] = R;
+		}
+		R = average(R_result);
 	}
 	
 }
-
-const float R0 = 6.6; // 6.6M
-float Cf = 0; 
 
 
 void Cal_C(void)
@@ -189,16 +219,23 @@ void Cal_C(void)
 	Av = GetMag();
 
 	Cf = (float)1.44 + (float)95.27 * length;
-	C = sqrt( (R0/Av)* (R0/Av) / (float)2 * pi * fre ) - Cf;
-
-
-
+	C = sqrt( (R0/Av)* (R0/Av) / (float)2 * (float)pi * fre ) - Cf;
 }
 
 
 uint8_t compare(float c1, float c2, float c3)
 {
-	uint8_t flag;
+	uint8_t same_flag;
 
-	return flag;
+	return same_flag;
+}
+
+float average(float *num)
+{
+	float sum;
+	for(int i; i<100; i++)
+	{
+		sum += num[i] * (float)0.01;
+	}
+	return sum;
 }
