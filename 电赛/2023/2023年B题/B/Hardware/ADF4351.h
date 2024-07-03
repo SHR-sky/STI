@@ -3,12 +3,12 @@
 
 #include "sys.h"
 
-#define ADF4351_CLK PBout(8)
-#define ADF4351_OUTPUT_DATA PBout(9)
-#define ADF4351_LE PBout(10)
-#define ADF4351_CE PBout(11)
+#define ADF4351_CLK PCout(11)
+#define ADF4351_OUTPUT_DATA PCout(10)
+#define ADF4351_LE PCout(9)
+#define ADF4351_CE PCout(12)
 
-#define ADF4351_INPUT_DATA PBin(9)
+#define ADF4351_INPUT_DATA PCin(10)
 
 
 void ADF4351Init(void); 

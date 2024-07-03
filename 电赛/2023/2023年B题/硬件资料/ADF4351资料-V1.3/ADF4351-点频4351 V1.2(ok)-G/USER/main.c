@@ -33,6 +33,7 @@ int main(void)
 	LED_Init();	//初始化LED接口
 	key_init();//按键初始化
 	initial_lcd();//液晶初始化
+	
 	LCD_Clear();
 	delay_ms(300);
 	LCD_Refresh_Gram();
@@ -43,7 +44,8 @@ int main(void)
 	//4351初始化
 	ADF4351Init();
 	ADF4351WriteFreq(400);									//使输出400M频率
-//while(1);																//取消此注释，获得固定输出，400M
+	while(1);
+																//取消此注释，获得固定输出，400M
 	while(1)
 	{
 		KeyRead();//读取按键值
