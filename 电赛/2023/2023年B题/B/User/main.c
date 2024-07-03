@@ -6,8 +6,9 @@
 uint8_t flag = 0;
 
 float length = 0;
-uint8_t index = 0;
 float length_result[100];
+float C_result[100];
+float R_result[100];
 
 float Av;
 float phi;
@@ -16,6 +17,7 @@ float de_phi;
 float fre;
 
 float C;
+float R;
 
 void Mea_Length(void);
 float Cal_Length(float lambda);
@@ -81,7 +83,8 @@ void Mea_Length(void)
 	// DDS输入固定频率信号，首先粗估1次，确定频率，然后100次取平均
 
 	// 10m以上
-	ADF4351WriteFreq(2.5); // 2.5MHZ 对应波长 84m 可测量最长21m
+	fre = 2.5;
+	ADF4351WriteFreq(fre); // 2.5MHZ 对应波长 84m 可测量最长21m
 	length = Cal_Length((float)84);
 	if (length >= 10)
 	{
@@ -93,7 +96,8 @@ void Mea_Length(void)
 	else
 	{
 		// 10m以下，5m以上
-		ADF4351WriteFreq(5.0); // 5.0MHZ 对应波长 42m 可测量最长10.5m
+		fre = 5.0;
+		ADF4351WriteFreq(fre); // 5.0MHZ 对应波长 42m 可测量最长10.5m
 		length = Cal_Length((float)42);
 		if (length >= 5)
 		{
@@ -105,7 +109,8 @@ void Mea_Length(void)
 		else
 		{
 			// 10m以下，5m以上
-			ADF4351WriteFreq(10.0); // 10.0MHZ 对应波长 21m 可测量最长5.25m
+			fre = 10.0;
+			ADF4351WriteFreq(fre); // 10.0MHZ 对应波长 21m 可测量最长5.25m
 			length = Cal_Length((float)21);
 			if (length >= 2)
 			{
@@ -117,7 +122,8 @@ void Mea_Length(void)
 			else
 			{
 				// 2m以下
-				ADF4351WriteFreq(20.0); // 20.0MHZ 对应波长 10.5m 可测量最长2.625m
+				fre = 20.0;
+				ADF4351WriteFreq(fre); // 20.0MHZ 对应波长 10.5m 可测量最长2.625m
 				for (int i = 0; i < 100; i++)
 				{
 					length_result[i] = Cal_Length((float)10.5);
@@ -136,19 +142,41 @@ float Cal_Length(float lambda)
 
 void Mea_C(void)
 {
+	float C1, C2, C3;
 	// DDS输入固定频率1信号
+	fre = 60;
+	ADF4351WriteFreq(fre);
+	C1 = C;
 
 	// 角度计算
 
 	// DDS输入固定频率2信号
+	fre = 60;
+	ADF4351WriteFreq(fre);
+	C2 = C;
 
 	// 角度计算
 
 	// DDS输入固定频率3信号
+	fre = 60;
+	ADF4351WriteFreq(fre);
+	C3 = C;
 
 	// 比较
+	uint8_t flag = (C1, C2, C3);	
 
-	// 电容测量100次，队列取平均
+	if(flag)
+	{
+		// 电容测量100次，队列取平均
+
+
+	}
+	else
+	{
+		// 电阻测量100次，队列取平均
+		R = R0/Av;
+	}
+	
 }
 
 const float R0 = 6.6; // 6.6M
@@ -163,4 +191,14 @@ void Cal_C(void)
 	Cf = (float)1.44 + (float)95.27 * length;
 	C = sqrt( (R0/Av)* (R0/Av) / (float)2 * pi * fre ) - Cf;
 
+
+
+}
+
+
+uint8_t compare(float c1, float c2, float c3)
+{
+	uint8_t flag;
+
+	return flag;
 }
