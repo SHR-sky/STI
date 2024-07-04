@@ -50,6 +50,8 @@ int main(void)
 	// 需要上网络分析仪
 	angle_direct = (float)12.0 - GetPhs();
 	
+	angle_direct = 0.0;
+	
 	// 长度已知，此处反解出来
 
 	while (1)
