@@ -26,7 +26,7 @@ void ADF_Output_GPIOInit(void)
 	
 	GPIO_InitTypeDef GPIO_InitStruct;
 	
-	RCC_APB2PeriphClockCmd(RCC_AHB1Periph_GPIOC, ENABLE);
+	RCC_AHB1PeriphClockCmd(RCC_AHB1Periph_GPIOC, ENABLE);
 
 	GPIO_InitStruct.GPIO_Pin = GPIO_Pin_9|GPIO_Pin_10|GPIO_Pin_11|GPIO_Pin_12;
 	GPIO_InitStruct.GPIO_Speed = GPIO_Speed_50MHz;
@@ -68,12 +68,11 @@ void WriteToADF4351(u8 count, u8 *buf)
 	u8 i = 0;
 	u8 j = 0;
 	
-//	ADF_Output_GPIOInit();  
-	
-	ADF4351_CE = 1;
+	ADF_Output_GPIOInit();  
+	GPIO_SetBits(GPIOC,GPIO_Pin_12);
 	delay_us(1);
-	ADF4351_CLK = 0;
-	ADF4351_LE = 0;
+	GPIO_ResetBits(GPIOC,GPIO_Pin_11);
+	GPIO_ResetBits(GPIOC,GPIO_Pin_9);
 	delay_us(1);
 	
 	for(i = count; i>0; i--)
@@ -83,24 +82,31 @@ void WriteToADF4351(u8 count, u8 *buf)
 		{
 			if(0x80 == (ValueToWrite & 0x80))
 			{
-				ADF4351_OUTPUT_DATA = 1;
+				GPIO_SetBits(GPIOC,GPIO_Pin_10);
+				//ADF4351_OUTPUT_DATA = 1;
 			}
 			else
 			{
-				ADF4351_OUTPUT_DATA = 0;
+				GPIO_ResetBits(GPIOC,GPIO_Pin_10);
+				//ADF4351_OUTPUT_DATA = 0;
 			}
 			delay_us(1);
+			//GPIO_SetBits(GPIOC,GPIO_Pin_11);
 			ADF4351_CLK = 1;
 			delay_us(1);
 			ValueToWrite <<= 1;
-			ADF4351_CLK = 0;	
+			//ADF4351_CLK = 0;
+			GPIO_ResetBits(GPIOC,GPIO_Pin_11);
 		}
 	}
-	ADF4351_OUTPUT_DATA = 0;
+	GPIO_ResetBits(GPIOC,GPIO_Pin_10);
+	//ADF4351_OUTPUT_DATA = 0;
 	delay_us(1);
-	ADF4351_LE = 1;
+	GPIO_SetBits(GPIOC,GPIO_Pin_9);
+	//ADF4351_LE = 1;
 	delay_us(1);
-	ADF4351_LE = 0;
+	GPIO_ResetBits(GPIOC,GPIO_Pin_9);
+	//ADF4351_LE = 0;
 }
 
 

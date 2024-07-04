@@ -3,7 +3,7 @@
 
 #include "sys.h"
 
-#define ADF4351_CLK PCout(11)
+#define ADF4351_CLK PCout(11) 
 #define ADF4351_OUTPUT_DATA PCout(10)
 #define ADF4351_LE PCout(9)
 #define ADF4351_CE PCout(12)
