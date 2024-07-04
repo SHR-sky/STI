@@ -6,8 +6,4 @@
 void SPI2_Init(void);
 uint8_t SPI2_ReadWriteByte(uint8_t TxData);
 
-
-
-
-
 #endif

@@ -34,6 +34,7 @@ void Cal_C(void);
 
 uint8_t compare(float c1, float c2, float c3);
 float average(float *num);
+float myabs(float a);
 
 // 20.0MHZ 对应波长 10.5m 可测量最长2.625m
 
@@ -213,7 +214,6 @@ void Mea_C(void)
 	}
 }
 
-
 void Cal_C(void)
 {
 	de_phi = GetPhs();
@@ -223,11 +223,24 @@ void Cal_C(void)
 	C = sqrt( (R0/Av)* (R0/Av) / (float)2 * (float)pi * fre ) - Cf;
 }
 
+float myabs(float a)
+{
+	return (a>0)?a:(-a);
+}
 
 uint8_t compare(float c1, float c2, float c3)
 {
 	uint8_t same_flag;
-
+	float de1 = c2 - c1;
+	float de2 = c3 - c2;
+	if(( myabs(de1) < 0.01) && (myabs(de2) < 0.01))
+	{
+		same_flag = 1;
+	}
+	else
+	{
+		same_flag = 0;
+	}
 	return same_flag;
 }
 
@@ -240,3 +253,4 @@ float average(float *num)
 	}
 	return sum;
 }
+
