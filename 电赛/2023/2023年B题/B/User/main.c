@@ -51,7 +51,7 @@ int main(void)
 	angle_direct = (float)12.0 - GetPhs();
 	
 	angle_direct = 0.0;
-	
+
 	// 长度已知，此处反解出来
 
 	while (1)
@@ -175,13 +175,13 @@ void Mea_C(void)
 	C1 = C;
 
 	// DDS输入固定频率2信号
-	fre = 60;
+	fre = 50;
 	ADF4351WriteFreq(fre);
 	Cal_C();
 	C2 = C;
 
 	// DDS输入固定频率3信号
-	fre = 60;
+	fre = 40;
 	ADF4351WriteFreq(fre);
 	Cal_C();
 	C3 = C;
@@ -211,7 +211,6 @@ void Mea_C(void)
 		}
 		R = average(R_result);
 	}
-	
 }
 
 
