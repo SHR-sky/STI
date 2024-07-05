@@ -67,7 +67,7 @@ void AD9959_Init(void)
 	*/
     RCC_AHB1PeriphClockCmd(RCC_AHB1Periph_GPIOD, ENABLE);	                   //PD port clock enable
 
-    GPIO_InitStructure.GPIO_Pin   = (0xC7FF << 0);                             //Initialize PD0~12
+    GPIO_InitStructure.GPIO_Pin   = (0xC79F << 0);                             //Initialize PD0~12
     GPIO_InitStructure.GPIO_Mode  = GPIO_Mode_OUT;
     GPIO_InitStructure.GPIO_OType = GPIO_OType_PP;
     GPIO_InitStructure.GPIO_Speed = GPIO_Speed_100MHz;
@@ -113,11 +113,11 @@ void Intserve(void)
 **************************************************************/
 void IntReset(void)	  
 {
-  Reset = 0;
+	RESET= 0;
 	delay1(1);
-	Reset = 1;
+	RESET = 1;
 	delay1(30);
-	Reset = 0;
+	RESET = 0;
 }
 
 /************************************************************

@@ -38,27 +38,41 @@ float myabs(float a);
 
 int main(void)
 {
+	Serial_Init();
+	Serial_Printf("Hi!");
 	// 初始化
-	//Adc_Init();
+	Adc_Init();
 
 	// 接入90MHZ，进行标定
 	fre = 90.0;
 	// AD9954_Set_Fre(fre);//设置AD9954输出频率，点频
 	// AD9954_Set_Amp(16383);//写幅度
 	// AD9954_Set_Phase(0);//写相位
-	Init_AD9959();
-	Write_frequence(2,80000);
-	Write_Amplitude(2,0x3ff0);
-	Write_Phase(2,0);
+	AD9959_Init();								//初始化控制AD9959需要用到的IO口,及寄存器
+	AD9959_Set_Fre(CH3, 2625000);	//设置通道0频率100000Hz
+	//AD9959_Set_Fre(CH3, 80000000);	//设置通道1频率100000Hz
+		
+	AD9959_Set_Amp(CH0, 1023); 		//设置通道0幅度控制值1023，范围0~1023
+	AD9959_Set_Amp(CH3, 1023); 		//设置通道1幅度控制值1023，范围0~1023
+
+	AD9959_Set_Phase(CH0, 0);			//设置通道0相位控制值0(0度)，范围0~16383
+	AD9959_Set_Phase(CH3, 0);	//设置通道1相位控制值4096(90度)，范围0~16383
+
+	IO_Update();	//AD9959更新数据,调用此函数后，上述操作生效！！！！
 	//UPDATE = 1;
 
 	// 需要上网络分析仪
 	angle_direct = (float)12.0 - GetPhs();
 
 	angle_direct = 0.0;
-
+	while(1)
+	{
+		//Serial_Printf("%d/r/n",GetMag());
+		Serial_Printf("%d\r\n",GetPhs());
+		delay_ms(500);
+	}
 	// 长度已知，此处反解出来
-
+	/*
 	while (1)
 	{
 		if (flag == 1)
@@ -87,7 +101,7 @@ int main(void)
 			Serial_SendByte(0x33); // 使串口屏显示结果
 			flag = 0;
 		}
-	}
+	}*/
 }
 
 // 中断接收串口数据
@@ -112,7 +126,8 @@ void Mea_Length(void)
 
 	// 10m以上
 	fre = 2.5;
-	// AD9954_Set_Fre(fre); // 2.5MHZ 对应波长 84m 可测量最长21m
+	AD9959_Set_Fre(CH0, fre*1000000); // 2.5MHZ 对应波长 84m 可测量最长21m
+	IO_Update();
 	length = Cal_Length((float)84);
 	if (length >= 10)
 	{
