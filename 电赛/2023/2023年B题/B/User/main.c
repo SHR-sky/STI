@@ -42,11 +42,14 @@ int main(void)
 {
 	// 初始化
 	Adc_Init();
-	ADF4351Init();
+	
+	
 
 	// 接入90MHZ，进行标定
 	fre = 90.0;
-	ADF4351WriteFreq(fre); 
+	// AD9954_Set_Fre(fre);//设置AD9954输出频率，点频
+	// AD9954_Set_Amp(16383);//写幅度
+	// AD9954_Set_Phase(0);//写相位 
 
 	// 需要上网络分析仪
 	angle_direct = (float)12.0 - GetPhs();
@@ -109,7 +112,7 @@ void Mea_Length(void)
 
 	// 10m以上
 	fre = 2.5;
-	ADF4351WriteFreq(fre); // 2.5MHZ 对应波长 84m 可测量最长21m
+	//AD9954_Set_Fre(fre); // 2.5MHZ 对应波长 84m 可测量最长21m
 	length = Cal_Length((float)84);
 	if (length >= 10)
 	{
@@ -122,7 +125,7 @@ void Mea_Length(void)
 	{
 		// 10m以下，5m以上
 		fre = 5.0;
-		ADF4351WriteFreq(fre); // 5.0MHZ 对应波长 42m 可测量最长10.5m
+		//AD9954_Set_Fre(fre); // 5.0MHZ 对应波长 42m 可测量最长10.5m
 		length = Cal_Length((float)42);
 		if (length >= 5)
 		{
@@ -135,7 +138,7 @@ void Mea_Length(void)
 		{
 			// 10m以下，5m以上
 			fre = 10.0;
-			ADF4351WriteFreq(fre); // 10.0MHZ 对应波长 21m 可测量最长5.25m
+			//AD9954_Set_Fre(fre); // 10.0MHZ 对应波长 21m 可测量最长5.25m
 			length = Cal_Length((float)21);
 			if (length >= 2)
 			{
@@ -148,7 +151,7 @@ void Mea_Length(void)
 			{
 				// 2m以下
 				fre = 20.0;
-				ADF4351WriteFreq(fre); // 20.0MHZ 对应波长 10.5m 可测量最长2.625m
+				//AD9954_Set_Fre(fre); // 20.0MHZ 对应波长 10.5m 可测量最长2.625m
 				for (int i = 0; i < 100; i++)
 				{
 					length_result[i] = Cal_Length((float)10.5);
@@ -171,19 +174,19 @@ void Mea_C(void)
 	float C1, C2, C3;
 	// DDS输入固定频率1信号
 	fre = 60;
-	ADF4351WriteFreq(fre);
+	//AD9954_Set_Fre(fre);
 	Cal_C();
 	C1 = C;
 
 	// DDS输入固定频率2信号
 	fre = 50;
-	ADF4351WriteFreq(fre);
+	//AD9954_Set_Fre(fre);
 	Cal_C();
 	C2 = C;
 
 	// DDS输入固定频率3信号
 	fre = 40;
-	ADF4351WriteFreq(fre);
+	//AD9954_Set_Fre(fre);
 	Cal_C();
 	C3 = C;
 
@@ -233,7 +236,7 @@ uint8_t compare(float c1, float c2, float c3)
 	uint8_t same_flag;
 	float de1 = c2 - c1;
 	float de2 = c3 - c2;
-	if(( myabs(de1) < 0.01) && (myabs(de2) < 0.01))
+	if(( myabs(de1) < (float)0.01) && (myabs(de2) < (float)0.01))
 	{
 		same_flag = 1;
 	}

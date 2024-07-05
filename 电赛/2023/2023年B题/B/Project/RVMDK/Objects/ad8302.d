@@ -45,4 +45,5 @@
 .\objects\ad8302.o: ..\..\Hardware\mySPI.h
 .\objects\ad8302.o: ..\..\Hardware\ADC.h
 .\objects\ad8302.o: ..\..\Hardware\AD8302.h
+.\objects\ad8302.o: ..\..\Hardware\AD9959.h
 .\objects\ad8302.o: F:\keil\core\ARM\ARMCC\Bin\..\include\math.h

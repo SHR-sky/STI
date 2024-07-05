@@ -46,3 +46,4 @@
 .\objects\myspi.o: ..\..\Hardware\ADC.h
 .\objects\myspi.o: ..\..\Hardware\AD8302.h
 .\objects\myspi.o: F:\keil\core\ARM\ARMCC\Bin\..\include\math.h
+.\objects\myspi.o: ..\..\Hardware\AD9959.h

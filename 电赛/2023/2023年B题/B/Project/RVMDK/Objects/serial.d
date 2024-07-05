@@ -46,4 +46,5 @@
 .\objects\serial.o: ..\..\Hardware\ADC.h
 .\objects\serial.o: ..\..\Hardware\AD8302.h
 .\objects\serial.o: F:\keil\core\ARM\ARMCC\Bin\..\include\math.h
+.\objects\serial.o: ..\..\Hardware\AD9959.h
 .\objects\serial.o: F:\keil\core\ARM\ARMCC\Bin\..\include\stdarg.h

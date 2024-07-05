@@ -9,7 +9,7 @@
 #include "mySPI.h"
 #include "ADC.h"
 #include "AD8302.h"
-#include "AD9954.h"
+#include "AD9959.h"
 
 // //0,不支持ucos
 // //1,支持ucos

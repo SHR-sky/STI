@@ -46,3 +46,4 @@
 .\objects\delay.o: ..\..\Hardware\ADC.h
 .\objects\delay.o: ..\..\Hardware\AD8302.h
 .\objects\delay.o: F:\keil\core\ARM\ARMCC\Bin\..\include\math.h
+.\objects\delay.o: ..\..\Hardware\AD9959.h

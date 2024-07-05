@@ -46,3 +46,4 @@
 .\objects\adf4351.o: ..\..\Hardware\ADC.h
 .\objects\adf4351.o: ..\..\Hardware\AD8302.h
 .\objects\adf4351.o: F:\keil\core\ARM\ARMCC\Bin\..\include\math.h
+.\objects\adf4351.o: ..\..\Hardware\AD9959.h

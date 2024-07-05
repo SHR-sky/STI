@@ -45,3 +45,4 @@
 .\objects\main.o: ..\..\Hardware\ADC.h
 .\objects\main.o: ..\..\Hardware\AD8302.h
 .\objects\main.o: F:\keil\core\ARM\ARMCC\Bin\..\include\math.h
+.\objects\main.o: ..\..\Hardware\AD9959.h

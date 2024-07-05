@@ -938,8 +938,8 @@
       <tvExp>0</tvExp>
       <tvExpOptDlg>0</tvExpOptDlg>
       <bDave2>0</bDave2>
-      <PathWithFileName>..\..\Hardware\AD9954.c</PathWithFileName>
-      <FilenameWithoutPath>AD9954.c</FilenameWithoutPath>
+      <PathWithFileName>..\..\Hardware\AD9959.c</PathWithFileName>
+      <FilenameWithoutPath>AD9959.c</FilenameWithoutPath>
       <RteFlg>0</RteFlg>
       <bShared>0</bShared>
     </File>
@@ -950,8 +950,8 @@
       <tvExp>0</tvExp>
       <tvExpOptDlg>0</tvExpOptDlg>
       <bDave2>0</bDave2>
-      <PathWithFileName>..\..\Hardware\AD9954.h</PathWithFileName>
-      <FilenameWithoutPath>AD9954.h</FilenameWithoutPath>
+      <PathWithFileName>..\..\Hardware\AD9959.h</PathWithFileName>
+      <FilenameWithoutPath>AD9959.h</FilenameWithoutPath>
       <RteFlg>0</RteFlg>
       <bShared>0</bShared>
     </File>
