@@ -16,7 +16,7 @@ float mypower(int index, float base)
 
 float GetMag(void) //输出幅度比
 {
-	float temp = Get_Adc_Average(ADC_Channel_1,100);
+	float temp = Get_Adc_Average(ADC1,ADC_Channel_1,100);
 
 	float volt,volt_dis;
 	temp=temp*(3.3/4096.0);
@@ -33,7 +33,7 @@ float GetMag(void) //输出幅度比
 
 float GetPhs(void)//输出相位差
 {
-	float temp = Get_Adc_Average(ADC_Channel_3,100);
+	float temp = Get_Adc_Average(ADC2,ADC_Channel_11,100);
 	//float temp = Get_Adc(ADC_Channel_3);
 	float volt;
 	temp=temp*((float)3.3/(float)4096.0);

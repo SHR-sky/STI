@@ -1,10 +1,10 @@
 .\objects\serial.o: ..\..\Hardware\Serial.c
 .\objects\serial.o: ..\..\Hardware\Serial.h
-.\objects\serial.o: F:\keil\core\ARM\ARMCC\Bin\..\include\stdio.h
+.\objects\serial.o: E:\SoftLib\Keil_v5\ARM\ARMCC\Bin\..\include\stdio.h
 .\objects\serial.o: ..\..\Hardware\sys.h
 .\objects\serial.o: ..\..\Libraries\CMSIS\Device\ST\STM32F4xx\Include\stm32f4xx.h
 .\objects\serial.o: ..\..\Libraries\CMSIS\Include\core_cm4.h
-.\objects\serial.o: F:\keil\core\ARM\ARMCC\Bin\..\include\stdint.h
+.\objects\serial.o: E:\SoftLib\Keil_v5\ARM\ARMCC\Bin\..\include\stdint.h
 .\objects\serial.o: ..\..\Libraries\CMSIS\Include\core_cmInstr.h
 .\objects\serial.o: ..\..\Libraries\CMSIS\Include\core_cmFunc.h
 .\objects\serial.o: ..\..\Libraries\CMSIS\Include\core_cmSimd.h
@@ -45,6 +45,6 @@
 .\objects\serial.o: ..\..\Hardware\mySPI.h
 .\objects\serial.o: ..\..\Hardware\ADC.h
 .\objects\serial.o: ..\..\Hardware\AD8302.h
-.\objects\serial.o: F:\keil\core\ARM\ARMCC\Bin\..\include\math.h
+.\objects\serial.o: E:\SoftLib\Keil_v5\ARM\ARMCC\Bin\..\include\math.h
 .\objects\serial.o: ..\..\Hardware\AD9959.h
-.\objects\serial.o: F:\keil\core\ARM\ARMCC\Bin\..\include\stdarg.h
+.\objects\serial.o: E:\SoftLib\Keil_v5\ARM\ARMCC\Bin\..\include\stdarg.h

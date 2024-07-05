@@ -1,20 +1,8 @@
-#ifndef __AD9959_H 
-#define __AD9959_H 
-
+#ifndef _AD9959_H_
+#define _AD9959_H_
 #include "sys.h"
+#include "stdint.h"
 
-#define CSR_ADD   0x00   //CSR  Channel Select Register(é€šé“é€‰æ‹©å¯„å­˜å™¨)                1 Bytes
-#define FR1_ADD   0x01   //FR1  Function Register 1(åŠŸèƒ½å¯„å­˜å™¨1)                       3 Bytes
-#define FR2_ADD   0x02   //FR2  Function Register 2(åŠŸèƒ½å¯„å­˜å™¨2)                       2 Bytes
-#define CFR_ADD   0x03   //CFR  Channel Function Register(é€šé“åŠŸèƒ½å¯„å­˜å™¨)              3 Bytes
-#define CFTW0_ADD 0x04   //CTW0 Channel Frequency Tuning Word 0(é€šé“é¢‘ç‡è½¬æ¢å­—å¯„å­˜å™¨)  4 Bytes
-#define CPOW0_ADD 0x05   //CPW0 Channel Phase Offset Word 0(é€šé“ç›¸ä½è½¬æ¢å­—å¯„å­˜å™¨)      2 Bytes
-#define ACR_ADD   0x06   //ACR  Amplitude Control Register(å¹…åº¦æ§åˆ¶å¯„å­˜å™¨)             3 Bytes
-#define LSRR_ADD  0x07   //LSR  Linear Sweep Ramp Rate(é€šé“çº¿æ€§æ‰«æå¯„å­˜å™¨)             2 Bytes
-#define RDW_ADD   0x08   //RDW  LSR Rising Delta Word(é€šé“çº¿æ€§å‘ä¸Šæ‰«æå¯„å­˜å™¨)          4 Bytes
-#define FDW_ADD   0x09   //FDW  LSR Falling Delta Word(é€šé“çº¿æ€§å‘ä¸‹æ‰«æå¯„å­˜å™¨)         4 Bytes
-
-//AD9959 Pin macro definition PD0~12
 #define SCLK        PDout(0)
 #define CS          PDout(1)
 #define UPDATE      PDout(2)
@@ -28,33 +16,94 @@
 #define SDIO1       PDout(8)
 #define SDIO2       PDout(9)
 #define SDIO3       PDout(10)
-#define AD9959_PWR  PDout(11)
+#define AD9959_PWR  PDout(15)
 #define RESET       PDout(14)
 
-//Function definition
-void Init_AD9959(void);
-void delay_9959(uint32_t length);
-void InitIO_9959(void);
-void InitReset(void);
-void IO_Update(void) ;
-void WriteData_AD9959(uint8_t RegisterAddress, uint8_t NumberofRegisters, uint8_t *RegisterData,uint8_t temp);
-void ReadData_9959(uint8_t RegisterAddress,uint8_t NumberofRegisters,uint8_t *RegisterData);
-void Write_frequence(uint8_t Channel,uint32_t Freq);
-void Write_Amplitude(uint8_t Channel, uint16_t Ampli);
-void Write_Phase(uint8_t Channel,uint16_t Phase);
+//AD9959¹Ü½Åºê¶¨Òå
 
-//IO port operation macro definition
-#define BITBAND(addr, bitnum) ((addr & 0xF0000000)+0x2000000+((addr &0xFFFFF)<<5)+(bitnum<<2)) 
-#define MEM_ADDR(addr)  *((volatile unsigned long  *)(addr)) 
-#define BIT_ADDR(addr, bitnum)   MEM_ADDR(BITBAND(addr, bitnum)) 
+//AD9959¼Ä´æÆ÷µØÖ·¶¨Òå
+#define CSR_ADD   0x00   //CSR Í¨µÀÑ¡Ôñ¼Ä´æÆ÷
+#define FR1_ADD   0x01   //FR1 ¹¦ÄÜ¼Ä´æÆ÷1
+#define FR2_ADD   0x02   //FR2 ¹¦ÄÜ¼Ä´æÆ÷2
+#define CFR_ADD   0x03   //CFR Í¨µÀ¹¦ÄÜ¼Ä´æÆ÷
 
-//IO address mapping
-#define GPIOD_ODR_Addr    (GPIOD_BASE+20)           //0x40020C14 
-#define GPIOD_IDR_Addr    (GPIOD_BASE+16)           //0x40020C10 
+#define CFTW0_ADD 0x04   //CTW0 Í¨µÀÆµÂÊ×ª»»×Ö¼Ä´æÆ÷
+#define CPOW0_ADD 0x05   //CPW0 Í¨µÀÏàÎ»×ª»»×Ö¼Ä´æÆ÷
+#define ACR_ADD   0x06   //ACR ·ù¶È¿ØÖÆ¼Ä´æÆ÷
 
-//IO port operation, only for a single IO port!
-//Ensure that the value of n is less than 16!
-#define PDout(n)   BIT_ADDR(GPIOD_ODR_Addr,n)       //Output 
-#define PDin(n)    BIT_ADDR(GPIOD_IDR_Addr,n)       //Input 
+#define LSRR_ADD  0x07   //LSR ÏßĞÔÉ¨ÃèĞ±ÂÊ¼Ä´æÆ÷
+#define RDW_ADD   0x08   //RDW ÉÏÉıÉ¨ÃèÔöÁ¿¼Ä´æÆ÷
+#define FDW_ADD   0x09   //FDW ÏÂ½µÉ¨ÃèÔöÁ¿¼Ä´æÆ÷
 
-#endif  
+#define PROFILE_ADDR_BASE   0x0A   //Profile¼Ä´æÆ÷,ÅäÖÃÎÄ¼ş¼Ä´æÆ÷ÆğÊ¼µØÖ·
+
+//CSR[7:4]Í¨µÀÑ¡ÔñÆôÓÃÎ»
+#define CH0 0x10
+#define CH1 0x20
+#define CH2 0x40
+#define CH3 0x80
+
+//FR1[9:8] µ÷ÖÆµçÆ½Ñ¡ÔñÎ»
+#define LEVEL_MOD_2  	0x00//2µçÆ½µ÷ÖÆ 2½×µ÷ÖÆ
+#define LEVEL_MOD_4		0x01//4µçÆ½µ÷ÖÆ	4½×µ÷ÖÆ
+#define LEVEL_MOD_8		0x02//8µçÆ½µ÷ÖÆ	8½×µ÷ÖÆ
+#define LEVEL_MOD_16	0x03//16µçÆ½µ÷ÖÆ	16½×µ÷ÖÆ
+
+//CFR[23:22]  ·ùÆµÏàÎ»£¨AFP£©Ñ¡ÔñÎ»
+#define	DISABLE_Mod		0x00	//00	µ÷ÖÆÒÑ½ûÓÃ
+#define	ASK 					0x40	//01	Õñ·ùµ÷ÖÆ£¬·ùÒÆ¼ü¿Ø
+#define	FSK 					0x80	//10	ÆµÂÊµ÷ÖÆ£¬ÆµÒÆ¼ü¿Ø
+#define	PSK 					0xc0	//11	ÏàÎ»µ÷ÖÆ£¬ÏàÒÆ¼ü¿Ø
+
+//£¨CFR[14]£©ÏßĞÔÉ¨ÃèÆôÓÃ sweep enable																				
+#define	SWEEP_ENABLE	0x40	//1	ÆôÓÃ
+#define	SWEEP_DISABLE	0x00	//0	²»ÆôÓÃ
+		
+void delay1 (uint32_t length);//ÑÓÊ±
+void IntReset(void);	 			//AD9959¸´Î»
+void IO_Update(void); 		  //AD9959¸üĞÂÊı¾İ
+void Intserve(void);				//IO¿ÚµçÆ½×´Ì¬³õÊ¼»¯
+void AD9959_Init(void);			//IO¿Ú³õÊ¼»¯
+
+/***********************AD9959»ù±¾¼Ä´æÆ÷²Ù×÷º¯Êı*****************************************/
+void AD9959_WriteData(uint8_t RegisterAddress, uint8_t NumberofRegisters, uint8_t *RegisterData);//ÏòAD9959Ğ´Êı¾İ
+void Write_CFTW0(uint32_t fre);										//Ğ´CFTW0Í¨µÀÆµÂÊ×ª»»×Ö¼Ä´æÆ÷
+void Write_ACR(uint16_t Ampli);										//Ğ´ACRÍ¨µÀ·ù¶È×ª»»×Ö¼Ä´æÆ÷
+void Write_CPOW0(uint16_t Phase);									//Ğ´CPOW0Í¨µÀÏàÎ»×ª»»×Ö¼Ä´æÆ÷
+
+void Write_LSRR(uint8_t rsrr,uint8_t fsrr);				//Ğ´LSRRÏßĞÔÉ¨ÃèĞ±ÂÊ¼Ä´æÆ÷
+void Write_RDW(uint32_t r_delta);									//Ğ´RDWÉÏÉıÔöÁ¿¼Ä´æÆ÷
+void Write_FDW(uint32_t f_delta);									//Ğ´FDWÏÂ½µÔöÁ¿¼Ä´æÆ÷
+
+void Write_Profile_Fre(uint8_t profile,uint32_t data);//Ğ´Profile¼Ä´æÆ÷,ÆµÂÊ
+void Write_Profile_Ampli(uint8_t profile,uint16_t data);//Ğ´Profile¼Ä´æÆ÷,·ù¶È
+void Write_Profile_Phase(uint8_t profile,uint16_t data);//Ğ´Profile¼Ä´æÆ÷,ÏàÎ»
+/********************************************************************************************/
+
+
+/*****************************µãÆµ²Ù×÷º¯Êı***********************************/
+void AD9959_Set_Fre(uint8_t Channel,uint32_t Freq); //Ğ´ÆµÂÊ
+void AD9959_Set_Amp(uint8_t Channel, uint16_t Ampli);//Ğ´·ù¶È
+void AD9959_Set_Phase(uint8_t Channel,uint16_t Phase);//Ğ´ÏàÎ»
+/****************************************************************************/
+
+/*****************************µ÷ÖÆ²Ù×÷º¯Êı  ***********************************/
+void AD9959_Modulation_Init(uint8_t Channel,uint8_t Modulation,uint8_t Sweep_en,uint8_t Nlevel);//ÉèÖÃ¸÷¸öÍ¨µÀµÄµ÷ÖÆÄ£Ê½¡£
+void AD9959_SetFSK(uint8_t Channel, uint32_t *data,uint16_t Phase);//ÉèÖÃFSKµ÷ÖÆµÄ²ÎÊı
+void AD9959_SetASK(uint8_t Channel, uint16_t *data,uint32_t fre,uint16_t Phase);//ÉèÖÃASKµ÷ÖÆµÄ²ÎÊı
+void AD9959_SetPSK(uint8_t Channel, uint16_t *data,uint32_t Freq);//ÉèÖÃPSKµ÷ÖÆµÄ²ÎÊı
+
+void AD9959_SetFre_Sweep(uint8_t Channel, uint32_t s_data,uint32_t e_data,uint32_t r_delta,uint32_t f_delta,uint8_t rsrr,uint8_t fsrr,uint16_t Ampli,uint16_t Phase);//ÉèÖÃÏßĞÔÉ¨ÆµµÄ²ÎÊı
+void AD9959_SetAmp_Sweep(uint8_t Channel, uint32_t s_Ampli,uint16_t e_Ampli,uint32_t r_delta,uint32_t f_delta,uint8_t rsrr,uint8_t fsrr,uint32_t fre,uint16_t Phase);//ÉèÖÃÏßĞÔÉ¨·ùµÄ²ÎÊı
+void AD9959_SetPhase_Sweep(uint8_t Channel, uint16_t s_data,uint16_t e_data,uint16_t r_delta,uint16_t f_delta,uint8_t rsrr,uint8_t fsrr,uint32_t fre,uint16_t Ampli);//ÉèÖÃÏßĞÔÉ¨ÏàµÄ²ÎÊı
+/********************************************************************************************/
+
+#endif
+
+
+
+
+
+
+
+
