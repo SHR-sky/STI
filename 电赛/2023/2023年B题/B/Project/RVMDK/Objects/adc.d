@@ -3,7 +3,7 @@
 .\objects\adc.o: ..\..\Hardware\sys.h
 .\objects\adc.o: ..\..\Libraries\CMSIS\Device\ST\STM32F4xx\Include\stm32f4xx.h
 .\objects\adc.o: ..\..\Libraries\CMSIS\Include\core_cm4.h
-.\objects\adc.o: F:\keil\core\ARM\ARMCC\Bin\..\include\stdint.h
+.\objects\adc.o: E:\SoftLib\Keil_v5\ARM\ARMCC\Bin\..\include\stdint.h
 .\objects\adc.o: ..\..\Libraries\CMSIS\Include\core_cmInstr.h
 .\objects\adc.o: ..\..\Libraries\CMSIS\Include\core_cmFunc.h
 .\objects\adc.o: ..\..\Libraries\CMSIS\Include\core_cmSimd.h
@@ -39,11 +39,11 @@
 .\objects\adc.o: ..\..\Hardware\TIM.h
 .\objects\adc.o: ..\..\Hardware\sys.h
 .\objects\adc.o: ..\..\Hardware\Serial.h
-.\objects\adc.o: F:\keil\core\ARM\ARMCC\Bin\..\include\stdio.h
+.\objects\adc.o: E:\SoftLib\Keil_v5\ARM\ARMCC\Bin\..\include\stdio.h
 .\objects\adc.o: ..\..\Hardware\Delay.h
 .\objects\adc.o: ..\..\Hardware\ADF4351.h
 .\objects\adc.o: ..\..\Hardware\mySPI.h
 .\objects\adc.o: ..\..\Hardware\ADC.h
 .\objects\adc.o: ..\..\Hardware\AD8302.h
-.\objects\adc.o: F:\keil\core\ARM\ARMCC\Bin\..\include\math.h
+.\objects\adc.o: E:\SoftLib\Keil_v5\ARM\ARMCC\Bin\..\include\math.h
 .\objects\adc.o: ..\..\Hardware\AD9959.h

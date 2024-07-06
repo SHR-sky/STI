@@ -16,7 +16,7 @@ float mypower(int index, float base)
 
 float GetMag(void) //输出幅度比
 {
-	float temp = Get_Adc_Average(ADC_Channel_1,100);
+	float temp = Get_Adc_Average(ADC1,ADC_Channel_1,100);
 
 	float volt,volt_dis;
 	temp=temp*(3.3/4096.0);
@@ -33,18 +33,21 @@ float GetMag(void) //输出幅度比
 
 float GetPhs(void)//输出相位差
 {
-	float temp = Get_Adc_Average(ADC_Channel_3,100);
+	float temp = Get_Adc_Average(ADC2,ADC_Channel_11,100);
+	temp = 0.074*temp + 19.201;
 	//float temp = Get_Adc(ADC_Channel_3);
+	/*
 	float volt;
 	temp=temp*((float)3.3/(float)4096.0);
 	volt=temp;
-	Serial_Printf("%d",(int)volt);
+	//Serial_Printf("%d",(int)volt);
 	volt = volt - (int)volt;
 	volt *= (float)10000;
-	Serial_Printf("%d",(int)volt);
+	//Serial_Printf("%d",(int)volt);
 	//Vphs 的输出为 30mV～1.8V 表示 180 度～0 度，中间值 0.9V 为 90 度
 	temp = (float)-98.901099*(temp)+(float)181.978022;
 	//temp = -100.0*(temp)+180.0;
+	*/
 	return temp;
 }
 

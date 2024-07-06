@@ -3,7 +3,7 @@
 #include "sys.h"
 
 void Adc_Init(void);
-uint16_t Get_Adc(uint8_t ch); 
-uint16_t Get_Adc_Average(uint8_t ch,uint8_t times); 
+uint16_t Get_Adc(ADC_TypeDef* kADCx,u8 ch);
+uint16_t Get_Adc_Average(ADC_TypeDef* kADCx,u8 ch,u8 times);
  
 #endif 

@@ -844,14 +844,14 @@
               <FilePath>..\..\Hardware\AD8302.h</FilePath>
             </File>
             <File>
-              <FileName>ADC.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\..\Hardware\ADC.c</FilePath>
-            </File>
-            <File>
               <FileName>ADC.h</FileName>
               <FileType>5</FileType>
               <FilePath>..\..\Hardware\ADC.h</FilePath>
+            </File>
+            <File>
+              <FileName>ADC.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\Hardware\ADC.c</FilePath>
             </File>
             <File>
               <FileName>AD9959.c</FileName>
