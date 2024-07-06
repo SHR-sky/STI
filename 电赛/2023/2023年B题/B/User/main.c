@@ -3,6 +3,7 @@
 
 #define pi 3.1415926
 #define E 2.718281828
+#define MAX_DIFF 0.00625 // 误差值，需更改 0.01/16 ? 存疑
 
 uint8_t flag = 0;
 
@@ -51,6 +52,8 @@ void Mea_Length(void);
 
 // 测阻抗
 void Mea_C(void);
+
+uint8_t ApproximatelyEqule(float angle);
 
 
 uint8_t compare(float c1, float c2, float c3);
@@ -155,64 +158,67 @@ void Mea_Length(void)
 	de_phi = GetPhs();
 	if(de_phi>90)	// 说明大于10m
 	{
-		// 给40m波长
-		AD9959_Set_Fre(CH3,lambadatofre(40));
+		// 给120m波长
+		AD9959_Set_Fre(CH3,lambadatofre(120));
 		de_phi = GetPhs();
 		if(de_phi>90)	// 说明大于15m
 		{
-			for(int i=1; i<100; i++)
+			for(int i=1; i<400; i++) // Q:80 + 0.01i最大是50M,没到80M,是不是要i<400 ? 
 			{
-				AD9959_Set_Fre(CH3,lambadatofre(40 + 0.01 * i));
-				if(de_phi == 90)
+				AD9959_Set_Fre(CH3,lambadatofre(120 + 0.01 * i)); 
+				if(ApproximatelyEqule(de_phi)==1)
 				{
-					length = (40 + 0.01*i)/8.0;
+					length = (120 + 0.01*i)/8.0;
 					break;
 				}
 			}
 		}
 		else if(de_phi<90)	//说明小于15m
 		{
-			for(int i=1; i<100; i++)
+			for(int i=1; i<800; i++)
 			{
-				AD9959_Set_Fre(CH3,lambadatofre(40 - 0.01 * i));
-				if(de_phi == 90)
+				AD9959_Set_Fre(CH3,lambadatofre(120 - 0.01 * i));
+				if(ApproximatelyEqule(de_phi)==1)
 				{
-					length = (40 - 0.01*i)/8.0;
+					length = (120 - 0.01*i)/8.0;
 					break;
 				}
 			}
 		}
+		else length = 15 ;
 	}
-	else if(phi<90)	// 小于10m
+	else if(phi<90)	// 小于10m 对应80M
 	{
 		// 给160m波长
-		AD9959_Set_Fre(CH3,lambadatofre(160));
+		AD9959_Set_Fre(CH3,lambadatofre(40));
 		de_phi = GetPhs();
 		if(de_phi>90)	// 说明大于5m
 		{
-			for(int i=1; i<100; i++)
+			for(int i=1; i<400; i++)
 			{
-				AD9959_Set_Fre(CH3,lambadatofre(160 + 0.01 * i));
-				if(de_phi == 90)
+				AD9959_Set_Fre(CH3,lambadatofre(40 + 0.01 * i));
+				if(ApproximatelyEqule(de_phi)==1)
 				{
-					length = (160 + 0.01*i)/8.0;
+					length = (40 + 0.01*i)/8.0;
 					break;
 				}
 			}
 		}
 		else if(de_phi<90)	// 说明小于5m
 		{
-			for(int i=1; i<100; i++)
+			for(int i=1; i<400; i++)
 			{
-				AD9959_Set_Fre(CH3,lambadatofre(160 - 0.01 * i));
-				if(de_phi == 90)
+				AD9959_Set_Fre(CH3,lambadatofre(40 - 0.01 * i));
+				if(ApproximatelyEqule(de_phi)==1)
 				{
-					length = (160 - 0.01*i)/8.0;
+					length = (40 - 0.01*i)/8.0;
 					break;
 				}
 			}
 		}
+		else length = 5;
 	}
+	else length = 10;
 	
 }
 
@@ -273,4 +279,12 @@ float average(float *num)
 		sum += num[i] * (float)0.01;
 	}
 	return sum;
+}
+
+
+uint8_t ApproximatelyEqule(float angle)
+{
+	if(abs(angle-90)<MAX_DIFF)
+		return 1;
+	return 0;
 }
