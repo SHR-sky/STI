@@ -6,35 +6,52 @@
 
 uint8_t flag = 0;
 
-const float R0 = 6.6; // 6.6M
-float Cf = 0;
+// 电缆速度系数
+// 可以采用安慰按钮，此处取0.672285，或者修改为更好的值
+float k;
 
+// 反馈阻值
+const float R0 = 0.001; // 1k
+
+// 单位长度寄生电容（pF）
+float Cp = 95.27;
+
+// 单位长度电阻
+float Rp = 0;
+
+// 多次测量得结果
 float length = 0;
+float C = 0;
+float R = 0;
 float length_result[100];
 float C_result[100];
 float R_result[100];
 
-float angle_direct = 0;
-
+// 增益
 float Av;
+
+// 相位以及相位差
 float phi;
 float de_phi;
 
-float fre;
-
-float C;
-float R;
+// 标志是电容还是电阻
 uint8_t CorR;
 
-void Mea_Length(void);
-float Cal_Length_2_5(float lambda);
-float Cal_Length_5(float lambda);
-float Cal_Length_10(float lambda);
-float Cal_Length_20(float lambda);
-// void Cal_phase(void);
+// 用于标定的标准波长80m，对应10m线，对应角度90度
+float lambda0;
 
+//校准函数
+void direct(void);
+
+// 波长转相位
+int lambdatofre(float);
+
+// 测长度
+void Mea_Length(void);
+
+// 测阻抗
 void Mea_C(void);
-void Cal_C(void);
+
 
 uint8_t compare(float c1, float c2, float c3);
 float average(float *num);
@@ -47,68 +64,22 @@ int main(void)
 	Serial_Printf("Hi!");
 	// 初始化
 	Adc_Init();
-	Serial_Printf("111");
-	// 接入90MHZ，进行标定
-	fre = 90.0;
-	// AD9954_                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                           Set_Fre(fre);//设置AD9954输出频率，点频
-	// AD9954_Set_Amp(16383);//写幅度
-	// AD9954_Set_Phase(0);//写相位
 	AD9959_Init();								//初始化控制AD9959需要用到的IO口,及寄存器
-	AD9959_Set_Fre(CH3, 2000000);	//设置通道0频率100000Hz
-	//AD9959_Set_Fre(CH3, 80000000);	//设置通道1频率100000Hz
-	AD9959_Set_Fre(CH0, 2000000);	
-	AD9959_Set_Amp(CH0, 1023); 		//设置通道0幅度控制值1023，范围0~1023
-	AD9959_Set_Amp(CH3, 1023); 		//设置通道1幅度控制值1023，范围0~1023
-
-	AD9959_Set_Phase(CH0, 0);			//设置通道0相位控制值0(0度)，范围0~16383
-	AD9959_Set_Phase(CH3, 4096*100.0/90.0);	//设置通道1相位控制值4096(90度)，范围0~16383
+	
+	AD9959_Set_Fre(CH3, 2000000);	//设置通道3频率2M
+	AD9959_Set_Amp(CH3, 1023); 		//设置通道3幅度控制值1023，范围0~1023
+	AD9959_Set_Phase(CH3, 0);	//设置通道3相位控制值，4096(90度)，范围0~16383
 
 	IO_Update();	//AD9959更新数据,调用此函数后，上述操作生效！！！！
 	
-	while(1)
-	{	
-		Mea_C();
-		Serial_Printf("c:%f\r\n",C);
-		//Serial_Printf("%f\r\n",pow(E,2));
-		Serial_Printf("phs:%f\r\n",GetPhs());
-		//delay_ms(500);
-		//Serial_Printf("Mag:%f\r\n",GetMag());
-		delay_ms(500);
-	}
-	//UPDATE = 1;
-
-	// 需要上网络分析仪
-	//angle_direct = (float)12.0 - GetPhs();
-
-	//angle_direct = 0.0;
-	/*
-	while(1)
-	{
-		float p = 0;
-		//Serial_Printf("%d/r/n",GetMag());
-		for(int i=0; i<10; i++)
-		{
-			p += GetPhs();
-			delay_ms(50);
-			//Serial_Printf("Phs:%f\r\n",GetPhs());
-		}
-		Serial_Printf("phs:%f\r\n",p/10.0);
-		delay_ms(500);
-		//Serial_Printf("Mag:%f\r\n",GetMag());
-		//delay_ms(500);
-	}
-	*/
-	// 长度已知，此处反解出来
-	/*
-	while(1) 
-	{
-		Serial_Printf("%f\r\n",GetMag());
-	}
-	*/
-	flag = 1;
-	/*
 	while (1)
 	{
+		if (flag == 3)
+		{
+			direct();
+		}
+
+
 		if (flag == 1)
 		{
 			//Serial_SendByte(0x11); // 使串口屏显示测量中
@@ -136,7 +107,7 @@ int main(void)
 			flag = 0;
 		}
 	}
-	*/
+
 }
 
 // 中断接收串口数据
@@ -155,161 +126,123 @@ void USART3_IRQHandler(void)
 	}
 }
 
+void direct()
+{
+	float alpha = GetPhs();
+	k = ((float)20/alpha)*2.625/((float)3 * 100);
+}
+
+int lambdatofre(float lambda)
+{
+	int fre = k * 300000000/lambda; 
+	return fre;
+}
+
+
 void Mea_Length(void)
 {
-	// DDS输入固定频率信号，首先粗估1次，确定频率，然后100次取平均
+	// 10m 应该使得 2.625MHZ频率，波长为80m，相位为90度
+	// 即是，插入后，测量角度，得到为alpha相位时
+	// 不为90是波长不为80m导致的，所以，需要修正波长
+	// lambda等于360 * 2 * 10（d）/alpha
+	// lambda又等于 光速*系数/f
+	// 由此可得系数，用于修正
+	// 由此使得，产生的频率确实能够得到标准lambda
 
 
-	// 10m以上
-	fre = 2.5;
-	AD9959_Set_Fre(CH3, fre*1000000); // 2.5MHZ 对应波长 84m 可测量最长21m
-	IO_Update();
-	length = Cal_Length_2_5((float)84);
-	Serial_Printf("first\r\n");
-	if (length >= 10)
+	// 给80m波长
+	AD9959_Set_Fre(CH3,lambdatofre(80));
+	de_phi = GetPhs();
+	if(de_phi>90)	// 说明大于10m
 	{
-		for (int i = 0; i < 10; i++)
+		// 给40m波长
+		AD9959_Set_Fre(CH3,lambadatofre(40));
+		de_phi = GetPhs();
+		if(de_phi>90)	// 说明大于15m
 		{
-			Serial_Printf("2.5\r\n");
-			length_result[i] = Cal_Length_2_5((float)84);
-		}
-	}
-	else
-	{
-		// 10m以下，5m以上
-		fre = 5.0;
-		AD9959_Set_Fre(CH3, fre*1000000); // 2.5MHZ 对应波长 84m 可测量最长21m
-		IO_Update();
-		// AD9954_Set_Fre(fre); // 5.0MHZ 对应波长 42m 可测量最长10.5m
-		length = Cal_Length_5((float)42);
-		if (length >= 5)
-		{
-			for (int i = 0; i < 100; i++)
+			for(int i=1; i<100; i++)
 			{
-				Serial_Printf("5\r\n");
-				length_result[i] = Cal_Length_5((float)42);
-			}
-		}
-		else
-		{
-			// 10m以下，5m以上
-			fre = 10.0;
-			AD9959_Set_Fre(CH3, fre*1000000); // 2.5MHZ 对应波长 84m 可测量最长21m
-			IO_Update();
-			// AD9954_Set_Fre(fre); // 10.0MHZ 对应波长 21m 可测量最长5.25m
-			length = Cal_Length_10((float)21);
-			if (length >= 2)
-			{
-				for (int i = 0; i < 100; i++)
+				AD9959_Set_Fre(CH3,lambadatofre(40 + 0.01 * i));
+				if(de_phi == 90)
 				{
-					length_result[i] = Cal_Length_10((float)21);
+					length = (40 + 0.01*i)/8.0;
+					break;
 				}
 			}
-			else
+		}
+		else if(de_phi<90)	//说明小于15m
+		{
+			for(int i=1; i<100; i++)
 			{
-				// 2m以下
-				fre = 20.0;
-				AD9959_Set_Fre(CH3, fre*1000000); // 2.5MHZ 对应波长 84m 可测量最长21m
-				IO_Update();
-				// AD9954_Set_Fre(fre); // 20.0MHZ 对应波长 10.5m 可测量最长2.625m
-				for (int i = 0; i < 100; i++)
+				AD9959_Set_Fre(CH3,lambadatofre(40 - 0.01 * i));
+				if(de_phi == 90)
 				{
-					length_result[i] = Cal_Length_20((float)10.5);
+					length = (40 - 0.01*i)/8.0;
+					break;
 				}
 			}
 		}
 	}
-	length = average(length_result);
+	else if(phi<90)	// 小于10m
+	{
+		// 给160m波长
+		AD9959_Set_Fre(CH3,lambadatofre(160));
+		de_phi = GetPhs();
+		if(de_phi>90)	// 说明大于5m
+		{
+			for(int i=1; i<100; i++)
+			{
+				AD9959_Set_Fre(CH3,lambadatofre(160 + 0.01 * i));
+				if(de_phi == 90)
+				{
+					length = (160 + 0.01*i)/8.0;
+					break;
+				}
+			}
+		}
+		else if(de_phi<90)	// 说明小于5m
+		{
+			for(int i=1; i<100; i++)
+			{
+				AD9959_Set_Fre(CH3,lambadatofre(160 - 0.01 * i));
+				if(de_phi == 90)
+				{
+					length = (160 - 0.01*i)/8.0;
+					break;
+				}
+			}
+		}
+	}
+	
 }
 
-float Cal_Length_2_5(float lambda)
-{
-	//float angle = GetPhs() + angle_direct;
-	//float result = (angle * lambda) / (float)(360 * 2);
-	float phi = GetPhs();
-	Serial_Printf("Phs:%f\r\n",phi);
-	return (phi-(float)31.08)/(float)2.4;
-}
 
-float Cal_Length_5(float lambda)
-{
-	//float angle = GetPhs() + angle_direct;
-	//float result = (angle * lambda) / (float)(360 * 2);
-	return (GetPhs()-(float)31.08)/(float)2.4;
-}
-
-float Cal_Length_10(float lambda)
-{
-	//float angle = GetPhs() + angle_direct;
-	//float result = (angle * lambda) / (float)(360 * 2);
-	return (GetPhs()-(float)31.08)/(float)2.4;
-}
-
-float Cal_Length_20(float lambda)
-{
-	//float angle = GetPhs() + angle_direct;
-	//float result = (angle * lambda) / (float)(360 * 2);
-	return (GetPhs()-(float)31.08)/(float)2.4;
-}
 
 void Mea_C(void)
 {
-	/*
-	float C1, C2, C3;
-	// DDS输入固定频率1信号
-	fre = 60;
-	// AD9954_Set_Fre(fre);
-	Cal_C();
-	C1 = C;
 
-	// DDS输入固定频率2信号
-	fre = 50;
-	// AD9954_Set_Fre(fre);
-	Cal_C();
-	C2 = C;
+	AD9959_Set_Fre(CH3,100000);
+	float C1 = GetPhs();
 
-	// DDS输入固定频率3信号
-	fre = 40;
-	// AD9954_Set_Fre(fre);
-	Cal_C();
-	C3 = C;
+	AD9959_Set_Fre(CH3,200000);
+	float C2 = GetPhs();
 
-	// 比较
-	uint8_t same_flag = compare(C1, C2, C3);
+	AD9959_Set_Fre(CH3,300000);
+	float C3 = GetPhs();
 
-	if (same_flag)
+	uint8_t flag_c = (C1,C2,C3);
+	if(flag_c == 1)
 	{
-		CorR = 1;
-		// 电容测量100次，队列取平均
-		for (int i = 0; i < 100; i++)
-		{
-			Cal_C();
-			C_result[i] = C;
-		}
-		C = average(C_result);
+		R =  R0 / GetMag() - Rp;
 	}
 	else
 	{
-		CorR = 2;
-		// 电阻测量100次，队列取平均
-		for (int i = 0; i < 100; i++)
-		{
-			R = R0 / Av;
-			R_result[i] = R;
-		}
-		R = average(R_result);
-	}*/
-	C = (float)0.0014*pow(E,0.0775*GetPhs());
+		// excel 拟合？或者NE555
+		C = (float)0.0014*pow(E,0.0775*GetPhs()) - length * Cp;
+	}
 }
 
-void Cal_C(void)
-{
-	de_phi = GetPhs();
-	Av = GetMag();
 
-	Cf = (float)1.44 + (float)95.27 * length;
-	C = sqrt((R0 / Av) * (R0 / Av) / (float)2 * (float)pi * fre) - Cf;
-}
 
 float myabs(float a)
 {
