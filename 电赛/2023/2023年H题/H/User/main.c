@@ -1,32 +1,20 @@
 #include "sys.h"
 
-
 uint8_t flag = 0;
 
-
-double pos_angle_0;//转换为延迟0-2pi，全部为整数的角度，重建信号延迟的相位
-double pos_angle_1;//转换为延迟0-2pi，全部为整数的角度，重建信号延迟的相位
+double pos_angle_0; // 转换为延迟0-2pi，全部为整数的角度，重建信号延迟的相位
+double pos_angle_1; // 转换为延迟0-2pi，全部为整数的角度，重建信号延迟的相位
 double temp_double;
 short temp_short;
 double angle;
 
 unsigned char fre[2];
-unsigned char wave_type [2];
-
+unsigned char wave_type[2];
 
 double ADCConvertedValue[1000];
 
-
-
-
-
-
-
-
-
-
 double modulus(double I, double Q);
-double corr1000_200(short* data, short* mask);
+double corr1000_200(short *data, short *mask);
 void get_pos_angle(void);
 void cal_2frqs(unsigned char *frq);
 void fft_cal_2types(unsigned char *frq, unsigned char *wave_type);
@@ -78,11 +66,11 @@ short DAC_COS[200 * 19] =
 
 int main()
 {
-    again:
+again:
 
     // 信号重建思路
     // 采集信号之后，确定参数，进行重建
-    
+
     // AD采样
     Adc_Init();
     for (int i = 0; i < 1000; i++)
@@ -91,15 +79,15 @@ int main()
     }
 
     // 计算正交
-    
+
     cal_2frqs(fre);
 
     // 最后，需要实时调整相位差
 
     AD9959_Init();
-    AD9959_Set_Fre(CH0, (fre[0]+2)*5000 );
-    AD9959_Set_Fre(CH1, (fre[1]+2)*5000 );
-    
+    AD9959_Set_Fre(CH0, (fre[0] + 2) * 5000);
+    AD9959_Set_Fre(CH1, (fre[1] + 2) * 5000);
+
     // 后端需要接运放放大幅度，不然难以达到 1Vpp
     AD9959_Set_Amp(CH0, 1023);
     AD9959_Set_Amp(CH1, 1023);
@@ -111,8 +99,8 @@ int main()
     }
     get_pos_angle();
 
-    AD9959_Set_Phase(CH0, (pos_angle_0*16383) / (2*3.1415926) );
-    AD9959_Set_Phase(CH1, (pos_angle_1*16383) / (2*3.1415926) );
+    AD9959_Set_Phase(CH0, (pos_angle_0 * 16383) / (2 * 3.1415926));
+    AD9959_Set_Phase(CH1, (pos_angle_1 * 16383) / (2 * 3.1415926));
 
     IO_Update();
 
@@ -124,13 +112,13 @@ int main()
         }
         get_pos_angle();
 
-        AD9959_Set_Phase(CH0, (pos_angle_0*16383) / (2*3.1415926) );
-        AD9959_Set_Phase(CH1, (pos_angle_1*16383) / (2*3.1415926) );
+        AD9959_Set_Phase(CH0, (pos_angle_0 * 16383) / (2 * 3.1415926));
+        AD9959_Set_Phase(CH1, (pos_angle_1 * 16383) / (2 * 3.1415926));
 
         IO_Update();
 
         // 接收到重启信号
-        if(flag == 1)
+        if (flag == 1)
         {
             flag = 0;
             goto again;
@@ -139,20 +127,20 @@ int main()
 }
 
 // 确定频率用
-double corr1000_200(short* data, short* mask) 
+double corr1000_200(short *data, short *mask)
 {
     double res = 0;
     short i;
-    for(i = 0; i < 1000 ; i++)
-        res = res + (data[i] - 2048) * (mask[i%200] - 2048);//注意SIN与COS模版要减去直流偏置，才是真正的信号
+    for (i = 0; i < 1000; i++)
+        res = res + (data[i] - 2048) * (mask[i % 200] - 2048); // 注意SIN与COS模版要减去直流偏置，才是真正的信号
     return res;
 }
 
-//计算IQ分量的模的长度
+// 计算IQ分量的模的长度
 double modulus(double I, double Q)
 {
     double temp_double;
-    temp_double = sqrt(I*I + Q*Q);
+    temp_double = sqrt(I * I + Q * Q);
     return temp_double;
 }
 
@@ -199,7 +187,6 @@ void cal_2frqs(unsigned char *frq) // 计算参与叠加的两个正弦信号的
     }
 }
 
-
 void get_pos_angle(void)
 {
     unsigned char i = 0;
@@ -207,19 +194,19 @@ void get_pos_angle(void)
     double temp_double_cos = corr1000_200(ADCConvertedValue, DAC_COS + 200 * fre[0]);
     double temp_double_angle_0 = atan2(temp_double_cos, temp_double_sin);
 
-    if(temp_double_angle_0 < 0)//atan2函数计算得到的相位差在-pi到pi，但当其小于0时，DAC输出的信号无法提前相位，只能将所有相位全部延迟一个周期，即进行一个周期的求补操作
+    if (temp_double_angle_0 < 0) // atan2函数计算得到的相位差在-pi到pi，但当其小于0时，DAC输出的信号无法提前相位，只能将所有相位全部延迟一个周期，即进行一个周期的求补操作
         pos_angle_0 = -temp_double_angle_0;
     else
-        pos_angle_0 = 2*3.1415926 - temp_double_angle_0;
-    
+        pos_angle_0 = 2 * 3.1415926 - temp_double_angle_0;
+
     double temp_double_sin = corr1000_200(ADCConvertedValue, DAC_SIN + 200 * fre[1]);
     double temp_double_cos = corr1000_200(ADCConvertedValue, DAC_COS + 200 * fre[1]);
     double temp_double_angle_1 = atan2(temp_double_cos, temp_double_sin);
 
-    if(temp_double_angle_1 < 0)//atan2函数计算得到的相位差在-pi到pi，但当其小于0时，DAC输出的信号无法提前相位，只能将所有相位全部延迟一个周期，即进行一个周期的求补操作
+    if (temp_double_angle_1 < 0) // atan2函数计算得到的相位差在-pi到pi，但当其小于0时，DAC输出的信号无法提前相位，只能将所有相位全部延迟一个周期，即进行一个周期的求补操作
         pos_angle_1 = -temp_double_angle_1;
     else
-        pos_angle_1 = 2*3.1415926 - temp_double_angle_1;   
+        pos_angle_1 = 2 * 3.1415926 - temp_double_angle_1;
 }
 
 // 提高部分
