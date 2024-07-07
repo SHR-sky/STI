@@ -34,7 +34,7 @@ float GetMag(void) //输出幅度比
 float GetPhs(void)//输出相位差
 {
 	float temp = Get_Adc_Average(ADC2,ADC_Channel_11,100);
-	temp = 0.074*temp + 19.201;
+	temp = (float)0.074*temp + (float)19.201;
 	//float temp = Get_Adc(ADC_Channel_3);
 	/*
 	float volt;
