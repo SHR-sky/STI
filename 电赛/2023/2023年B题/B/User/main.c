@@ -3,6 +3,7 @@
 
 #define pi 3.1415926
 #define E 2.718281828
+#define CONST_LN2 0.69314718 
 #define MAX_DIFF 0.00625 // 误差值，需更改 0.01/16 ? 存疑
 
 uint8_t flag = 0;
@@ -19,6 +20,10 @@ float Cp = 95.27;
 
 // 单位长度电阻
 float Rp = 0;
+
+extern int cnt;
+// 测量得到的频率
+float cntFre;
 
 // 多次测量得结果
 float length = 0;
@@ -54,7 +59,7 @@ void Mea_Length(void);
 void Mea_C(void);
 
 uint8_t ApproximatelyEqule(float angle);
-
+int lambdatofre(float lambda);
 
 uint8_t compare(float c1, float c2, float c3);
 float average(float *num);
@@ -62,19 +67,24 @@ float myabs(float a);
 
 int main(void)
 {		
+	// 频率测量范围1Hz-1M，
+	// 100k误差3Hz左右，1M误差10Hz左右,PA0方波输入
+	SysTick_Config(SystemCoreClock);
 	NVIC_PriorityGroupConfig(NVIC_PriorityGroup_2);
 	Serial_Init();
+	Timer_Init();
+	exti_init(); 
+	//TIM_PWMINPUT_Config();
 	Serial_Printf("Hi!");
 	// 初始化
 	Adc_Init();
 	AD9959_Init();								//初始化控制AD9959需要用到的IO口,及寄存器
-	
 	AD9959_Set_Fre(CH3, 2000000);	//设置通道3频率2M
 	AD9959_Set_Amp(CH3, 1023); 		//设置通道3幅度控制值1023，范围0~1023
 	AD9959_Set_Phase(CH3, 0);	//设置通道3相位控制值，4096(90度)，范围0~16383
 
 	IO_Update();	//AD9959更新数据,调用此函数后，上述操作生效！！！！
-	
+	while(1);
 	while (1)
 	{
 		if (flag == 3)
@@ -112,6 +122,27 @@ int main(void)
 	}
 
 }
+// 频率计算
+void TIM2_IRQHandler(void) 
+{
+	if (TIM_GetITStatus(TIM2, TIM_IT_Update) != RESET)  
+	{
+		TIM_ClearITPendingBit(TIM2, TIM_IT_Update);
+		if(cnt>3000)
+		{
+			cnt = cnt + (cnt-3000)/1000;
+		}
+		if(cnt>100000)
+		{
+			cnt = cnt + cnt/100000*5+5;
+		}
+		cntFre = cnt;
+		Mea_C();
+		Serial_Printf("Fre:%d\r\n",cnt);
+		Serial_Printf("C:%f\r\n",C);
+		cnt = 0;
+	}
+}	
 
 // 中断接收串口数据
 void USART3_IRQHandler(void)
@@ -132,7 +163,7 @@ void USART3_IRQHandler(void)
 void direct()
 {
 	float alpha = GetPhs();
-	k = ((float)20/alpha)*2.625/((float)3 * 100);
+	k = ((float)20/alpha)*(float)2.625/((float)3 * 100);
 }
 
 int lambdatofre(float lambda)
@@ -159,13 +190,13 @@ void Mea_Length(void)
 	if(de_phi>90)	// 说明大于10m
 	{
 		// 给120m波长
-		AD9959_Set_Fre(CH3,lambadatofre(120));
+		AD9959_Set_Fre(CH3,lambdatofre(120));
 		de_phi = GetPhs();
 		if(de_phi>90)	// 说明大于15m
 		{
 			for(int i=1; i<400; i++) // Q:80 + 0.01i最大是50M,没到80M,是不是要i<400 ? 
 			{
-				AD9959_Set_Fre(CH3,lambadatofre(120 + 0.01 * i)); 
+				AD9959_Set_Fre(CH3,lambdatofre(120 + 0.01 * i)); 
 				if(ApproximatelyEqule(de_phi)==1)
 				{
 					length = (120 + 0.01*i)/8.0;
@@ -177,7 +208,7 @@ void Mea_Length(void)
 		{
 			for(int i=1; i<800; i++)
 			{
-				AD9959_Set_Fre(CH3,lambadatofre(120 - 0.01 * i));
+				AD9959_Set_Fre(CH3,lambdatofre(120 - 0.01 * i));
 				if(ApproximatelyEqule(de_phi)==1)
 				{
 					length = (120 - 0.01*i)/8.0;
@@ -190,13 +221,13 @@ void Mea_Length(void)
 	else if(phi<90)	// 小于10m 对应80M
 	{
 		// 给160m波长
-		AD9959_Set_Fre(CH3,lambadatofre(40));
+		AD9959_Set_Fre(CH3,lambdatofre(40));
 		de_phi = GetPhs();
 		if(de_phi>90)	// 说明大于5m
 		{
 			for(int i=1; i<400; i++)
 			{
-				AD9959_Set_Fre(CH3,lambadatofre(40 + 0.01 * i));
+				AD9959_Set_Fre(CH3,lambdatofre(40 + 0.01 * i));
 				if(ApproximatelyEqule(de_phi)==1)
 				{
 					length = (40 + 0.01*i)/8.0;
@@ -208,7 +239,7 @@ void Mea_Length(void)
 		{
 			for(int i=1; i<400; i++)
 			{
-				AD9959_Set_Fre(CH3,lambadatofre(40 - 0.01 * i));
+				AD9959_Set_Fre(CH3,lambdatofre(40 - 0.01 * i));
 				if(ApproximatelyEqule(de_phi)==1)
 				{
 					length = (40 - 0.01*i)/8.0;
@@ -226,7 +257,9 @@ void Mea_Length(void)
 
 void Mea_C(void)
 {
-
+	// NE555计算
+	C = 1/(cntFre*(float)CONST_LN2(R1+2R2))- 0.0001; // 减本身电容
+	/*
 	AD9959_Set_Fre(CH3,100000);
 	float C1 = GetPhs();
 
@@ -244,8 +277,9 @@ void Mea_C(void)
 	else
 	{
 		// excel 拟合？或者NE555
-		C = (float)0.0014*pow(E,0.0775*GetPhs()) - length * Cp;
+		C = (float)0.0014*pow(E,(float)0.0775*GetPhs()) - length * Cp;
 	}
+	*/
 }
 
 
@@ -284,7 +318,7 @@ float average(float *num)
 
 uint8_t ApproximatelyEqule(float angle)
 {
-	if(abs(angle-90)<MAX_DIFF)
+	if(myabs(angle-(float)90)<(float)MAX_DIFF)
 		return 1;
 	return 0;
 }

@@ -2,6 +2,7 @@
 #define _TIM_H_
 
 #include "sys.h"
-void TIM_Init(void);
+void Timer_Init(void);
+void exti_init(void);
 
 #endif
