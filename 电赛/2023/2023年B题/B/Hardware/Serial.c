@@ -41,7 +41,7 @@ void Serial_Init(void)
 	RCC_APB1PeriphClockCmd(RCC_APB1Periph_USART2, ENABLE);
 
 	USART_InitTypeDef USART_InitStruct;
-	USART_InitStruct.USART_BaudRate = 115200;
+	USART_InitStruct.USART_BaudRate = 9600;
 	USART_InitStruct.USART_HardwareFlowControl = USART_HardwareFlowControl_None;
 	USART_InitStruct.USART_Mode = USART_Mode_Rx | USART_Mode_Tx;
 	USART_InitStruct.USART_Parity = USART_Parity_No;
@@ -83,7 +83,7 @@ void Serial_Init(void)
 	GPIO_Init(GPIOB, &GPIO_InitStructure);
 
 	// 配置波特率
-	USART_InitStructure.USART_BaudRate = 115200;
+	USART_InitStructure.USART_BaudRate = 9600;
 	// 配置 针数据字长
 	USART_InitStructure.USART_WordLength = USART_WordLength_8b;
 	// 配置停止位
@@ -102,8 +102,8 @@ void Serial_Init(void)
 	USART_Cmd(USART3, ENABLE);
 	// 清除发送完成标志
 	NVIC_InitStructure.NVIC_IRQChannel = USART3_IRQn;
-	NVIC_InitStructure.NVIC_IRQChannelPreemptionPriority = 0X06;
-	NVIC_InitStructure.NVIC_IRQChannelSubPriority = 0X00;
+	NVIC_InitStructure.NVIC_IRQChannelPreemptionPriority = 1;
+	NVIC_InitStructure.NVIC_IRQChannelSubPriority = 1;
 	NVIC_InitStructure.NVIC_IRQChannelCmd = ENABLE;
 	NVIC_Init(&NVIC_InitStructure);
 }
@@ -164,11 +164,15 @@ uint8_t Serial_LookUpData(void)
 	return 0;
 }
 
+extern uint8_t flag;
+
 void USART2_IRQHandler(void)
 {
 	if (USART_GetFlagStatus(USART2, USART_FLAG_RXNE) == SET)
 	{
 		USART_ClearITPendingBit(USART2, USART_IT_RXNE);
+		flag = USART_ReceiveData(USART2);
+		//Serial_Printf("%d\r\n",flag);
 		// Write you code
 	}
 }
