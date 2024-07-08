@@ -1,69 +1,69 @@
 
 /************************************************************
-                    AD9959 Çı¶¯³ÌĞò
-					AD9959--µ¥Æ¬»ú 
-Ó²¼şÁ¬½Ó:  CS			¡ª¡ªPA6;     
-          SCLK 		¡ª¡ªPB1;   
-          UPDATE	¡ª¡ªPB0;	  
-          SP0    	¡ª¡ªPA7;   
-          SP1			¡ª¡ªPA2;     
-          SP2			¡ª¡ªPB10; 
-          SP3			¡ª¡ªPC0;     
-          SDIO0		¡ª¡ªPA5;     
-          SDIO1		¡ª¡ªPA4;     
-          SDIO2		¡ª¡ªPA3;     
-          SDIO3		¡ª¡ªPA8;     
-   AD9959_PWR(PDC)¡ª¡ªPA9;     
-          RST			¡ª¡ªPA10;         
+                    AD9959 é©±åŠ¨ç¨‹åº
+					AD9959--å•ç‰‡æœº 
+ç¡¬ä»¶è¿æ¥:  CS			â€”â€”PA6;     
+          SCLK 		â€”â€”PB1;   
+          UPDATE	â€”â€”PB0;	  
+          SP0    	â€”â€”PA7;   
+          SP1			â€”â€”PA2;     
+          SP2			â€”â€”PB10; 
+          SP3			â€”â€”PC0;     
+          SDIO0		â€”â€”PA5;     
+          SDIO1		â€”â€”PA4;     
+          SDIO2		â€”â€”PA3;     
+          SDIO3		â€”â€”PA8;     
+   AD9959_PWR(PDC)â€”â€”PA9;     
+          RST			â€”â€”PA10;         
           GND			--GND(0V)  
 //AD9959.c
-//¿µÍşµç×Ó¹¤×÷ÊÒ
-//ËµÃ÷£º±¾³ÌĞò»ùÓÚÓ²¼şµÄÍâ½Ó¾§ÕñÎª25MHZ
+//åº·å¨ç”µå­å·¥ä½œå®¤
+//è¯´æ˜ï¼šæœ¬ç¨‹åºåŸºäºç¡¬ä»¶çš„å¤–æ¥æ™¶æŒ¯ä¸º25MHZ
 **************************************************************/
 
 #include "AD9959.h"
 															
-uint8_t FR1_DATA[3] = {0xD0,0x00,0x00};//VCO gain control[23]=1ÏµÍ³Ê±ÖÓ¸ßÓÚ255Mhz; PLL[22:18]=10100,20±¶Æµ,20*25M=500MHZ; Charge pump control = 75uA 
+uint8_t FR1_DATA[3] = {0xD0,0x00,0x00};//VCO gain control[23]=1ç³»ç»Ÿæ—¶é’Ÿé«˜äº255Mhz; PLL[22:18]=10100,20å€é¢‘,20*25M=500MHZ; Charge pump control = 75uA 
 
 
-uint8_t FR2_DATA[2] = {0x00,0x00};	// Ë«·½ÏòÉ¨Ãè£¬¼´´ÓÆğÊ¼ÖµÉ¨µ½½áÊøÖµºó£¬ÓÖ´Ó½áÊøÖµÉ¨µ½ÆğÊ¼Öµ
-//uint8_t FR2_DATA[2] = {0x80,0x00};// µ¥·½ÏòÉ¨Ãè£¬¼´´ÓÆğÊ¼ÖµÉ¨µ½½áÊøÖµºó£¬ÓÖ´ÓÆğÊ¼ÖµÉ¨µ½½áÊøÖµ£¬ÒÔ´ËÀàÍÆ
+uint8_t FR2_DATA[2] = {0x00,0x00};	// åŒæ–¹å‘æ‰«æï¼Œå³ä»èµ·å§‹å€¼æ‰«åˆ°ç»“æŸå€¼åï¼Œåˆä»ç»“æŸå€¼æ‰«åˆ°èµ·å§‹å€¼
+//uint8_t FR2_DATA[2] = {0x80,0x00};// å•æ–¹å‘æ‰«æï¼Œå³ä»èµ·å§‹å€¼æ‰«åˆ°ç»“æŸå€¼åï¼Œåˆä»èµ·å§‹å€¼æ‰«åˆ°ç»“æŸå€¼ï¼Œä»¥æ­¤ç±»æ¨
 
 
-double ACC_FRE_FACTOR = 8.589934592;	//ÆµÂÊÒò×Ó8.589934592=(2^32)/500000000 ÆäÖĞ500M=25M*20(±¶ÆµÊı¿É±à³Ì)
+double ACC_FRE_FACTOR = 8.589934592;	//é¢‘ç‡å› å­8.589934592=(2^32)/500000000 å…¶ä¸­500M=25M*20(å€é¢‘æ•°å¯ç¼–ç¨‹)
 
-uint8_t CFR_DATA[3] = {0x00,0x03,0x02};//default Value = 0x000302	   //Í¨µÀ¹¦ÄÜ¼Ä´æÆ÷
+uint8_t CFR_DATA[3] = {0x00,0x03,0x02};//default Value = 0x000302	   //é€šé“åŠŸèƒ½å¯„å­˜å™¨
 
 																	
 																
 																	
 /************************************************************
-** º¯ÊıÃû³Æ £ºvoid AD9959_Init(void)  
-** º¯Êı¹¦ÄÜ £º³õÊ¼»¯¿ØÖÆAD9959ĞèÒªÓÃµ½µÄIO¿Ú,¼°¼Ä´æÆ÷
-** Èë¿Ú²ÎÊı £ºÎŞ
-** ³ö¿Ú²ÎÊı £ºÎŞ
-** º¯ÊıËµÃ÷ £ºÎŞ
+** å‡½æ•°åç§° ï¼švoid AD9959_Init(void)  
+** å‡½æ•°åŠŸèƒ½ ï¼šåˆå§‹åŒ–æ§åˆ¶AD9959éœ€è¦ç”¨åˆ°çš„IOå£,åŠå¯„å­˜å™¨
+** å…¥å£å‚æ•° ï¼šæ— 
+** å‡ºå£å‚æ•° ï¼šæ— 
+** å‡½æ•°è¯´æ˜ ï¼šæ— 
 **************************************************************/
 void AD9959_Init(void)  
 { 
 	GPIO_InitTypeDef  GPIO_InitStructure;
 /*	
-	RCC_APB2PeriphClockCmd(RCC_APB2Periph_GPIOA|RCC_APB2Periph_GPIOB|RCC_APB2Periph_GPIOC, ENABLE);	 //PA,PB,PC¶Ë¿ÚÊ±ÖÓÊ¹ÄÜ
+	RCC_APB2PeriphClockCmd(RCC_APB2Periph_GPIOA|RCC_APB2Periph_GPIOB|RCC_APB2Periph_GPIOC, ENABLE);	 //PA,PB,PCç«¯å£æ—¶é’Ÿä½¿èƒ½
 	
-	GPIO_InitStructure.GPIO_Pin = GPIO_Pin_3|GPIO_Pin_4|GPIO_Pin_5|GPIO_Pin_2|GPIO_Pin_7|GPIO_Pin_6|GPIO_Pin_8|GPIO_Pin_9|GPIO_Pin_10;//³õÊ¼»¯¹Ü½ÅPA2.3.4.5.6.7.8.9.10
-	GPIO_InitStructure.GPIO_Mode = GPIO_Mode_Out_PP; 		 //ÍÆÍìÊä³ö
-	GPIO_InitStructure.GPIO_Speed = GPIO_Speed_50MHz;		 //IO¿ÚËÙ¶ÈÎª50MHz
-	GPIO_Init(GPIOA, &GPIO_InitStructure);					 //¸ù¾İÉè¶¨²ÎÊı³õÊ¼»¯GPIOA
+	GPIO_InitStructure.GPIO_Pin = GPIO_Pin_3|GPIO_Pin_4|GPIO_Pin_5|GPIO_Pin_2|GPIO_Pin_7|GPIO_Pin_6|GPIO_Pin_8|GPIO_Pin_9|GPIO_Pin_10;//åˆå§‹åŒ–ç®¡è„šPA2.3.4.5.6.7.8.9.10
+	GPIO_InitStructure.GPIO_Mode = GPIO_Mode_Out_PP; 		 //æ¨æŒ½è¾“å‡º
+	GPIO_InitStructure.GPIO_Speed = GPIO_Speed_50MHz;		 //IOå£é€Ÿåº¦ä¸º50MHz
+	GPIO_Init(GPIOA, &GPIO_InitStructure);					 //æ ¹æ®è®¾å®šå‚æ•°åˆå§‹åŒ–GPIOA
 	
-	GPIO_InitStructure.GPIO_Pin = GPIO_Pin_0|GPIO_Pin_1|GPIO_Pin_10;//³õÊ¼»¯¹Ü½ÅPB0.1.10			
-	GPIO_InitStructure.GPIO_Mode = GPIO_Mode_Out_PP; 		 //ÍÆÍìÊä³ö
-	GPIO_InitStructure.GPIO_Speed = GPIO_Speed_2MHz;		 //IO¿ÚËÙ¶ÈÎª2MHz
-	GPIO_Init(GPIOB, &GPIO_InitStructure);					 //¸ù¾İÉè¶¨²ÎÊı³õÊ¼»¯GPIOB
+	GPIO_InitStructure.GPIO_Pin = GPIO_Pin_0|GPIO_Pin_1|GPIO_Pin_10;//åˆå§‹åŒ–ç®¡è„šPB0.1.10			
+	GPIO_InitStructure.GPIO_Mode = GPIO_Mode_Out_PP; 		 //æ¨æŒ½è¾“å‡º
+	GPIO_InitStructure.GPIO_Speed = GPIO_Speed_2MHz;		 //IOå£é€Ÿåº¦ä¸º2MHz
+	GPIO_Init(GPIOB, &GPIO_InitStructure);					 //æ ¹æ®è®¾å®šå‚æ•°åˆå§‹åŒ–GPIOB
 	
-	GPIO_InitStructure.GPIO_Pin = GPIO_Pin_0;	//³õÊ¼»¯¹Ü½ÅPC0			 
-	GPIO_InitStructure.GPIO_Mode = GPIO_Mode_Out_PP; 		 //ÍÆÍìÊä³ö
-	GPIO_InitStructure.GPIO_Speed = GPIO_Speed_2MHz;		 //IO¿ÚËÙ¶ÈÎª2MHz
-	GPIO_Init(GPIOC, &GPIO_InitStructure);					 //¸ù¾İÉè¶¨²ÎÊı³õÊ¼»¯GPIOC
+	GPIO_InitStructure.GPIO_Pin = GPIO_Pin_0;	//åˆå§‹åŒ–ç®¡è„šPC0			 
+	GPIO_InitStructure.GPIO_Mode = GPIO_Mode_Out_PP; 		 //æ¨æŒ½è¾“å‡º
+	GPIO_InitStructure.GPIO_Speed = GPIO_Speed_2MHz;		 //IOå£é€Ÿåº¦ä¸º2MHz
+	GPIO_Init(GPIOC, &GPIO_InitStructure);					 //æ ¹æ®è®¾å®šå‚æ•°åˆå§‹åŒ–GPIOC
 	*/
     RCC_AHB1PeriphClockCmd(RCC_AHB1Periph_GPIOD, ENABLE);	                   //PD port clock enable
 
@@ -73,23 +73,23 @@ void AD9959_Init(void)
     GPIO_InitStructure.GPIO_Speed = GPIO_Speed_100MHz;
     GPIO_InitStructure.GPIO_PuPd  = GPIO_PuPd_UP;
     GPIO_Init(GPIOD, &GPIO_InitStructure);	
-	Intserve();  //IO¿ÚµçÆ½×´Ì¬³õÊ¼»¯
-  IntReset();  //AD9959¸´Î»  
+	Intserve();  //IOå£ç”µå¹³çŠ¶æ€åˆå§‹åŒ–
+  IntReset();  //AD9959å¤ä½  
 	
-	//³õÊ¼»¯¹¦ÄÜ¼Ä´æÆ÷
-  AD9959_WriteData(FR1_ADD,3,FR1_DATA);//Ğ´¹¦ÄÜ¼Ä´æÆ÷1
+	//åˆå§‹åŒ–åŠŸèƒ½å¯„å­˜å™¨
+  AD9959_WriteData(FR1_ADD,3,FR1_DATA);//å†™åŠŸèƒ½å¯„å­˜å™¨1
   AD9959_WriteData(FR2_ADD,2,FR2_DATA);//
 } 
 
-//ÑÓÊ±
+//å»¶æ—¶
 void delay1 (uint32_t length)
 {
 	length = length*12;
    while(length--);
 }
 /************************************************************
-** º¯ÊıÃû³Æ £ºvoid Intserve(void)		   
-** º¯Êı¹¦ÄÜ £ºIO¿ÚµçÆ½×´Ì¬³õÊ¼»¯
+** å‡½æ•°åç§° ï¼švoid Intserve(void)		   
+** å‡½æ•°åŠŸèƒ½ ï¼šIOå£ç”µå¹³çŠ¶æ€åˆå§‹åŒ–
 **************************************************************/
 void Intserve(void)		   
 {   
@@ -108,8 +108,8 @@ void Intserve(void)
 }
 
 /************************************************************
-** º¯ÊıÃû³Æ £ºvoid IntReset(void)		   
-** º¯Êı¹¦ÄÜ £ºAD9959¸´Î»
+** å‡½æ•°åç§° ï¼švoid IntReset(void)		   
+** å‡½æ•°åŠŸèƒ½ ï¼šAD9959å¤ä½
 **************************************************************/
 void IntReset(void)	  
 {
@@ -121,8 +121,8 @@ void IntReset(void)
 }
 
 /************************************************************
-** º¯ÊıÃû³Æ void IO_Update(void)  
-** º¯Êı¹¦ÄÜ £º AD9959¸üĞÂÊı¾İ
+** å‡½æ•°åç§° void IO_Update(void)  
+** å‡½æ•°åŠŸèƒ½ ï¼š AD9959æ›´æ–°æ•°æ®
 **************************************************************/
 void IO_Update(void)  
 {
@@ -134,13 +134,13 @@ void IO_Update(void)
 }
 
 /************************************************************
-** º¯ÊıÃû³Æ £ºvoid AD9959_WriteData(u8 RegisterAddress, u8 NumberofRegisters, u8 *RegisterData)
-** º¯Êı¹¦ÄÜ £ºÊ¹ÓÃÄ£ÄâSPIÏòAD9959Ğ´Êı¾İ
-** Èë¿Ú²ÎÊı £ºRegisterAddress: ¼Ä´æÆ÷µØÖ·
-						NumberofRegisters: ÒªĞ´ÈëµÄ×Ö½ÚÊı
-						*RegisterData: Êı¾İÆğÊ¼µØÖ·
-** ³ö¿Ú²ÎÊı £ºÎŞ
-** º¯ÊıËµÃ÷ £ºÎŞ
+** å‡½æ•°åç§° ï¼švoid AD9959_WriteData(u8 RegisterAddress, u8 NumberofRegisters, u8 *RegisterData)
+** å‡½æ•°åŠŸèƒ½ ï¼šä½¿ç”¨æ¨¡æ‹ŸSPIå‘AD9959å†™æ•°æ®
+** å…¥å£å‚æ•° ï¼šRegisterAddress: å¯„å­˜å™¨åœ°å€
+						NumberofRegisters: è¦å†™å…¥çš„å­—èŠ‚æ•°
+						*RegisterData: æ•°æ®èµ·å§‹åœ°å€
+** å‡ºå£å‚æ•° ï¼šæ— 
+** å‡½æ•°è¯´æ˜ ï¼šæ— 
 **************************************************************/
 void AD9959_WriteData(uint8_t RegisterAddress, uint8_t NumberofRegisters, uint8_t *RegisterData)
 {
@@ -150,7 +150,7 @@ void AD9959_WriteData(uint8_t RegisterAddress, uint8_t NumberofRegisters, uint8_
 	uint8_t	i = 0;
 
 	ControlValue = RegisterAddress;
-//Ğ´ÈëµØÖ·
+//å†™å…¥åœ°å€
 	SCLK = 0;
 	CS = 0;	 
 	for(i=0; i<8; i++)
@@ -164,7 +164,7 @@ void AD9959_WriteData(uint8_t RegisterAddress, uint8_t NumberofRegisters, uint8_
 		ControlValue <<= 1;
 	}
 	SCLK = 0;
-//Ğ´ÈëÊı¾İ
+//å†™å…¥æ•°æ®
 	for (RegisterIndex=0; RegisterIndex<NumberofRegisters; RegisterIndex++)
 	{
 		ValueToWrite = RegisterData[RegisterIndex];
@@ -184,15 +184,15 @@ void AD9959_WriteData(uint8_t RegisterAddress, uint8_t NumberofRegisters, uint8_
 } 
 
 /************************************************************
-** º¯ÊıÃû³Æ £ºvoid Write_CFTW0(uint32_t fre)
-** º¯Êı¹¦ÄÜ £ºĞ´CFTW0Í¨µÀÆµÂÊ×ª»»×Ö¼Ä´æÆ÷
-** Èë¿Ú²ÎÊı £º Freq:	Ğ´ÈëÆµÂÊ£¬·¶Î§0~200 000 000 Hz
-** ³ö¿Ú²ÎÊı £ºÎŞ
-** º¯ÊıËµÃ÷ £ºÎŞ
+** å‡½æ•°åç§° ï¼švoid Write_CFTW0(uint32_t fre)
+** å‡½æ•°åŠŸèƒ½ ï¼šå†™CFTW0é€šé“é¢‘ç‡è½¬æ¢å­—å¯„å­˜å™¨
+** å…¥å£å‚æ•° ï¼š Freq:	å†™å…¥é¢‘ç‡ï¼ŒèŒƒå›´0~200 000 000 Hz
+** å‡ºå£å‚æ•° ï¼šæ— 
+** å‡½æ•°è¯´æ˜ ï¼šæ— 
 **************************************************************/
 void Write_CFTW0(uint32_t fre)
 {
-		uint8_t CFTW0_DATA[4] ={0x00,0x00,0x00,0x00};	//ÖĞ¼ä±äÁ¿
+		uint8_t CFTW0_DATA[4] ={0x00,0x00,0x00,0x00};	//ä¸­é—´å˜é‡
 	  uint32_t Temp;            
 	  Temp=(uint32_t)fre*ACC_FRE_FACTOR;	 
 	  CFTW0_DATA[3]=(uint8_t)Temp;
@@ -203,11 +203,11 @@ void Write_CFTW0(uint32_t fre)
 }
 
 /************************************************************
-** º¯ÊıÃû³Æ £ºvoid Write_ACR(uint16_t Ampli)
-** º¯Êı¹¦ÄÜ £ºĞ´ACRÍ¨µÀ·ù¶È×ª»»×Ö¼Ä´æÆ÷
-** Èë¿Ú²ÎÊı £ºAmpli:    Êä³ö·ù¶È,·¶Î§0~1023£¬¿ØÖÆÖµ0~1023¶ÔÓ¦Êä³ö·ù¶È0~500mVpp×óÓÒ
-** ³ö¿Ú²ÎÊı £ºÎŞ
-** º¯ÊıËµÃ÷ £ºÎŞ
+** å‡½æ•°åç§° ï¼švoid Write_ACR(uint16_t Ampli)
+** å‡½æ•°åŠŸèƒ½ ï¼šå†™ACRé€šé“å¹…åº¦è½¬æ¢å­—å¯„å­˜å™¨
+** å…¥å£å‚æ•° ï¼šAmpli:    è¾“å‡ºå¹…åº¦,èŒƒå›´0~1023ï¼Œæ§åˆ¶å€¼0~1023å¯¹åº”è¾“å‡ºå¹…åº¦0~500mVppå·¦å³
+** å‡ºå£å‚æ•° ï¼šæ— 
+** å‡½æ•°è¯´æ˜ ï¼šæ— 
 **************************************************************/
 void Write_ACR(uint16_t Ampli)
 { 
@@ -215,17 +215,17 @@ void Write_ACR(uint16_t Ampli)
 	uint8_t ACR_DATA[3] = {0x00,0x00,0x00};//default Value = 0x--0000 Rest = 18.91/Iout 
   A_temp=Ampli|0x1000;
 	
-	ACR_DATA[1] = (uint8_t)(A_temp>>8); //¸ßÎ»Êı¾İ
-	ACR_DATA[2] = (uint8_t)A_temp;  //µÍÎ»Êı¾İ
-  AD9959_WriteData(ACR_ADD,3,ACR_DATA); //ACR address 0x06.CHnÉè¶¨·ù¶È
+	ACR_DATA[1] = (uint8_t)(A_temp>>8); //é«˜ä½æ•°æ®
+	ACR_DATA[2] = (uint8_t)A_temp;  //ä½ä½æ•°æ®
+  AD9959_WriteData(ACR_ADD,3,ACR_DATA); //ACR address 0x06.CHnè®¾å®šå¹…åº¦
 }
 
 /************************************************************
-** º¯ÊıÃû³Æ £ºvoid Write_CPOW0(uint16_t Phase)
-** º¯Êı¹¦ÄÜ £ºĞ´CPOW0Í¨µÀÏàÎ»×ª»»×Ö¼Ä´æÆ÷
-** Èë¿Ú²ÎÊı £ºPhase:		Êä³öÏàÎ»,·¶Î§£º0~16383(¶ÔÓ¦½Ç¶È£º0¡ã~360¡ã)
-** ³ö¿Ú²ÎÊı £ºÎŞ
-** º¯ÊıËµÃ÷ £ºÎŞ
+** å‡½æ•°åç§° ï¼švoid Write_CPOW0(uint16_t Phase)
+** å‡½æ•°åŠŸèƒ½ ï¼šå†™CPOW0é€šé“ç›¸ä½è½¬æ¢å­—å¯„å­˜å™¨
+** å…¥å£å‚æ•° ï¼šPhase:		è¾“å‡ºç›¸ä½,èŒƒå›´ï¼š0~16383(å¯¹åº”è§’åº¦ï¼š0Â°~360Â°)
+** å‡ºå£å‚æ•° ï¼šæ— 
+** å‡½æ•°è¯´æ˜ ï¼šæ— 
 **************************************************************/
 void Write_CPOW0(uint16_t Phase)
 {
@@ -233,37 +233,37 @@ void Write_CPOW0(uint16_t Phase)
 	CPOW0_data[1]=(uint8_t)Phase;
 	CPOW0_data[0]=(uint8_t)(Phase>>8);
 
-	AD9959_WriteData(CPOW0_ADD,2,CPOW0_data);//CPOW0 address 0x05.CHnÉè¶¨ÏàÎ»
+	AD9959_WriteData(CPOW0_ADD,2,CPOW0_data);//CPOW0 address 0x05.CHnè®¾å®šç›¸ä½
 }
 
 /************************************************************
-** º¯ÊıÃû³Æ £ºvoid Write_LSRR(uint8_t rsrr,uint8_t fsrr)
-** º¯Êı¹¦ÄÜ £ºĞ´LSRRÏßĞÔÉ¨ÃèĞ±ÂÊ¼Ä´æÆ÷
-** Èë¿Ú²ÎÊı £º	rsrr:	ÉÏÉıĞ±ÂÊ,·¶Î§£º0~255
-							fsrr:	ÏÂ½µĞ±ÂÊ,·¶Î§£º0~255
-** ³ö¿Ú²ÎÊı £ºÎŞ
-** º¯ÊıËµÃ÷ £ºÎŞ
+** å‡½æ•°åç§° ï¼švoid Write_LSRR(uint8_t rsrr,uint8_t fsrr)
+** å‡½æ•°åŠŸèƒ½ ï¼šå†™LSRRçº¿æ€§æ‰«ææ–œç‡å¯„å­˜å™¨
+** å…¥å£å‚æ•° ï¼š	rsrr:	ä¸Šå‡æ–œç‡,èŒƒå›´ï¼š0~255
+							fsrr:	ä¸‹é™æ–œç‡,èŒƒå›´ï¼š0~255
+** å‡ºå£å‚æ•° ï¼šæ— 
+** å‡½æ•°è¯´æ˜ ï¼šæ— 
 **************************************************************/
 void Write_LSRR(uint8_t rsrr,uint8_t fsrr)
 {
 	uint8_t LSRR_data[2]={0x00,0x00};
 
 	LSRR_data[1]=rsrr;	
-	LSRR_data[0]=fsrr;//¸ß8Î»ÏÂ½µĞ±ÂÊ
+	LSRR_data[0]=fsrr;//é«˜8ä½ä¸‹é™æ–œç‡
 
 	AD9959_WriteData(LSRR_ADD,2,LSRR_data);
 }
 
 /************************************************************
-** º¯ÊıÃû³Æ £ºvoid Write_RDW(uint32_t r_delta)
-** º¯Êı¹¦ÄÜ £ºĞ´RDWÉÏÉıÔöÁ¿¼Ä´æÆ÷
-** Èë¿Ú²ÎÊı £ºr_delta:ÉÏÉıÔöÁ¿,0-4294967295
-** ³ö¿Ú²ÎÊı £ºÎŞ
-** º¯ÊıËµÃ÷ £ºÎŞ
+** å‡½æ•°åç§° ï¼švoid Write_RDW(uint32_t r_delta)
+** å‡½æ•°åŠŸèƒ½ ï¼šå†™RDWä¸Šå‡å¢é‡å¯„å­˜å™¨
+** å…¥å£å‚æ•° ï¼šr_delta:ä¸Šå‡å¢é‡,0-4294967295
+** å‡ºå£å‚æ•° ï¼šæ— 
+** å‡½æ•°è¯´æ˜ ï¼šæ— 
 **************************************************************/
 void Write_RDW(uint32_t r_delta)
 {
-		uint8_t RDW_data[4] ={0x00,0x00,0x00,0x00};	//ÖĞ¼ä±äÁ¿          
+		uint8_t RDW_data[4] ={0x00,0x00,0x00,0x00};	//ä¸­é—´å˜é‡          
  
 	  RDW_data[3]=(uint8_t)r_delta;
 	  RDW_data[2]=(uint8_t)(r_delta>>8);
@@ -273,15 +273,15 @@ void Write_RDW(uint32_t r_delta)
 }
 
 /************************************************************
-** º¯ÊıÃû³Æ £ºvoid Write_FDW(uint32_t f_delta)
-** º¯Êı¹¦ÄÜ £ºĞ´FDWÏÂ½µÔöÁ¿¼Ä´æÆ÷
-** Èë¿Ú²ÎÊı £ºf_delta:ÏÂ½µÔöÁ¿,0-4294967295
-** ³ö¿Ú²ÎÊı £ºÎŞ
-** º¯ÊıËµÃ÷ £ºÎŞ
+** å‡½æ•°åç§° ï¼švoid Write_FDW(uint32_t f_delta)
+** å‡½æ•°åŠŸèƒ½ ï¼šå†™FDWä¸‹é™å¢é‡å¯„å­˜å™¨
+** å…¥å£å‚æ•° ï¼šf_delta:ä¸‹é™å¢é‡,0-4294967295
+** å‡ºå£å‚æ•° ï¼šæ— 
+** å‡½æ•°è¯´æ˜ ï¼šæ— 
 **************************************************************/
 void Write_FDW(uint32_t f_delta)
 {
-		uint8_t FDW_data[4] ={0x00,0x00,0x00,0x00};	//ÖĞ¼ä±äÁ¿          
+		uint8_t FDW_data[4] ={0x00,0x00,0x00,0x00};	//ä¸­é—´å˜é‡          
  
 	  FDW_data[3]=(uint8_t)f_delta;
 	  FDW_data[2]=(uint8_t)(f_delta>>8);
@@ -291,19 +291,19 @@ void Write_FDW(uint32_t f_delta)
 }
 
 /************************************************************
-** º¯ÊıÃû³Æ £ºvoid Write_Profile_Fre(uint8_t profile,uint32_t data)
-** º¯Êı¹¦ÄÜ £ºĞ´Profile¼Ä´æÆ÷
-** Èë¿Ú²ÎÊı £ºprofile:	profileºÅ(0~14)
-							data:	Ğ´ÈëÆµÂÊ£¬·¶Î§0~200 000 000 Hz
-** ³ö¿Ú²ÎÊı £ºÎŞ
-** º¯ÊıËµÃ÷ £ºÎŞ
+** å‡½æ•°åç§° ï¼švoid Write_Profile_Fre(uint8_t profile,uint32_t data)
+** å‡½æ•°åŠŸèƒ½ ï¼šå†™Profileå¯„å­˜å™¨
+** å…¥å£å‚æ•° ï¼šprofile:	profileå·(0~14)
+							data:	å†™å…¥é¢‘ç‡ï¼ŒèŒƒå›´0~200 000 000 Hz
+** å‡ºå£å‚æ•° ï¼šæ— 
+** å‡½æ•°è¯´æ˜ ï¼šæ— 
 **************************************************************/
 void Write_Profile_Fre(uint8_t profile,uint32_t data)
 {
 		uint8_t profileAddr;
-		uint8_t Profile_data[4] ={0x00,0x00,0x00,0x00};	//ÖĞ¼ä±äÁ¿
+		uint8_t Profile_data[4] ={0x00,0x00,0x00,0x00};	//ä¸­é—´å˜é‡
 	  uint32_t Temp;            
-	  Temp=(uint32_t)data*ACC_FRE_FACTOR;	   //½«ÊäÈëÆµÂÊÒò×Ó·ÖÎªËÄ¸ö×Ö½Ú  4.294967296=(2^32)/500000000
+	  Temp=(uint32_t)data*ACC_FRE_FACTOR;	   //å°†è¾“å…¥é¢‘ç‡å› å­åˆ†ä¸ºå››ä¸ªå­—èŠ‚  4.294967296=(2^32)/500000000
 	  Profile_data[3]=(uint8_t)Temp;
 	  Profile_data[2]=(uint8_t)(Temp>>8);
 	  Profile_data[1]=(uint8_t)(Temp>>16);
@@ -313,117 +313,117 @@ void Write_Profile_Fre(uint8_t profile,uint32_t data)
 		AD9959_WriteData(profileAddr,4,Profile_data);
 }
 /************************************************************
-** º¯ÊıÃû³Æ £ºvoid Write_Profile_Ampli(uint8_t profile,uint16_t data)
-** º¯Êı¹¦ÄÜ £ºĞ´Profile¼Ä´æÆ÷
-** Èë¿Ú²ÎÊı £ºprofile:	profileºÅ(0~14)
-							data:	 Ğ´Èë·ù¶È,·¶Î§0~1023£¬
-** ³ö¿Ú²ÎÊı £ºÎŞ
-** º¯ÊıËµÃ÷ £ºÎŞ
+** å‡½æ•°åç§° ï¼švoid Write_Profile_Ampli(uint8_t profile,uint16_t data)
+** å‡½æ•°åŠŸèƒ½ ï¼šå†™Profileå¯„å­˜å™¨
+** å…¥å£å‚æ•° ï¼šprofile:	profileå·(0~14)
+							data:	 å†™å…¥å¹…åº¦,èŒƒå›´0~1023ï¼Œ
+** å‡ºå£å‚æ•° ï¼šæ— 
+** å‡½æ•°è¯´æ˜ ï¼šæ— 
 **************************************************************/
 void Write_Profile_Ampli(uint8_t profile,uint16_t data)
 {
 		uint8_t profileAddr;
-		uint8_t Profile_data[4] ={0x00,0x00,0x00,0x00};	//ÖĞ¼ä±äÁ¿
+		uint8_t Profile_data[4] ={0x00,0x00,0x00,0x00};	//ä¸­é—´å˜é‡
 
-		//Îª·ù¶Èµ÷ÖÆÊ±·ù¶ÈÊı¾İÎª[31:22]Î»
+		//ä¸ºå¹…åº¦è°ƒåˆ¶æ—¶å¹…åº¦æ•°æ®ä¸º[31:22]ä½
 	  Profile_data[1]=(uint8_t)(data<<6);//[23:22]
 	  Profile_data[0]=(uint8_t)(data>>2);//[31:24]
 		
 		profileAddr = PROFILE_ADDR_BASE + profile;
 		
-		AD9959_WriteData(profileAddr,4,Profile_data);//Ğ´Èë32Î»Êı¾İ
+		AD9959_WriteData(profileAddr,4,Profile_data);//å†™å…¥32ä½æ•°æ®
 }
 /************************************************************
-** º¯ÊıÃû³Æ £ºvoid Write_Profile_Phase(uint8_t profile,uint16_t data)
-** º¯Êı¹¦ÄÜ £ºĞ´Profile¼Ä´æÆ÷
-** Èë¿Ú²ÎÊı £ºprofile:	profileºÅ(0~14)
-							data:	 Ğ´ÈëÏàÎ»,·¶Î§£º0~16383
-** ³ö¿Ú²ÎÊı £ºÎŞ
-** º¯ÊıËµÃ÷ £ºÎŞ
+** å‡½æ•°åç§° ï¼švoid Write_Profile_Phase(uint8_t profile,uint16_t data)
+** å‡½æ•°åŠŸèƒ½ ï¼šå†™Profileå¯„å­˜å™¨
+** å…¥å£å‚æ•° ï¼šprofile:	profileå·(0~14)
+							data:	 å†™å…¥ç›¸ä½,èŒƒå›´ï¼š0~16383
+** å‡ºå£å‚æ•° ï¼šæ— 
+** å‡½æ•°è¯´æ˜ ï¼šæ— 
 **************************************************************/
 void Write_Profile_Phase(uint8_t profile,uint16_t data)
 {
 		uint8_t profileAddr;
-		uint8_t Profile_data[4] ={0x00,0x00,0x00,0x00};	//ÖĞ¼ä±äÁ¿
+		uint8_t Profile_data[4] ={0x00,0x00,0x00,0x00};	//ä¸­é—´å˜é‡
 
-		//ÎªÏàÎ»µ÷ÖÆÊ±ÏàÎ»Êı¾İÎª[31:18]Î»
+		//ä¸ºç›¸ä½è°ƒåˆ¶æ—¶ç›¸ä½æ•°æ®ä¸º[31:18]ä½
 	  Profile_data[1]=(uint8_t)(data<<2);//[23:18]
 	  Profile_data[0]=(uint8_t)(data>>6);//[31:24]
 		
 		profileAddr = PROFILE_ADDR_BASE + profile;
 		
-		AD9959_WriteData(profileAddr,4,Profile_data);//Ğ´Èë32Î»Êı¾İ
+		AD9959_WriteData(profileAddr,4,Profile_data);//å†™å…¥32ä½æ•°æ®
 }
 
 
 
 /************************************************************
-** º¯ÊıÃû³Æ £ºvoid AD9959_Set_Fre(uint8_t Channel,uint32_t Freq)
-** º¯Êı¹¦ÄÜ £ºÉèÖÃÍ¨µÀµÄÊä³öÆµÂÊ
-** Èë¿Ú²ÎÊı £ºChannel:  Êä³öÍ¨µÀ  CH0-CH3
-						 Freq:     Êä³öÆµÂÊ£¬·¶Î§0~200 000 000 Hz
-** ³ö¿Ú²ÎÊı £ºÎŞ
-** º¯ÊıËµÃ÷ £ºÎŞ
+** å‡½æ•°åç§° ï¼švoid AD9959_Set_Fre(uint8_t Channel,uint32_t Freq)
+** å‡½æ•°åŠŸèƒ½ ï¼šè®¾ç½®é€šé“çš„è¾“å‡ºé¢‘ç‡
+** å…¥å£å‚æ•° ï¼šChannel:  è¾“å‡ºé€šé“  CH0-CH3
+						 Freq:     è¾“å‡ºé¢‘ç‡ï¼ŒèŒƒå›´0~200 000 000 Hz
+** å‡ºå£å‚æ•° ï¼šæ— 
+** å‡½æ•°è¯´æ˜ ï¼šæ— 
 **************************************************************/
 void AD9959_Set_Fre(uint8_t Channel,uint32_t Freq)
 {	 
 		uint8_t CHANNEL[1] = {0x00};
 		
 		CHANNEL[0]=Channel;
-		AD9959_WriteData(CSR_ADD,1,CHANNEL);//¿ØÖÆ¼Ä´æÆ÷Ğ´ÈëCHnÍ¨µÀ£¬Ñ¡ÔñCHn
-    Write_CFTW0(Freq);//Êä³öCHnÉè¶¨ÆµÂÊ																																			 
+		AD9959_WriteData(CSR_ADD,1,CHANNEL);//æ§åˆ¶å¯„å­˜å™¨å†™å…¥CHné€šé“ï¼Œé€‰æ‹©CHn
+    Write_CFTW0(Freq);//è¾“å‡ºCHnè®¾å®šé¢‘ç‡																																			 
 } 
 
 /************************************************************
-** º¯ÊıÃû³Æ £ºvoid AD9959_Set_Amp(uint8_t Channel, uint16_t Ampli)
-** º¯Êı¹¦ÄÜ £ºÉèÖÃÍ¨µÀµÄÊä³ö·ù¶È
-** Èë¿Ú²ÎÊı £ºChannel:  Êä³öÍ¨µÀ CH0-CH3
-							Ampli:    Êä³ö·ù¶È,·¶Î§0~1023£¬¿ØÖÆÖµ0~1023¶ÔÓ¦Êä³ö·ù¶È0~500mVpp×óÓÒ
-** ³ö¿Ú²ÎÊı £ºÎŞ
-** º¯ÊıËµÃ÷ £ºÎŞ
+** å‡½æ•°åç§° ï¼švoid AD9959_Set_Amp(uint8_t Channel, uint16_t Ampli)
+** å‡½æ•°åŠŸèƒ½ ï¼šè®¾ç½®é€šé“çš„è¾“å‡ºå¹…åº¦
+** å…¥å£å‚æ•° ï¼šChannel:  è¾“å‡ºé€šé“ CH0-CH3
+							Ampli:    è¾“å‡ºå¹…åº¦,èŒƒå›´0~1023ï¼Œæ§åˆ¶å€¼0~1023å¯¹åº”è¾“å‡ºå¹…åº¦0~500mVppå·¦å³
+** å‡ºå£å‚æ•° ï¼šæ— 
+** å‡½æ•°è¯´æ˜ ï¼šæ— 
 **************************************************************/
 void AD9959_Set_Amp(uint8_t Channel, uint16_t Ampli)
 { 
 	uint8_t CHANNEL[1] = {0x00};
 
 	CHANNEL[0]=Channel;
-	AD9959_WriteData(CSR_ADD,1,CHANNEL); //¿ØÖÆ¼Ä´æÆ÷Ğ´ÈëCHnÍ¨µÀ£¬Ñ¡ÔñCHn
-	Write_ACR(Ampli);							//	CHnÉè¶¨·ù¶È
+	AD9959_WriteData(CSR_ADD,1,CHANNEL); //æ§åˆ¶å¯„å­˜å™¨å†™å…¥CHné€šé“ï¼Œé€‰æ‹©CHn
+	Write_ACR(Ampli);							//	CHnè®¾å®šå¹…åº¦
 }
 
 /************************************************************
-** º¯ÊıÃû³Æ £ºvoid AD9959_Set_Phase(uint8_t Channel,uint16_t Phase)
-** º¯Êı¹¦ÄÜ £ºÉèÖÃÍ¨µÀµÄÊä³öÏàÎ»
-** Èë¿Ú²ÎÊı £ºChannel:  Êä³öÍ¨µÀ CH0-CH3
-							Phase:		Êä³öÏàÎ»,·¶Î§£º0~16383(¶ÔÓ¦½Ç¶È£º0¡ã~360¡ã)
-** ³ö¿Ú²ÎÊı £ºÎŞ
-** º¯ÊıËµÃ÷ £ºÎŞ
+** å‡½æ•°åç§° ï¼švoid AD9959_Set_Phase(uint8_t Channel,uint16_t Phase)
+** å‡½æ•°åŠŸèƒ½ ï¼šè®¾ç½®é€šé“çš„è¾“å‡ºç›¸ä½
+** å…¥å£å‚æ•° ï¼šChannel:  è¾“å‡ºé€šé“ CH0-CH3
+							Phase:		è¾“å‡ºç›¸ä½,èŒƒå›´ï¼š0~16383(å¯¹åº”è§’åº¦ï¼š0Â°~360Â°)
+** å‡ºå£å‚æ•° ï¼šæ— 
+** å‡½æ•°è¯´æ˜ ï¼šæ— 
 **************************************************************/
 void AD9959_Set_Phase(uint8_t Channel,uint16_t Phase)
 {
 	uint8_t CHANNEL[1] = {0x00};
 	CHANNEL[0]=Channel;
 
-	AD9959_WriteData(CSR_ADD,1,CHANNEL); //¿ØÖÆ¼Ä´æÆ÷Ğ´ÈëCHnÍ¨µÀ£¬Ñ¡ÔñCHn
-	Write_CPOW0(Phase);//CHnÉè¶¨ÏàÎ»
+	AD9959_WriteData(CSR_ADD,1,CHANNEL); //æ§åˆ¶å¯„å­˜å™¨å†™å…¥CHné€šé“ï¼Œé€‰æ‹©CHn
+	Write_CPOW0(Phase);//CHnè®¾å®šç›¸ä½
 }
 
 /************************************************************
-** º¯ÊıÃû³Æ £ºvoid AD9959_Modulation_Init(uint8_t Channel,uint8_t Modulation,uint8_t Sweep_en,uint8_t Nlevel)
-** º¯Êı¹¦ÄÜ £ºÉèÖÃ¸÷¸öÍ¨µÀµÄµ÷ÖÆÄ£Ê½¡£
-** Èë¿Ú²ÎÊı £º Channel:  	Êä³öÍ¨µÀ CH0-CH3
-							Modulation:	µ÷ÖÆÄ£Ê½DISABLE_Mod£¬ASK£¬FSK£¬PSK
-							Sweep_en:		ÏßĞÔÉ¨ÃèÄ£Ê½ SWEEP_ENABLEÆôÓÃ¡¢SWEEP_DISABLE²»ÆôÓÃ£»ÆôÓÃÊ±NlevelÖ»ÄÜÊÇLEVEL_MOD_2
-							Nlevel£º		µ÷ÖÆµçÆ½Ñ¡Ôñ LEVEL_MOD_2¡¢4¡¢8¡¢16
-** ³ö¿Ú²ÎÊı £ºÎŞ
-** º¯ÊıËµÃ÷ £ºÈç½«µ÷ÖÆµçÆ½ÉèÖÃÎª2µçÆ½µ÷ÖÆÊ±£¬¶ÔÓ¦µÄP0-P3Òı½ÅÉÏµÄ¸ßµÍµçÆ½·Ö±ğ¿ØÖÆCH0-CH3Í¨µÀ(Èç¹û¶ÔÓ¦Í¨µÀ¿ªÆôµÄ»°)
-							Èç½«µ÷ÖÆµçÆ½ÉèÖÃÎª4µçÆ½µ÷ÖÆÊ±£¬¶ÔÓ¦µÄP0£¬P1ºÍP2,P3Òı½ÅÉÏµÄ¸ßµÍµçÆ½·Ö±ğ¿ØÖÆCH0-CH1Í¨µÀ(Èç¹û¶ÔÓ¦Í¨µÀ¿ªÆôµÄ»°)
-							ÓÉÓÚAD9959Ö»ÓĞP0-P3,4¸öÓÃÓÚµ÷ÖÆ¿ØÖÆµÄÒı½Å£¬Òò´ËÊä³öÔÚ4µçÆ½µ÷ÖÆÊ±£¬Ö»ÄÜÓĞ2¸öÍ¨µÀÍ¬Ê±ÉèÖÃÎªµ÷ÖÆÊä³ö£»
-							8µçÆ½ºÍ16µçÆ½µ÷ÖÆÊ±£¬Ö»ÄÜÓĞ1¸öÍ¨µÀÍ¬Ê±ÉèÖÃÎªµ÷ÖÆÊä³ö¡£ÇëÊÊµ±ÉèÖÃ¼¸µçÆ½µ÷ÖÆÒÔÂú×ãÓ¦ÓÃĞèÇó¡£
+** å‡½æ•°åç§° ï¼švoid AD9959_Modulation_Init(uint8_t Channel,uint8_t Modulation,uint8_t Sweep_en,uint8_t Nlevel)
+** å‡½æ•°åŠŸèƒ½ ï¼šè®¾ç½®å„ä¸ªé€šé“çš„è°ƒåˆ¶æ¨¡å¼ã€‚
+** å…¥å£å‚æ•° ï¼š Channel:  	è¾“å‡ºé€šé“ CH0-CH3
+							Modulation:	è°ƒåˆ¶æ¨¡å¼DISABLE_Modï¼ŒASKï¼ŒFSKï¼ŒPSK
+							Sweep_en:		çº¿æ€§æ‰«ææ¨¡å¼ SWEEP_ENABLEå¯ç”¨ã€SWEEP_DISABLEä¸å¯ç”¨ï¼›å¯ç”¨æ—¶Nlevelåªèƒ½æ˜¯LEVEL_MOD_2
+							Nlevelï¼š		è°ƒåˆ¶ç”µå¹³é€‰æ‹© LEVEL_MOD_2ã€4ã€8ã€16
+** å‡ºå£å‚æ•° ï¼šæ— 
+** å‡½æ•°è¯´æ˜ ï¼šå¦‚å°†è°ƒåˆ¶ç”µå¹³è®¾ç½®ä¸º2ç”µå¹³è°ƒåˆ¶æ—¶ï¼Œå¯¹åº”çš„P0-P3å¼•è„šä¸Šçš„é«˜ä½ç”µå¹³åˆ†åˆ«æ§åˆ¶CH0-CH3é€šé“(å¦‚æœå¯¹åº”é€šé“å¼€å¯çš„è¯)
+							å¦‚å°†è°ƒåˆ¶ç”µå¹³è®¾ç½®ä¸º4ç”µå¹³è°ƒåˆ¶æ—¶ï¼Œå¯¹åº”çš„P0ï¼ŒP1å’ŒP2,P3å¼•è„šä¸Šçš„é«˜ä½ç”µå¹³åˆ†åˆ«æ§åˆ¶CH0-CH1é€šé“(å¦‚æœå¯¹åº”é€šé“å¼€å¯çš„è¯)
+							ç”±äºAD9959åªæœ‰P0-P3,4ä¸ªç”¨äºè°ƒåˆ¶æ§åˆ¶çš„å¼•è„šï¼Œå› æ­¤è¾“å‡ºåœ¨4ç”µå¹³è°ƒåˆ¶æ—¶ï¼Œåªèƒ½æœ‰2ä¸ªé€šé“åŒæ—¶è®¾ç½®ä¸ºè°ƒåˆ¶è¾“å‡ºï¼›
+							8ç”µå¹³å’Œ16ç”µå¹³è°ƒåˆ¶æ—¶ï¼Œåªèƒ½æœ‰1ä¸ªé€šé“åŒæ—¶è®¾ç½®ä¸ºè°ƒåˆ¶è¾“å‡ºã€‚è¯·é€‚å½“è®¾ç½®å‡ ç”µå¹³è°ƒåˆ¶ä»¥æ»¡è¶³åº”ç”¨éœ€æ±‚ã€‚
 
-**×¢Òâ£¡£¡£¡£ºÉèÖÃ³É4µçÆ½µ÷ÖÆÊ±£¬Êä³öÍ¨µÀÖ»ÄÜÑ¡ÔñCH0-1
-							ÉèÖÃ³É8,16µçÆ½µ÷ÖÆÊ±£¬Êä³öÍ¨µÀÖ»ÄÜÑ¡ÔñCH0
-							±¾º¯ÊıÎ´×öÈÎÒâÍ¨µÀ¼æÈİ£¬¾ßÌå·½·¨Çë²Î¿¼AD9959Ğ¾Æ¬ÊÖ²á22-23Ò³£¬²Ù×÷FR1[14:12]Îª¶ÔÓ¦Öµ¡£
+**æ³¨æ„ï¼ï¼ï¼ï¼šè®¾ç½®æˆ4ç”µå¹³è°ƒåˆ¶æ—¶ï¼Œè¾“å‡ºé€šé“åªèƒ½é€‰æ‹©CH0-1
+							è®¾ç½®æˆ8,16ç”µå¹³è°ƒåˆ¶æ—¶ï¼Œè¾“å‡ºé€šé“åªèƒ½é€‰æ‹©CH0
+							æœ¬å‡½æ•°æœªåšä»»æ„é€šé“å…¼å®¹ï¼Œå…·ä½“æ–¹æ³•è¯·å‚è€ƒAD9959èŠ¯ç‰‡æ‰‹å†Œ22-23é¡µï¼Œæ“ä½œFR1[14:12]ä¸ºå¯¹åº”å€¼ã€‚
 **************************************************************/
 void AD9959_Modulation_Init(uint8_t Channel,uint8_t Modulation,uint8_t Sweep_en,uint8_t Nlevel)
 {
@@ -432,7 +432,7 @@ void AD9959_Modulation_Init(uint8_t Channel,uint8_t Modulation,uint8_t Sweep_en,
 	uint8_t FR1_data[3];
 	uint8_t FR2_data[2];
 	uint8_t CFR_data[3];
-	for(i=0;i<3;i++)//ÉèÖÃÄ¬ÈÏÖµ
+	for(i=0;i<3;i++)//è®¾ç½®é»˜è®¤å€¼
 	{
 		FR1_data[i]=FR1_DATA[i];
 		CFR_data[i]=CFR_DATA[i];
@@ -441,30 +441,30 @@ void AD9959_Modulation_Init(uint8_t Channel,uint8_t Modulation,uint8_t Sweep_en,
 	FR2_data[1]=FR2_DATA[1];
 		
 	CHANNEL[0]=Channel;
-	AD9959_WriteData(CSR_ADD,1,CHANNEL); //¿ØÖÆ¼Ä´æÆ÷Ğ´ÈëCHnÍ¨µÀ£¬Ñ¡ÔñCHn£»ÒÔÏÂÉèÖÃ¾ùÕë¶ÔCHn
+	AD9959_WriteData(CSR_ADD,1,CHANNEL); //æ§åˆ¶å¯„å­˜å™¨å†™å…¥CHné€šé“ï¼Œé€‰æ‹©CHnï¼›ä»¥ä¸‹è®¾ç½®å‡é’ˆå¯¹CHn
 	
 	FR1_data[1]=Nlevel;
 	CFR_data[0]=Modulation;
 	CFR_data[1]|=Sweep_en;
 	CFR_data[2]=0x00;
 
-	if(Channel!=0)//ÓĞÍ¨µÀ±»Ê¹ÄÜ
+	if(Channel!=0)//æœ‰é€šé“è¢«ä½¿èƒ½
 	{
-		AD9959_WriteData(FR1_ADD,3,FR1_data);//Ğ´¹¦ÄÜ¼Ä´æÆ÷1
-		AD9959_WriteData(FR2_ADD,2,FR2_data);//Ğ´¹¦ÄÜ¼Ä´æÆ÷1
-		AD9959_WriteData(CFR_ADD,3,CFR_data);//Ğ´Í¨µÀ¹¦ÄÜ¼Ä´æÆ÷
+		AD9959_WriteData(FR1_ADD,3,FR1_data);//å†™åŠŸèƒ½å¯„å­˜å™¨1
+		AD9959_WriteData(FR2_ADD,2,FR2_data);//å†™åŠŸèƒ½å¯„å­˜å™¨1
+		AD9959_WriteData(CFR_ADD,3,CFR_data);//å†™é€šé“åŠŸèƒ½å¯„å­˜å™¨
 	}
 }
 
 
 /************************************************************
-** º¯ÊıÃû³Æ £ºvoid AD9959_SetFSK(uint8_t Channel, uint32_t *data,uint16_t Phase)
-** º¯Êı¹¦ÄÜ £ºÉèÖÃFSKµ÷ÖÆµÄ²ÎÊı
-** Èë¿Ú²ÎÊı £ºChannel:  Êä³öÍ¨µÀ CH0-CH3
-							*data:	µ÷ÕûÆµÂÊÊı¾İµÄÆğÊ¼µØÖ·
-							Phase:	Êä³öÏàÎ»,·¶Î§£º0~16383(¶ÔÓ¦½Ç¶È£º0¡ã~360¡ã)
-** ³ö¿Ú²ÎÊı £ºÎŞ
-** º¯ÊıËµÃ÷ £ºFSKÊ±ĞÅºÅ·ù¶ÈÄ¬ÈÏÎª×î´ó
+** å‡½æ•°åç§° ï¼švoid AD9959_SetFSK(uint8_t Channel, uint32_t *data,uint16_t Phase)
+** å‡½æ•°åŠŸèƒ½ ï¼šè®¾ç½®FSKè°ƒåˆ¶çš„å‚æ•°
+** å…¥å£å‚æ•° ï¼šChannel:  è¾“å‡ºé€šé“ CH0-CH3
+							*data:	è°ƒæ•´é¢‘ç‡æ•°æ®çš„èµ·å§‹åœ°å€
+							Phase:	è¾“å‡ºç›¸ä½,èŒƒå›´ï¼š0~16383(å¯¹åº”è§’åº¦ï¼š0Â°~360Â°)
+** å‡ºå£å‚æ•° ï¼šæ— 
+** å‡½æ•°è¯´æ˜ ï¼šFSKæ—¶ä¿¡å·å¹…åº¦é»˜è®¤ä¸ºæœ€å¤§
 **************************************************************/
 void AD9959_SetFSK(uint8_t Channel, uint32_t *data,uint16_t Phase)
 {
@@ -472,8 +472,8 @@ void AD9959_SetFSK(uint8_t Channel, uint32_t *data,uint16_t Phase)
 	uint8_t CHANNEL[1]={0x00};	
 	
 	CHANNEL[0]=Channel;
-	AD9959_WriteData(CSR_ADD,1,CHANNEL); //¿ØÖÆ¼Ä´æÆ÷Ğ´ÈëCHnÍ¨µÀ£¬Ñ¡ÔñCHn£»ÒÔÏÂÉèÖÃ¾ùÕë¶ÔCHn
-	Write_CPOW0(Phase);//ÉèÖÃÏàÎ»
+	AD9959_WriteData(CSR_ADD,1,CHANNEL); //æ§åˆ¶å¯„å­˜å™¨å†™å…¥CHné€šé“ï¼Œé€‰æ‹©CHnï¼›ä»¥ä¸‹è®¾ç½®å‡é’ˆå¯¹CHn
+	Write_CPOW0(Phase);//è®¾ç½®ç›¸ä½
 	
 	Write_CFTW0(data[0]);
 	for(i=0;i<15;i++)
@@ -481,14 +481,14 @@ void AD9959_SetFSK(uint8_t Channel, uint32_t *data,uint16_t Phase)
 }
 
 /************************************************************
-** º¯ÊıÃû³Æ £ºvoid AD9959_SetASK(uint8_t Channel, uint32_t *data,uint32_t fre,uint16_t Phase)
-** º¯Êı¹¦ÄÜ £ºÉèÖÃASKµ÷ÖÆµÄ²ÎÊı
-** Èë¿Ú²ÎÊı £ºChannel:  Êä³öÍ¨µÀ CH0-CH3
-							*data: µ÷Õû·ù¶ÈÊı¾İµÄÆğÊ¼µØÖ·
-							Freq:		Êä³öÆµÂÊ£¬·¶Î§0~200 000 000 Hz
-							Phase:	Êä³öÏàÎ»,·¶Î§£º0~16383(¶ÔÓ¦½Ç¶È£º0¡ã~360¡ã)
-** ³ö¿Ú²ÎÊı £ºÎŞ
-** º¯ÊıËµÃ÷ £ºÎŞ
+** å‡½æ•°åç§° ï¼švoid AD9959_SetASK(uint8_t Channel, uint32_t *data,uint32_t fre,uint16_t Phase)
+** å‡½æ•°åŠŸèƒ½ ï¼šè®¾ç½®ASKè°ƒåˆ¶çš„å‚æ•°
+** å…¥å£å‚æ•° ï¼šChannel:  è¾“å‡ºé€šé“ CH0-CH3
+							*data: è°ƒæ•´å¹…åº¦æ•°æ®çš„èµ·å§‹åœ°å€
+							Freq:		è¾“å‡ºé¢‘ç‡ï¼ŒèŒƒå›´0~200 000 000 Hz
+							Phase:	è¾“å‡ºç›¸ä½,èŒƒå›´ï¼š0~16383(å¯¹åº”è§’åº¦ï¼š0Â°~360Â°)
+** å‡ºå£å‚æ•° ï¼šæ— 
+** å‡½æ•°è¯´æ˜ ï¼šæ— 
 **************************************************************/
 void AD9959_SetASK(uint8_t Channel, uint16_t *data,uint32_t fre,uint16_t Phase)
 {
@@ -496,9 +496,9 @@ void AD9959_SetASK(uint8_t Channel, uint16_t *data,uint32_t fre,uint16_t Phase)
 	uint8_t CHANNEL[1]={0x00};	
 	
 	CHANNEL[0]=Channel;
-	AD9959_WriteData(CSR_ADD,1,CHANNEL); //¿ØÖÆ¼Ä´æÆ÷Ğ´ÈëCHnÍ¨µÀ£¬Ñ¡ÔñCHn£»ÒÔÏÂÉèÖÃ¾ùÕë¶ÔCHn
-	Write_CFTW0(fre);//ÉèÖÃÆµÂÊ
-	Write_CPOW0(Phase);//ÉèÖÃÏàÎ»
+	AD9959_WriteData(CSR_ADD,1,CHANNEL); //æ§åˆ¶å¯„å­˜å™¨å†™å…¥CHné€šé“ï¼Œé€‰æ‹©CHnï¼›ä»¥ä¸‹è®¾ç½®å‡é’ˆå¯¹CHn
+	Write_CFTW0(fre);//è®¾ç½®é¢‘ç‡
+	Write_CPOW0(Phase);//è®¾ç½®ç›¸ä½
 	
 	Write_ACR(data[0]);
 	for(i=0;i<15;i++)
@@ -506,13 +506,13 @@ void AD9959_SetASK(uint8_t Channel, uint16_t *data,uint32_t fre,uint16_t Phase)
 }
 
 /************************************************************
-** º¯ÊıÃû³Æ £ºvoid AD9959_SetPSK(uint8_t Channel, uint16_t *data,uint32_t fre,uint16_t Phase)
-** º¯Êı¹¦ÄÜ £ºÉèÖÃPSKµ÷ÖÆµÄ²ÎÊı
-** Èë¿Ú²ÎÊı £ºChannel:  Êä³öÍ¨µÀ CH0-CH3
-							*data:	µ÷ÕûÏàÎ»Êı¾İµÄÆğÊ¼µØÖ·
-							Freq:		Êä³öÆµÂÊ£¬·¶Î§0~200 000 000 Hz
-** ³ö¿Ú²ÎÊı £ºÎŞ
-** º¯ÊıËµÃ÷ £ºÎŞ
+** å‡½æ•°åç§° ï¼švoid AD9959_SetPSK(uint8_t Channel, uint16_t *data,uint32_t fre,uint16_t Phase)
+** å‡½æ•°åŠŸèƒ½ ï¼šè®¾ç½®PSKè°ƒåˆ¶çš„å‚æ•°
+** å…¥å£å‚æ•° ï¼šChannel:  è¾“å‡ºé€šé“ CH0-CH3
+							*data:	è°ƒæ•´ç›¸ä½æ•°æ®çš„èµ·å§‹åœ°å€
+							Freq:		è¾“å‡ºé¢‘ç‡ï¼ŒèŒƒå›´0~200 000 000 Hz
+** å‡ºå£å‚æ•° ï¼šæ— 
+** å‡½æ•°è¯´æ˜ ï¼šæ— 
 **************************************************************/
 void AD9959_SetPSK(uint8_t Channel, uint16_t *data,uint32_t Freq)
 {
@@ -520,7 +520,7 @@ void AD9959_SetPSK(uint8_t Channel, uint16_t *data,uint32_t Freq)
 	uint8_t CHANNEL[1]={0x00};	
 	
 	CHANNEL[0]=Channel;
-	AD9959_WriteData(CSR_ADD,1,CHANNEL); //¿ØÖÆ¼Ä´æÆ÷Ğ´ÈëCHnÍ¨µÀ£¬Ñ¡ÔñCHn£»ÒÔÏÂÉèÖÃ¾ùÕë¶ÔCHn
+	AD9959_WriteData(CSR_ADD,1,CHANNEL); //æ§åˆ¶å¯„å­˜å™¨å†™å…¥CHné€šé“ï¼Œé€‰æ‹©CHnï¼›ä»¥ä¸‹è®¾ç½®å‡é’ˆå¯¹CHn
 	Write_CFTW0(Freq);
 	
 	Write_CPOW0(data[0]);
@@ -529,21 +529,21 @@ void AD9959_SetPSK(uint8_t Channel, uint16_t *data,uint32_t Freq)
 }
 
 /************************************************************
-** º¯ÊıÃû³Æ £ºvoid AD9959_SetFre_Sweep(uint8_t Channel, uint32_t s_data,uint32_t e_data,uint8_t fsrr,uint8_t rsrr,uint32_t r_delta,uint32_t f_delta,uint16_t Phase)
-** º¯Êı¹¦ÄÜ £ºÉèÖÃÏßĞÔÉ¨ÆµµÄ²ÎÊı
-** Èë¿Ú²ÎÊı £ºChannel:  Êä³öÍ¨µÀ CH0-CH3
-							s_data:	ÆğÊ¼ÆµÂÊ£¬·¶Î§0~200 000 000 Hz
-							e_data:	½áÊøÆµÂÊ£¬·¶Î§0~200 000 000 Hz
-							r_delta:ÉÏÉı²½³¤ÆµÂÊ,0~200 000 000Hz
-							f_delta:ÏÂ½µ²½³¤ÆµÂÊ,0~200 000 000Hz
+** å‡½æ•°åç§° ï¼švoid AD9959_SetFre_Sweep(uint8_t Channel, uint32_t s_data,uint32_t e_data,uint8_t fsrr,uint8_t rsrr,uint32_t r_delta,uint32_t f_delta,uint16_t Phase)
+** å‡½æ•°åŠŸèƒ½ ï¼šè®¾ç½®çº¿æ€§æ‰«é¢‘çš„å‚æ•°
+** å…¥å£å‚æ•° ï¼šChannel:  è¾“å‡ºé€šé“ CH0-CH3
+							s_data:	èµ·å§‹é¢‘ç‡ï¼ŒèŒƒå›´0~200 000 000 Hz
+							e_data:	ç»“æŸé¢‘ç‡ï¼ŒèŒƒå›´0~200 000 000 Hz
+							r_delta:ä¸Šå‡æ­¥é•¿é¢‘ç‡,0~200 000 000Hz
+							f_delta:ä¸‹é™æ­¥é•¿é¢‘ç‡,0~200 000 000Hz
 
-							rsrr:		ÉÏÉıĞ±ÂÊ,·¶Î§£º1~255£¬ÏµÍ³Ê±ÖÓÎª500MhzÊ±Ò»¸ö¿ØÖÆ×ÖÔ¼Îª8ns
-							fsrr:		ÏÂ½µĞ±ÂÊ,·¶Î§£º1~255
-							Ampli:	Êä³ö·ù¶È,·¶Î§0~1023£¬¿ØÖÆÖµ0~1023¶ÔÓ¦Êä³ö·ù¶È0~500mVpp×óÓÒ
-							Phase:	Êä³öÏàÎ»,·¶Î§£º0~16383(¶ÔÓ¦½Ç¶È£º0¡ã~360¡ã)
-** ³ö¿Ú²ÎÊı £ºÎŞ
-** º¯ÊıËµÃ÷ £ºÆµµãÓëÆµµã¼äÍ£ÁôÊ±¼ä dT = Xsrr*8 µ¥Î»ns£¬É¨ÃèµãÊı=(ÆğÊ¼-½áÊø)/²½³¤
-							É¨Æµ×ÜÊ±¼ä=×ÜÉ¨ÃèÆµµãÊı*dT
+							rsrr:		ä¸Šå‡æ–œç‡,èŒƒå›´ï¼š1~255ï¼Œç³»ç»Ÿæ—¶é’Ÿä¸º500Mhzæ—¶ä¸€ä¸ªæ§åˆ¶å­—çº¦ä¸º8ns
+							fsrr:		ä¸‹é™æ–œç‡,èŒƒå›´ï¼š1~255
+							Ampli:	è¾“å‡ºå¹…åº¦,èŒƒå›´0~1023ï¼Œæ§åˆ¶å€¼0~1023å¯¹åº”è¾“å‡ºå¹…åº¦0~500mVppå·¦å³
+							Phase:	è¾“å‡ºç›¸ä½,èŒƒå›´ï¼š0~16383(å¯¹åº”è§’åº¦ï¼š0Â°~360Â°)
+** å‡ºå£å‚æ•° ï¼šæ— 
+** å‡½æ•°è¯´æ˜ ï¼šé¢‘ç‚¹ä¸é¢‘ç‚¹é—´åœç•™æ—¶é—´ dT = Xsrr*8 å•ä½nsï¼Œæ‰«æç‚¹æ•°=(èµ·å§‹-ç»“æŸ)/æ­¥é•¿
+							æ‰«é¢‘æ€»æ—¶é—´=æ€»æ‰«æé¢‘ç‚¹æ•°*dT
 **************************************************************/
 void AD9959_SetFre_Sweep(uint8_t Channel, uint32_t s_data,uint32_t e_data,uint32_t r_delta,uint32_t f_delta,uint8_t rsrr,uint8_t fsrr,uint16_t Ampli,uint16_t Phase)
 {
@@ -551,41 +551,41 @@ void AD9959_SetFre_Sweep(uint8_t Channel, uint32_t s_data,uint32_t e_data,uint32
 	uint32_t Fer_data=0;            
 	
 	CHANNEL[0]=Channel;
-	AD9959_WriteData(CSR_ADD,1,CHANNEL); //¿ØÖÆ¼Ä´æÆ÷Ğ´ÈëCHnÍ¨µÀ£¬Ñ¡ÔñCHn£»ÒÔÏÂÉèÖÃ¾ùÕë¶ÔCHn
+	AD9959_WriteData(CSR_ADD,1,CHANNEL); //æ§åˆ¶å¯„å­˜å™¨å†™å…¥CHné€šé“ï¼Œé€‰æ‹©CHnï¼›ä»¥ä¸‹è®¾ç½®å‡é’ˆå¯¹CHn
 	
-	Write_CPOW0(Phase);//ÉèÖÃÏàÎ»
-	Write_ACR(Ampli); //·ù¶ÈÉèÖÃ
+	Write_CPOW0(Phase);//è®¾ç½®ç›¸ä½
+	Write_ACR(Ampli); //å¹…åº¦è®¾ç½®
 	
-	Write_LSRR(rsrr,fsrr);//Ğ±ÂÊ
+	Write_LSRR(rsrr,fsrr);//æ–œç‡
 	
-	Fer_data=(uint32_t)r_delta*ACC_FRE_FACTOR;	 //ÆµÂÊ×ª»»³É¿ØÖÆ×Ö
-	Write_RDW(Fer_data);//ÉÏÉı²½³¤
+	Fer_data=(uint32_t)r_delta*ACC_FRE_FACTOR;	 //é¢‘ç‡è½¬æ¢æˆæ§åˆ¶å­—
+	Write_RDW(Fer_data);//ä¸Šå‡æ­¥é•¿
 	
 	Fer_data=(uint32_t)f_delta*ACC_FRE_FACTOR;
-	Write_FDW(Fer_data);//ÏÂ½µ²½³¤
+	Write_FDW(Fer_data);//ä¸‹é™æ­¥é•¿
 	
-	Write_CFTW0(s_data);//ÆğÊ¼ÆµÂÊ
-	Write_Profile_Fre(0, e_data);//½áÊøÆµÂÊ
+	Write_CFTW0(s_data);//èµ·å§‹é¢‘ç‡
+	Write_Profile_Fre(0, e_data);//ç»“æŸé¢‘ç‡
 }
 
 /************************************************************
-** º¯ÊıÃû³Æ £ºvoid AD9959_SetAmp_Sweep(uint8_t Channel, uint32_t s_Ampli,uint16_t e_Ampli,uint32_t r_delta,uint32_t f_delta,uint8_t rsrr,uint8_t fsrr,uint32_t fre,uint16_t Phase)
-** º¯Êı¹¦ÄÜ £ºÉèÖÃÏßĞÔÉ¨·ùµÄ²ÎÊı
-** Èë¿Ú²ÎÊı £ºChannel:  Êä³öÍ¨µÀ CH0-CH3
-							s_Ampli:	ÆğÊ¼·ù¶È£¬¿ØÖÆÖµ0~1023¶ÔÓ¦Êä³ö·ù¶È0~500mVpp×óÓÒ
-							e_Ampli:	½áÊø·ù¶È£¬
+** å‡½æ•°åç§° ï¼švoid AD9959_SetAmp_Sweep(uint8_t Channel, uint32_t s_Ampli,uint16_t e_Ampli,uint32_t r_delta,uint32_t f_delta,uint8_t rsrr,uint8_t fsrr,uint32_t fre,uint16_t Phase)
+** å‡½æ•°åŠŸèƒ½ ï¼šè®¾ç½®çº¿æ€§æ‰«å¹…çš„å‚æ•°
+** å…¥å£å‚æ•° ï¼šChannel:  è¾“å‡ºé€šé“ CH0-CH3
+							s_Ampli:	èµ·å§‹å¹…åº¦ï¼Œæ§åˆ¶å€¼0~1023å¯¹åº”è¾“å‡ºå¹…åº¦0~500mVppå·¦å³
+							e_Ampli:	ç»“æŸå¹…åº¦ï¼Œ
 							
-							r_delta:	ÉÏÉı²½³¤·ù¶È,0~1023
-							f_delta:	ÏÂ½µ²½³¤·ù¶È,0~1023
+							r_delta:	ä¸Šå‡æ­¥é•¿å¹…åº¦,0~1023
+							f_delta:	ä¸‹é™æ­¥é•¿å¹…åº¦,0~1023
 
-							rsrr:			ÉÏÉıĞ±ÂÊ,·¶Î§£º1~255£¬ÏµÍ³Ê±ÖÓÎª500MhzÊ±Ò»¸ö¿ØÖÆ×ÖÔ¼Îª8ns
-							fsrr:			ÏÂ½µĞ±ÂÊ,·¶Î§£º1~255
+							rsrr:			ä¸Šå‡æ–œç‡,èŒƒå›´ï¼š1~255ï¼Œç³»ç»Ÿæ—¶é’Ÿä¸º500Mhzæ—¶ä¸€ä¸ªæ§åˆ¶å­—çº¦ä¸º8ns
+							fsrr:			ä¸‹é™æ–œç‡,èŒƒå›´ï¼š1~255
 
-							fre:			Êä³öÆµÂÊ£¬·¶Î§0~200 000 000 Hz
-							Phase:		Êä³öÏàÎ»,·¶Î§£º0~16383(¶ÔÓ¦½Ç¶È£º0¡ã~360¡ã)
-** ³ö¿Ú²ÎÊı £ºÎŞ
-** º¯ÊıËµÃ÷ £º·ùµãÓë·ùµã¼äÍ£ÁôÊ±¼ä dT = Xsrr*8 µ¥Î»ns£»É¨ÃèµãÊı=(ÆğÊ¼-½áÊø)/²½³¤
-							É¨·ù×ÜÊ±¼ä=×ÜÉ¨Ãè·ùµãÊı*dT
+							fre:			è¾“å‡ºé¢‘ç‡ï¼ŒèŒƒå›´0~200 000 000 Hz
+							Phase:		è¾“å‡ºç›¸ä½,èŒƒå›´ï¼š0~16383(å¯¹åº”è§’åº¦ï¼š0Â°~360Â°)
+** å‡ºå£å‚æ•° ï¼šæ— 
+** å‡½æ•°è¯´æ˜ ï¼šå¹…ç‚¹ä¸å¹…ç‚¹é—´åœç•™æ—¶é—´ dT = Xsrr*8 å•ä½nsï¼›æ‰«æç‚¹æ•°=(èµ·å§‹-ç»“æŸ)/æ­¥é•¿
+							æ‰«å¹…æ€»æ—¶é—´=æ€»æ‰«æå¹…ç‚¹æ•°*dT
 **************************************************************/
 void AD9959_SetAmp_Sweep(uint8_t Channel, uint32_t s_Ampli,uint16_t e_Ampli,uint32_t r_delta,uint32_t f_delta,uint8_t rsrr,uint8_t fsrr,uint32_t fre,uint16_t Phase)
 {
@@ -593,60 +593,60 @@ void AD9959_SetAmp_Sweep(uint8_t Channel, uint32_t s_Ampli,uint16_t e_Ampli,uint
 	uint8_t ACR_data[3] = {0x00,0x00,0x00};
 		
 	CHANNEL[0]=Channel;
-	AD9959_WriteData(CSR_ADD,1,CHANNEL); //¿ØÖÆ¼Ä´æÆ÷Ğ´ÈëCHnÍ¨µÀ£¬Ñ¡ÔñCHn£»ÒÔÏÂÉèÖÃ¾ùÕë¶ÔCHn
+	AD9959_WriteData(CSR_ADD,1,CHANNEL); //æ§åˆ¶å¯„å­˜å™¨å†™å…¥CHné€šé“ï¼Œé€‰æ‹©CHnï¼›ä»¥ä¸‹è®¾ç½®å‡é’ˆå¯¹CHn
 	
-	Write_CFTW0(fre); //·ù¶ÈÆµÂÊ
-	Write_CPOW0(Phase);//ÉèÖÃÏàÎ»
+	Write_CFTW0(fre); //å¹…åº¦é¢‘ç‡
+	Write_CPOW0(Phase);//è®¾ç½®ç›¸ä½
 	
-	Write_LSRR(rsrr,fsrr);//Ğ±ÂÊ
+	Write_LSRR(rsrr,fsrr);//æ–œç‡
 	
-	Write_RDW(r_delta<<22);//ÉÏÉı²½³¤
+	Write_RDW(r_delta<<22);//ä¸Šå‡æ­¥é•¿
 	
-	Write_FDW(f_delta<<22);//ÏÂ½µ²½³¤
+	Write_FDW(f_delta<<22);//ä¸‹é™æ­¥é•¿
 
-	ACR_data[1] = (uint8_t)(s_Ampli>>8); //¸ßÎ»Êı¾İ
-	ACR_data[2] = (uint8_t)s_Ampli;  //µÍÎ»Êı¾İ
-  AD9959_WriteData(ACR_ADD,3,ACR_data); //ACR Éè¶¨ÆğÊ¼·ù¶È
+	ACR_data[1] = (uint8_t)(s_Ampli>>8); //é«˜ä½æ•°æ®
+	ACR_data[2] = (uint8_t)s_Ampli;  //ä½ä½æ•°æ®
+  AD9959_WriteData(ACR_ADD,3,ACR_data); //ACR è®¾å®šèµ·å§‹å¹…åº¦
 					
-	Write_Profile_Ampli(0, e_Ampli);//½áÊø·ù¶È
+	Write_Profile_Ampli(0, e_Ampli);//ç»“æŸå¹…åº¦
 }
 
 
 /************************************************************
-** º¯ÊıÃû³Æ £ºvoid AD9959_SetPhase_Sweep(uint8_t Channel, uint16_t s_data,uint16_t e_data,uint16_t r_delta,uint16_t f_delta,uint8_t rsrr,uint8_t fsrr,uint32_t fre,uint16_t Ampli)
-** º¯Êı¹¦ÄÜ £ºÉèÖÃÏßĞÔÉ¨ÏàµÄ²ÎÊı
-** Èë¿Ú²ÎÊı £ºChannel:  Êä³öÍ¨µÀ CH0-CH3
-							s_data:	ÆğÊ¼ÏàÎ»£¬·¶Î§£º0~16383(¶ÔÓ¦½Ç¶È£º0¡ã~360¡ã)
-							e_data:	½áÊøÏàÎ»£¬
-							r_delta:ÉÏÉı²½³¤,·¶Î§£º0~16383(¶ÔÓ¦½Ç¶È£º0¡ã~360¡ã)
-							f_delta:ÏÂ½µ²½³¤,
+** å‡½æ•°åç§° ï¼švoid AD9959_SetPhase_Sweep(uint8_t Channel, uint16_t s_data,uint16_t e_data,uint16_t r_delta,uint16_t f_delta,uint8_t rsrr,uint8_t fsrr,uint32_t fre,uint16_t Ampli)
+** å‡½æ•°åŠŸèƒ½ ï¼šè®¾ç½®çº¿æ€§æ‰«ç›¸çš„å‚æ•°
+** å…¥å£å‚æ•° ï¼šChannel:  è¾“å‡ºé€šé“ CH0-CH3
+							s_data:	èµ·å§‹ç›¸ä½ï¼ŒèŒƒå›´ï¼š0~16383(å¯¹åº”è§’åº¦ï¼š0Â°~360Â°)
+							e_data:	ç»“æŸç›¸ä½ï¼Œ
+							r_delta:ä¸Šå‡æ­¥é•¿,èŒƒå›´ï¼š0~16383(å¯¹åº”è§’åº¦ï¼š0Â°~360Â°)
+							f_delta:ä¸‹é™æ­¥é•¿,
 
-							rsrr:		ÉÏÉıĞ±ÂÊ,·¶Î§£º1~255£¬ÏµÍ³Ê±ÖÓÎª500MhzÊ±Ò»¸ö¿ØÖÆ×ÖÔ¼Îª8ns
-							fsrr:		ÏÂ½µĞ±ÂÊ,·¶Î§£º1~255
-							fre:		Êä³öÆµÂÊ£¬·¶Î§0~200 000 000 Hz
-							Ampli:	Êä³ö·ù¶È,·¶Î§0~1023£¬¿ØÖÆÖµ0~1023¶ÔÓ¦Êä³ö·ù¶È0~500mVpp×óÓÒ
-** ³ö¿Ú²ÎÊı £ºÎŞ
-** º¯ÊıËµÃ÷ £ºÆµµãÓëÆµµã¼äÍ£ÁôÊ±¼ä dT = Xsrr*8 µ¥Î»ns£»É¨ÃèµãÊı=(ÆğÊ¼-½áÊø)/²½³¤
-							É¨Æµ×ÜÊ±¼ä=×ÜÉ¨ÃèÆµµãÊı*dT
+							rsrr:		ä¸Šå‡æ–œç‡,èŒƒå›´ï¼š1~255ï¼Œç³»ç»Ÿæ—¶é’Ÿä¸º500Mhzæ—¶ä¸€ä¸ªæ§åˆ¶å­—çº¦ä¸º8ns
+							fsrr:		ä¸‹é™æ–œç‡,èŒƒå›´ï¼š1~255
+							fre:		è¾“å‡ºé¢‘ç‡ï¼ŒèŒƒå›´0~200 000 000 Hz
+							Ampli:	è¾“å‡ºå¹…åº¦,èŒƒå›´0~1023ï¼Œæ§åˆ¶å€¼0~1023å¯¹åº”è¾“å‡ºå¹…åº¦0~500mVppå·¦å³
+** å‡ºå£å‚æ•° ï¼šæ— 
+** å‡½æ•°è¯´æ˜ ï¼šé¢‘ç‚¹ä¸é¢‘ç‚¹é—´åœç•™æ—¶é—´ dT = Xsrr*8 å•ä½nsï¼›æ‰«æç‚¹æ•°=(èµ·å§‹-ç»“æŸ)/æ­¥é•¿
+							æ‰«é¢‘æ€»æ—¶é—´=æ€»æ‰«æé¢‘ç‚¹æ•°*dT
 **************************************************************/
 void AD9959_SetPhase_Sweep(uint8_t Channel, uint16_t s_data,uint16_t e_data,uint16_t r_delta,uint16_t f_delta,uint8_t rsrr,uint8_t fsrr,uint32_t fre,uint16_t Ampli)
 {
 	uint8_t CHANNEL[1]={0x00};
 	
 	CHANNEL[0]=Channel;
-	AD9959_WriteData(CSR_ADD,1,CHANNEL); //¿ØÖÆ¼Ä´æÆ÷Ğ´ÈëCHnÍ¨µÀ£¬Ñ¡ÔñCHn£»ÒÔÏÂÉèÖÃ¾ùÕë¶ÔCHn
+	AD9959_WriteData(CSR_ADD,1,CHANNEL); //æ§åˆ¶å¯„å­˜å™¨å†™å…¥CHné€šé“ï¼Œé€‰æ‹©CHnï¼›ä»¥ä¸‹è®¾ç½®å‡é’ˆå¯¹CHn
 	
-	Write_CFTW0(fre); //·ù¶ÈÆµÂÊ
-	Write_ACR(Ampli); //·ù¶ÈÉèÖÃ
+	Write_CFTW0(fre); //å¹…åº¦é¢‘ç‡
+	Write_ACR(Ampli); //å¹…åº¦è®¾ç½®
 	
-	Write_LSRR(rsrr,fsrr);//Ğ±ÂÊ
+	Write_LSRR(rsrr,fsrr);//æ–œç‡
 	
-	Write_RDW(r_delta<<18);//ÉÏÉı²½³¤
+	Write_RDW(r_delta<<18);//ä¸Šå‡æ­¥é•¿
 	
-	Write_FDW(f_delta<<18);//ÏÂ½µ²½³¤
+	Write_FDW(f_delta<<18);//ä¸‹é™æ­¥é•¿
 	
-	Write_CPOW0(s_data);//ÆğÊ¼ÏàÎ»
-	Write_Profile_Phase(0, e_data);//½áÊøÏàÎ»
+	Write_CPOW0(s_data);//èµ·å§‹ç›¸ä½
+	Write_Profile_Phase(0, e_data);//ç»“æŸç›¸ä½
 }
 
 

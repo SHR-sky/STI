@@ -10,7 +10,12 @@
 #define MAX_DIFF 1 // 误差值，需更改 0.01/16 ? 存疑
 #define RELAY_CTR PDout(1)
 
+
+
+
 uint8_t flag = 0;
+
+
 
 // 电缆速度系数
 // 可以采用安慰按钮，此处取0.672285，或者修改为更好的值
