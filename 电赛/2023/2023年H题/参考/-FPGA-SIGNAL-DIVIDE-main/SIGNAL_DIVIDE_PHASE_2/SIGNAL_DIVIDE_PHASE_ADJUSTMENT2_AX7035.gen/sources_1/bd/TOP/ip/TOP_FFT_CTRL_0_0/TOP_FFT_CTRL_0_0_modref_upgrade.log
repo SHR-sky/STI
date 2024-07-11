@@ -1,0 +1,16 @@
+Copyright 1986-2022 Xilinx, Inc. All Rights Reserved.
+------------------------------------------------------------------------------------
+| Tool Version : Vivado v.2022.2 (win64) Build 3671981 Fri Oct 14 05:00:03 MDT 2022
+| Date         : Wed Jul 10 20:01:35 2024
+| Host         : LAPTOP-DIGBD0JR running 64-bit major release  (build 9200)
+| Command      : upgrade_ip
+| Device       : xc7z020clg400-2
+------------------------------------------------------------------------------------
+
+Upgrade Log for IP 'TOP_FFT_CTRL_0_0'
+
+1. Summary
+----------
+
+SUCCESS in the conversion of TOP_FFT_CTRL_0_0 (xilinx.com:module_ref:FFT_CTRL:1.0 (Rev. 1)) to Vivado generation flows.
+

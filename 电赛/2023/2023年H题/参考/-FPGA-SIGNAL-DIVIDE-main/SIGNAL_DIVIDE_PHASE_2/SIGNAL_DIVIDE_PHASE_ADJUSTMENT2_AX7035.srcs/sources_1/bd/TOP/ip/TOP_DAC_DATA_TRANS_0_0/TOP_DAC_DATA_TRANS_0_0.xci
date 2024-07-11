@@ -1,0 +1,47 @@
+{
+  "schema": "xilinx.com:schema:json_instance:1.0",
+  "ip_inst": {
+    "xci_name": "TOP_DAC_DATA_TRANS_0_0",
+    "component_reference": "xilinx.com:module_ref:DAC_DATA_TRANS:1.0",
+    "ip_revision": "1",
+    "gen_directory": "../../../../../../SIGNAL_DIVIDE_PHASE_ADJUSTMENT2_AX7035.gen/sources_1/bd/TOP/ip/TOP_DAC_DATA_TRANS_0_0",
+    "parameters": {
+      "component_parameters": {
+        "Component_Name": [ { "value": "TOP_DAC_DATA_TRANS_0_0", "resolve_type": "user", "usage": "all" } ]
+      },
+      "project_parameters": {
+        "ARCHITECTURE": [ { "value": "zynq" } ],
+        "BASE_BOARD_PART": [ { "value": "" } ],
+        "BOARD_CONNECTIONS": [ { "value": "" } ],
+        "DEVICE": [ { "value": "xc7z020" } ],
+        "PACKAGE": [ { "value": "clg400" } ],
+        "PREFHDL": [ { "value": "VHDL" } ],
+        "SILICON_REVISION": [ { "value": "" } ],
+        "SIMULATOR_LANGUAGE": [ { "value": "MIXED" } ],
+        "SPEEDGRADE": [ { "value": "-2" } ],
+        "STATIC_POWER": [ { "value": "" } ],
+        "TEMPERATURE_GRADE": [ { "value": "" } ],
+        "USE_RDI_CUSTOMIZATION": [ { "value": "TRUE" } ],
+        "USE_RDI_GENERATION": [ { "value": "TRUE" } ]
+      },
+      "runtime_parameters": {
+        "IPCONTEXT": [ { "value": "IP_Integrator" } ],
+        "IPREVISION": [ { "value": "1" } ],
+        "MANAGED": [ { "value": "TRUE" } ],
+        "OUTPUTDIR": [ { "value": "../../../../../../SIGNAL_DIVIDE_PHASE_ADJUSTMENT2_AX7035.gen/sources_1/bd/TOP/ip/TOP_DAC_DATA_TRANS_0_0" } ],
+        "SELECTEDSIMMODEL": [ { "value": "" } ],
+        "SHAREDDIR": [ { "value": "../../ipshared" } ],
+        "SWVERSION": [ { "value": "2022.2" } ],
+        "SYNTHESISFLOW": [ { "value": "OOC_HIERARCHICAL" } ]
+      }
+    },
+    "boundary": {
+      "ports": {
+        "DIN_0": [ { "direction": "in", "size_left": "11", "size_right": "0" } ],
+        "DIN_1": [ { "direction": "in", "size_left": "11", "size_right": "0" } ],
+        "DADB_0": [ { "direction": "out", "size_left": "13", "size_right": "0" } ],
+        "DADB_1": [ { "direction": "out", "size_left": "13", "size_right": "0" } ]
+      }
+    }
+  }
+}

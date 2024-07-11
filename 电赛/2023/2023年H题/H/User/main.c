@@ -121,27 +121,23 @@ again:
     //AD9959_Set_Amp(CH1, 1023);
 
     // 计算A与A' B和B' 的相位差，调至相同（由于频率肯定不完全相同，所有总会有滚动，要时刻调整相位消除滚动，使其不可见）
-    get_pos_angle();
-	while(do_ad_flag1==0);
+    //get_pos_angle();
 	while (1)
-    {
-		//delay_ms(10);
+    {	
+		do_ad_flag1 = 0;//标志启动AD标志清零，等待完成一次DAC的DMA传输中断中置位
+		while(do_ad_flag1==0);
 		ADC_DMA_Trig( ADC1_DMA_Size ); 	// 开始AD采集，设置采样点数
-		//for(int i=0; i<25600; i++);
-		//for(int i=0; i<1000; i++)
-		//{
-		//	ADCConvertedValue[i] = ADC1_ConvertedValue[i];
-		//}
+
 		get_pos_angle();
-		//delayTime0 = (int)(8400*pos_angle_0 / (3.1415926*((double)fre[0]+ 2.0))+0.5);
-		//delayTime0 = (int)(8400*pos_angle_1 / (3.1415926*((double)fre[1]+ 2.0))+0.5);
-		delayTime0 = (int)(84000.0/(double)(fre[0]+2)/(double)5.0*pos_angle_0/(2.0*3.1415926)+0.5);// 周期 fre[0]*5 对应 1M / fre[0]*5 s *  pos_angle_0/2*
-		delayTime1 = (int)(84000.0/(double)(fre[1]+2)/(double)5.0*pos_angle_1/(2.0*3.1415926)+0.5);
+		delayTime0 = (int)(8400*pos_angle_0 / (3.1415926*((double)fre[0]+ 2.0))+0.5);
+		delayTime1 = (int)(8400*pos_angle_1 / (3.1415926*((double)fre[1]+ 2.0))+0.5);
+		//delayTime0 = (int)(84000.0/(double)(fre[0]+2)/(double)5.0*pos_angle_0/(2.0*3.1415926)+0.5);// 周期 fre[0]*5 对应 1M / fre[0]*5 s *  pos_angle_0/2*
+		//delayTime1 = (int)(84000.0/(double)(fre[1]+2)/(double)5.0*pos_angle_1/(2.0*3.1415926)+0.5);
 
 		//TIM_Cmd(TIM4,DISABLE);
 		//TIM_Cmd(TIM5,DISABLE);
 		TIM4->CNT = 65535 - (delayTime0-TIM4->CNT);
-		TIM5->CNT = 4294967295 - (delayTime1-TIM5->CNT);
+		TIM5->CNT = 65535 - (delayTime1-TIM5->CNT);
 		//TIM_Cmd(TIM4,ENABLE);
 		//TIM_Cmd(TIM5,ENABLE);
 		//TIM5->CNT = (TIM5->CNT-delayTime1);

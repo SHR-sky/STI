@@ -1,0 +1,76 @@
+{
+   "ActiveEmotionalView":"Default View",
+   "Default View_ScaleFactor":"0.371585",
+   "Default View_TopLeft":"-334,-449",
+   "ExpandedHierarchyInLayout":"",
+   "guistr":"# # String gsaved with Nlview 7.0r6  2020-01-29 bk=1.5227 VDI=41 GEI=36 GUI=JA:10.0 non-TLS
+#  -string -flagsOSRD
+preplace port port-id_CLK -pg 1 -lvl 0 -x -210 -y 130 -defaultsOSRD
+preplace port port-id_DACLK_0 -pg 1 -lvl 9 -x 2820 -y -30 -defaultsOSRD
+preplace port port-id_DACLK_1 -pg 1 -lvl 9 -x 2820 -y -50 -defaultsOSRD
+preplace port port-id_AWRT -pg 1 -lvl 9 -x 2820 -y -10 -defaultsOSRD
+preplace port port-id_BWRT -pg 1 -lvl 9 -x 2820 -y 10 -defaultsOSRD
+preplace port port-id_ADCLK -pg 1 -lvl 9 -x 2820 -y -100 -defaultsOSRD
+preplace port port-id_KEY0 -pg 1 -lvl 0 -x -210 -y 380 -defaultsOSRD
+preplace port port-id_KEY1 -pg 1 -lvl 0 -x -210 -y 400 -defaultsOSRD
+preplace port port-id_KEY2 -pg 1 -lvl 0 -x -210 -y 420 -defaultsOSRD
+preplace port port-id_KEY3 -pg 1 -lvl 0 -x -210 -y 440 -defaultsOSRD
+preplace port port-id_KEY4 -pg 1 -lvl 0 -x -210 -y 460 -defaultsOSRD
+preplace portBus ADDB -pg 1 -lvl 0 -x -210 -y 20 -defaultsOSRD
+preplace portBus DADB_0 -pg 1 -lvl 9 -x 2820 -y 110 -defaultsOSRD
+preplace portBus DADB_1 -pg 1 -lvl 9 -x 2820 -y 130 -defaultsOSRD
+preplace portBus SMG_WX -pg 1 -lvl 9 -x 2820 -y 470 -defaultsOSRD
+preplace portBus SMG_DX -pg 1 -lvl 9 -x 2820 -y 490 -defaultsOSRD
+preplace inst ADC_SAMP_0 -pg 1 -lvl 3 -x 670 -y 160 -defaultsOSRD
+preplace inst FFT_CTRL_0 -pg 1 -lvl 4 -x 1050 -y 70 -defaultsOSRD
+preplace inst clk_wiz_0 -pg 1 -lvl 1 -x 10 -y 130 -defaultsOSRD
+preplace inst ADCLK_EN_GEN_0 -pg 1 -lvl 2 -x 340 -y 250 -defaultsOSRD
+preplace inst AD_DATA_TRANS_0 -pg 1 -lvl 2 -x 340 -y 10 -defaultsOSRD
+preplace inst JUDGE_GEN_0 -pg 1 -lvl 5 -x 1440 -y 140 -defaultsOSRD
+preplace inst DAC_DATA_TRANS_0 -pg 1 -lvl 8 -x 2660 -y 120 -defaultsOSRD
+preplace inst KEY_CTRL_0 -pg 1 -lvl 4 -x 1050 -y 400 -defaultsOSRD
+preplace inst SMG_DISPLAY_0 -pg 1 -lvl 6 -x 1840 -y 480 -defaultsOSRD
+preplace inst IFFT_CTRL_0 -pg 1 -lvl 7 -x 2310 -y 10 -defaultsOSRD
+preplace inst IFFT_CTRL_1 -pg 1 -lvl 7 -x 2310 -y 280 -defaultsOSRD
+preplace inst PHASE_ADJUSTMENT_0 -pg 1 -lvl 6 -x 1840 -y 110 -defaultsOSRD
+preplace netloc ADCLK_EN_GEN_0_CLK_EN 1 2 5 460 -90 N -90 N -90 N -90 2070
+preplace netloc ADC_SAMP_0_RAM_DATA 1 3 1 850 100n
+preplace netloc ADC_SAMP_0_SAMP_FINISH 1 3 1 840 80n
+preplace netloc AD_DATA_TRANS_0_DOUT 1 2 1 470J 10n
+preplace netloc DAC_DATA_TRANS_0_DADB_0 1 8 1 N 110
+preplace netloc DAC_DATA_TRANS_0_DADB_1 1 8 1 N 130
+preplace netloc DIN_0_1 1 0 2 NJ 20 NJ
+preplace netloc FFT_CTRL_0_AD_RAM_ADDR 1 2 3 510 -30 N -30 1240
+preplace netloc IFFT_CTRL_0_DADB 1 7 1 2510 20n
+preplace netloc IFFT_CTRL_0_FFT_RAM_ADDR 1 5 3 1640 -100 NJ -100 2510
+preplace netloc IFFT_CTRL_1_DADB 1 7 1 2510 130n
+preplace netloc IFFT_CTRL_1_FFT_RAM_ADDR 1 5 3 1640 280 2090J 170 2500
+preplace netloc JUDGE_GEN_0_AF_OUT 1 5 1 N 160
+preplace netloc JUDGE_GEN_0_BF_OUT 1 5 1 N 180
+preplace netloc JUDGE_GEN_0_IM_0 1 5 1 N 100
+preplace netloc JUDGE_GEN_0_IM_1 1 5 1 N 140
+preplace netloc JUDGE_GEN_0_JUDGE_FINISH 1 5 1 1600 40n
+preplace netloc JUDGE_GEN_0_RE_0 1 5 1 N 80
+preplace netloc JUDGE_GEN_0_RE_1 1 5 1 N 120
+preplace netloc KEY0_0_1 1 0 4 NJ 380 NJ 380 NJ 380 NJ
+preplace netloc KEY1_0_1 1 0 4 NJ 400 NJ 400 NJ 400 NJ
+preplace netloc KEY2_0_1 1 0 4 NJ 420 NJ 420 NJ 420 NJ
+preplace netloc KEY3_0_1 1 0 4 NJ 440 NJ 440 NJ 440 NJ
+preplace netloc KEY4_0_1 1 0 4 NJ 460 NJ 460 NJ 460 NJ
+preplace netloc KEY_CTRL_0_PHASE 1 4 2 N 400 1630J
+preplace netloc PHASE_ADJUSTMENT_0_FFT_RAM0_DATA 1 6 1 2040 20n
+preplace netloc PHASE_ADJUSTMENT_0_FFT_RAM1_DATA 1 6 1 2040 140n
+preplace netloc PHASE_ADJUSTMENT_0_VALID_OUT_0 1 6 1 2050 0n
+preplace netloc PHASE_ADJUSTMENT_0_VALID_OUT_1 1 6 1 2050 100n
+preplace netloc SMG_DISPLAY_0_SMG_DX 1 6 3 NJ 490 NJ 490 NJ
+preplace netloc SMG_DISPLAY_0_SMG_WX 1 6 3 NJ 470 NJ 470 NJ
+preplace netloc clk_in1_0_1 1 0 1 N 130
+preplace netloc clk_wiz_0_ACLK 1 1 6 N 130 480 30 860 -20 1260 -20 1610 -70 2100
+preplace netloc clk_wiz_0_AD_CLK 1 1 8 110 -60 500 -80 N -80 N -80 N -80 2060 120 2500 50 2800
+preplace netloc clk_wiz_0_locked 1 1 6 100 150 490 40 830 160 1250 260 1620 -60 2080
+preplace netloc FFT_CTRL_0_FFT_M_DATA 1 4 1 1250 50n
+levelinfo -pg 1 -210 10 340 670 1050 1440 1840 2310 2660 2820
+pagesize -pg 1 -db -bbox -sgen -340 -340 2960 630
+"
+}
+0
