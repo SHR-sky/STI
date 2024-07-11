@@ -74,9 +74,12 @@ short DAC_COS[200 * 19] =
         3289, 2600, 1721, 955, 566, 691, 1284, 2142, 2967, 3475, 3488, 3004, 2189, 1325, 711, 560, 923, 1675, 2556, 3262, 3547, 3314, 2644, 1767, 987, 575, 671, 1244, 2095, 2930, 3459, 3501, 3040, 2236, 1367, 734, 555, 892, 1630, 2512, 3233, 3545, 3339, 2687, 1813, 1021, 584, 653, 1205, 2048, 2891, 3443, 3512, 3075, 2283, 1409, 757, 551, 863, 1584, 2466, 3204, 3541, 3362, 2729, 1860, 1056, 595, 637, 1166, 2001, 2852, 3425, 3521, 3109, 2329, 1452, 782, 549, 834, 1540, 2421, 3173, 3536, 3385, 2771, 1907, 1092, 608, 621, 1129, 1954, 2812, 3405, 3530, 3141, 2375, 1496, 807, 548, 807, 1496, 2375, 3141, 3530, 3405, 2812, 1954, 1129, 621, 608, 1092, 1907, 2771, 3385, 3536, 3173, 2421, 1540, 834, 549, 782, 1452, 2329, 3109, 3521, 3425, 2852, 2001, 1166, 637, 595, 1056, 1860, 2729, 3362, 3541, 3204, 2466, 1584, 863, 551, 757, 1409, 2283, 3075, 3512, 3443, 2891, 2048, 1205, 653, 584, 1021, 1813, 2687, 3339, 3545, 3233, 2512, 1630, 892, 555, 734, 1367, 2236, 3040, 3501, 3459, 2930, 2095, 1244, 671, 575, 987, 1767, 2644, 3314, 3547, 3262, 2556, 1675, 923, 560, 711, 1325, 2189, 3004, 3488, 3475, 2967, 2142, 1284, 691, 566, 955, 1721, 2600, 3289, 3548,
         3262, 2512, 1584, 834, 548, 834, 1584, 2512, 3262, 3548, 3262, 2512, 1584, 834, 548, 834, 1584, 2512, 3262, 3548, 3262, 2512, 1584, 834, 548, 834, 1584, 2512, 3262, 3548, 3262, 2512, 1584, 834, 548, 834, 1584, 2512, 3262, 3548, 3262, 2512, 1584, 834, 548, 834, 1584, 2512, 3262, 3548, 3262, 2512, 1584, 834, 548, 834, 1584, 2512, 3262, 3548, 3262, 2512, 1584, 834, 548, 834, 1584, 2512, 3262, 3548, 3262, 2512, 1584, 834, 548, 834, 1584, 2512, 3262, 3548, 3262, 2512, 1584, 834, 548, 834, 1584, 2512, 3262, 3548, 3262, 2512, 1584, 834, 548, 834, 1584, 2512, 3262, 3548, 3262, 2512, 1584, 834, 548, 834, 1584, 2512, 3262, 3548, 3262, 2512, 1584, 834, 548, 834, 1584, 2512, 3262, 3548, 3262, 2512, 1584, 834, 548, 834, 1584, 2512, 3262, 3548, 3262, 2512, 1584, 834, 548, 834, 1584, 2512, 3262, 3548, 3262, 2512, 1584, 834, 548, 834, 1584, 2512, 3262, 3548, 3262, 2512, 1584, 834, 548, 834, 1584, 2512, 3262, 3548, 3262, 2512, 1584, 834, 548, 834, 1584, 2512, 3262, 3548, 3262, 2512, 1584, 834, 548, 834, 1584, 2512, 3262, 3548, 3262, 2512, 1584, 834, 548, 834, 1584, 2512, 3262, 3548, 3262, 2512, 1584, 834, 548, 834, 1584, 2512, 3262, 3548};
 
+extern u8 do_ad_flag1;
+		
 int main()
 {
 again:
+	//delay_init(168);
     // 信号重建思路
     // 采集信号之后，确定参数，进行重建
 
@@ -86,23 +89,22 @@ again:
 	//DAC_Set_Volt(-1.5);
 	//DAC_Mode_Init();
 	
-	
 	ADC_GPIO_Init();						    // ADC引脚初始化。
 	TIM3_Config();                     // 触发ADC采样频率，采样频率2MHz
 	ADC_Config();                               // ADC 2000K采样频率，采集6000个数据，需要花费3ms
 	ADC_DMA_Trig( ADC1_DMA_Size ); 	// 开始AD采集，设置采样点数
-	delay_ms(2); // 延时3ms，等待ADC数据全部转换到 ADC1_ConvertedValue数组中
-	for(int i=0; i<1000; i++)
-	{
-		ADCConvertedValue[i] = ADC1_ConvertedValue[i];
-	}
+	//delay_ms(2); // 延时3ms，等待ADC数据全部转换到 ADC1_ConvertedValue数组中
+	//for(int i=0; i<1000; i++)
+	//{
+	//	ADCConvertedValue[i] = ADC1_ConvertedValue[i];
+	//}
 	
 	cal_2frqs(fre);
 	
 	for(int i=0; i<200; i++)
 	{
-		meDA1_Value[i] = DAC_SIN[fre[0]*200+i];
-		meDA2_Value[i] = DAC_SIN[fre[1]*200+i];
+		meDA1_Value[i] = DAC_SIN[(fre[0])*200+i];
+		meDA2_Value[i] = DAC_SIN[(fre[1])*200+i];
 	}
 	
 	TIM4_Init();
@@ -112,7 +114,6 @@ again:
 
     // 计算正交
 
-
     // 最后，需要实时调整相位差
 
     // 后端需要接运放放大幅度，不然难以达到 1Vpp
@@ -120,22 +121,71 @@ again:
     //AD9959_Set_Amp(CH1, 1023);
 
     // 计算A与A' B和B' 的相位差，调至相同（由于频率肯定不完全相同，所有总会有滚动，要时刻调整相位消除滚动，使其不可见）
-    while (1)
+    get_pos_angle();
+	while(do_ad_flag1==0);
+	while (1)
     {
+		//delay_ms(10);
 		ADC_DMA_Trig( ADC1_DMA_Size ); 	// 开始AD采集，设置采样点数
-		delay_ms(2);
-		for(int i=0; i<1000; i++)
-		{
-			ADCConvertedValue[i] = ADC1_ConvertedValue[i];
-		}
+		//for(int i=0; i<25600; i++);
+		//for(int i=0; i<1000; i++)
+		//{
+		//	ADCConvertedValue[i] = ADC1_ConvertedValue[i];
+		//}
 		get_pos_angle();
-		
-		
+		//delayTime0 = (int)(8400*pos_angle_0 / (3.1415926*((double)fre[0]+ 2.0))+0.5);
+		//delayTime0 = (int)(8400*pos_angle_1 / (3.1415926*((double)fre[1]+ 2.0))+0.5);
+		delayTime0 = (int)(84000.0/(double)(fre[0]+2)/(double)5.0*pos_angle_0/(2.0*3.1415926)+0.5);// 周期 fre[0]*5 对应 1M / fre[0]*5 s *  pos_angle_0/2*
+		delayTime1 = (int)(84000.0/(double)(fre[1]+2)/(double)5.0*pos_angle_1/(2.0*3.1415926)+0.5);
 
-        AD9959_Set_Phase(CH0, (pos_angle_0 * 16383) / (2 * 3.1415926));
-        AD9959_Set_Phase(CH1, (pos_angle_1 * 16383) / (2 * 3.1415926));
+		//TIM_Cmd(TIM4,DISABLE);
+		//TIM_Cmd(TIM5,DISABLE);
+		TIM4->CNT = 65535 - (delayTime0-TIM4->CNT);
+		TIM5->CNT = 4294967295 - (delayTime1-TIM5->CNT);
+		//TIM_Cmd(TIM4,ENABLE);
+		//TIM_Cmd(TIM5,ENABLE);
+		//TIM5->CNT = (TIM5->CNT-delayTime1);
+		/*
+		if(delayTime0>100&&delayTime1>100)
+		{
+			if(delayTime0>delayTime1)
+			{
+				TIM_Cmd(TIM4,DISABLE);
+				TIM_Cmd(TIM5,DISABLE);
+				//delay_us(delayTime1);
+				SysTick_Delay_Us(delayTime1-10);
+				TIM_Cmd(TIM5,ENABLE);
+				//delay_us(delayTime0-delayTime1);
+				SysTick_Delay_Us(delayTime0-delayTime1);
+				TIM_Cmd(TIM4,ENABLE);
+			}
+			else if(delayTime0<delayTime1)
+			{
+				TIM_Cmd(TIM4,DISABLE);
+				TIM_Cmd(TIM5,DISABLE);
+				SysTick_Delay_Us(delayTime0-10);
+				//delay_us(delayTime0);
+				TIM_Cmd(TIM4,ENABLE);
+				//delay_us(delayTime1-delayTime0);
+				SysTick_Delay_Us(delayTime1-delayTime0);
+				TIM_Cmd(TIM5,ENABLE);
+			}
+			else 
+			{
+				TIM_Cmd(TIM4,DISABLE);
+				TIM_Cmd(TIM5,DISABLE);
+				//delay_us(delayTime0);
+				SysTick_Delay_Us(delayTime1-10);
+				TIM_Cmd(TIM5,ENABLE);
+				TIM_Cmd(TIM4,ENABLE);
+			}
+		}
+		*/
+		
+        //AD9959_Set_Phase(CH0, (pos_angle_0 * 16383) / (2 * 3.1415926));
+        //AD9959_Set_Phase(CH1, (pos_angle_1 * 16383) / (2 * 3.1415926));
 
-        IO_Update();
+        //IO_Update();
 
         // 接收到重启信号
         if (flag == 1)
@@ -144,6 +194,7 @@ again:
             goto again;
         }
     }
+	
 }
 
 // 确定频率用

@@ -49,6 +49,7 @@ void ADC_DMA_Trig( u16 Size )
 	DMA2_Stream0->CR |= (uint32_t)DMA_SxCR_EN;
 }	
  
+extern short ADCConvertedValue[1000];
  
 //ADC与DMA关联性配置
 //注：2000K采样频率，采集6000个数据，需要花费3ms
@@ -76,7 +77,7 @@ void ADC_Config(void)
 	/* DMA2 Stream0 channel0 configuration **************************************/
 	DMA_InitStructure.DMA_Channel = DMA_Channel_0;  
 	DMA_InitStructure.DMA_PeripheralBaseAddr = (uint32_t)ADC1_DR_ADDRESS;
-	DMA_InitStructure.DMA_Memory0BaseAddr = (uint32_t)ADC1_ConvertedValue;       
+	DMA_InitStructure.DMA_Memory0BaseAddr = (uint32_t)ADCConvertedValue;       
 	DMA_InitStructure.DMA_DIR = DMA_DIR_PeripheralToMemory;
 	DMA_InitStructure.DMA_BufferSize = ADC1_DMA_Size;                              //DMA 传输数量
 	DMA_InitStructure.DMA_PeripheralInc = DMA_PeripheralInc_Disable;
