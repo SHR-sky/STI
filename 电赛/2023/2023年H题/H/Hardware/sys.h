@@ -8,9 +8,10 @@
 #include "Serial.h"
 #include "Delay.h"
 #include "mySPI.h"
-#include "ADC.h"
+#include "ADCDMA.h"
 #include "AD8302.h"
 #include "AD9959.h"
+#include "DAC.h"
 
 #include "arm_math.h" // 包含DSP库
 
@@ -81,7 +82,8 @@
 void WFI_SET(void);		//执行WFI指令
 void INTX_DISABLE(void);//关闭所有中断
 void INTX_ENABLE(void);	//开启所有中断
-void MSR_MSP(uint32_t addr);	//设置堆栈地址 
-
+void MSR_MSP(u32 addr);	//设置堆栈地址 
 #endif
+
+
 

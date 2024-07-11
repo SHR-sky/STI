@@ -853,6 +853,26 @@
               <FileType>5</FileType>
               <FilePath>..\..\Hardware\AD9959.h</FilePath>
             </File>
+            <File>
+              <FileName>DAC.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\Hardware\DAC.c</FilePath>
+            </File>
+            <File>
+              <FileName>DAC.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>..\..\Hardware\DAC.h</FilePath>
+            </File>
+            <File>
+              <FileName>ADCDMA.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\Hardware\ADCDMA.c</FilePath>
+            </File>
+            <File>
+              <FileName>ADCDMA.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>..\..\Hardware\ADCDMA.h</FilePath>
+            </File>
           </Files>
         </Group>
         <Group>

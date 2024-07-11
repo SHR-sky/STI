@@ -3,7 +3,7 @@
 .\objects\ad8302.o: ..\..\Hardware\sys.h
 .\objects\ad8302.o: ..\..\Libraries\CMSIS\Device\ST\STM32F4xx\Include\stm32f4xx.h
 .\objects\ad8302.o: ..\..\Libraries\CMSIS\Include\core_cm4.h
-.\objects\ad8302.o: F:\keil\core\ARM\ARMCC\Bin\..\include\stdint.h
+.\objects\ad8302.o: E:\SoftLib\Keil_v5\ARM\ARMCC\Bin\..\include\stdint.h
 .\objects\ad8302.o: ..\..\Libraries\CMSIS\Include\core_cmInstr.h
 .\objects\ad8302.o: ..\..\Libraries\CMSIS\Include\core_cmFunc.h
 .\objects\ad8302.o: ..\..\Libraries\CMSIS\Include\core_cmSimd.h
@@ -39,13 +39,14 @@
 .\objects\ad8302.o: ..\..\Hardware\TIM.h
 .\objects\ad8302.o: ..\..\Hardware\sys.h
 .\objects\ad8302.o: ..\..\Hardware\Serial.h
-.\objects\ad8302.o: F:\keil\core\ARM\ARMCC\Bin\..\include\stdio.h
+.\objects\ad8302.o: E:\SoftLib\Keil_v5\ARM\ARMCC\Bin\..\include\stdio.h
 .\objects\ad8302.o: ..\..\Hardware\Delay.h
 .\objects\ad8302.o: ..\..\Hardware\mySPI.h
-.\objects\ad8302.o: ..\..\Hardware\ADC.h
+.\objects\ad8302.o: ..\..\Hardware\ADCDMA.h
 .\objects\ad8302.o: ..\..\Hardware\AD8302.h
 .\objects\ad8302.o: ..\..\Hardware\AD9959.h
+.\objects\ad8302.o: ..\..\Hardware\DAC.h
 .\objects\ad8302.o: ..\..\Libraries\CMSIS\Include\arm_math.h
 .\objects\ad8302.o: ..\..\Libraries\CMSIS\Include\core_cm4.h
-.\objects\ad8302.o: F:\keil\core\ARM\ARMCC\Bin\..\include\string.h
-.\objects\ad8302.o: F:\keil\core\ARM\ARMCC\Bin\..\include\math.h
+.\objects\ad8302.o: E:\SoftLib\Keil_v5\ARM\ARMCC\Bin\..\include\string.h
+.\objects\ad8302.o: E:\SoftLib\Keil_v5\ARM\ARMCC\Bin\..\include\math.h
