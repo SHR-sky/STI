@@ -11,7 +11,7 @@ void DA1_Init(void);
 void DA2_Init(void);
 
 void TIM4_Init(void);
-void TIM5_Init(void);
+void TIM6_Init(void);
 
 //uint16_t DA1_GetValue();
 //uint16_t DA2_GetValue();

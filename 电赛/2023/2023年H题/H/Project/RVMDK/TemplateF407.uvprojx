@@ -341,7 +341,7 @@
               <MiscControls></MiscControls>
               <Define>USE_STDPERIPH_DRIVER USE_STM324xG_EVAL</Define>
               <Undefine></Undefine>
-              <IncludePath>..\..\Libraries\CMSIS\Include;..\..\Libraries\CMSIS\Device\ST\STM32F4xx\Include;..\..\Libraries\STM32F4xx_StdPeriph_Driver\inc;..\..\User;..\..\Hardware</IncludePath>
+              <IncludePath>..\..\Libraries\CMSIS\Include;..\..\Libraries\CMSIS\Device\ST\STM32F4xx\Include;..\..\Libraries\STM32F4xx_StdPeriph_Driver\inc;..\..\User;..\..\Hardware;..\..\User\fft\inc;..\..\User\fft\src\asm\arm</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -824,36 +824,6 @@
               <FilePath>..\..\Hardware\mySPI.h</FilePath>
             </File>
             <File>
-              <FileName>AD8302.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\..\Hardware\AD8302.c</FilePath>
-            </File>
-            <File>
-              <FileName>AD8302.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>..\..\Hardware\AD8302.h</FilePath>
-            </File>
-            <File>
-              <FileName>ADC.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>..\..\Hardware\ADC.h</FilePath>
-            </File>
-            <File>
-              <FileName>ADC.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\..\Hardware\ADC.c</FilePath>
-            </File>
-            <File>
-              <FileName>AD9959.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\..\Hardware\AD9959.c</FilePath>
-            </File>
-            <File>
-              <FileName>AD9959.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>..\..\Hardware\AD9959.h</FilePath>
-            </File>
-            <File>
               <FileName>DAC.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\..\Hardware\DAC.c</FilePath>
@@ -887,6 +857,31 @@
               <FileName>stm32f4xx_it.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\..\User\stm32f4xx_it.c</FilePath>
+            </File>
+            <File>
+              <FileName>cr4_fft_64_stm32.s</FileName>
+              <FileType>2</FileType>
+              <FilePath>..\..\User\fft\src\asm\arm\cr4_fft_64_stm32.s</FilePath>
+            </File>
+            <File>
+              <FileName>cr4_fft_256_stm32.s</FileName>
+              <FileType>2</FileType>
+              <FilePath>..\..\User\fft\src\asm\arm\cr4_fft_256_stm32.s</FilePath>
+            </File>
+            <File>
+              <FileName>cr4_fft_1024_stm32.s</FileName>
+              <FileType>2</FileType>
+              <FilePath>..\..\User\fft\src\asm\arm\cr4_fft_1024_stm32.s</FilePath>
+            </File>
+            <File>
+              <FileName>stm32_dsp.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>..\..\User\fft\inc\stm32_dsp.h</FilePath>
+            </File>
+            <File>
+              <FileName>table_fft.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>..\..\User\fft\inc\table_fft.h</FilePath>
             </File>
           </Files>
         </Group>

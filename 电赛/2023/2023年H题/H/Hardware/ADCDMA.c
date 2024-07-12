@@ -35,7 +35,6 @@ void TIM3_Config()
 	TIM_Cmd( TIM3 , ENABLE );							                        //使能TIM3
 }
  
- 
 #define ADC1_DR_ADDRESS  ((uint32_t)0x4001204C)          //ADC1 DR
 u16 ADC1_ConvertedValue[ ADC1_DMA_Size ];
 //ADC-DMA触发使能
@@ -112,7 +111,6 @@ void ADC_Config(void)
 	ADC_InitStructure.ADC_DataAlign = ADC_DataAlign_Right;
 	ADC_InitStructure.ADC_NbrOfConversion = 1;                                   //规则通道序列长度，这里只有一个通道9（下面一条语句进行配置）
 	ADC_Init( ADC1, &ADC_InitStructure );
-	
 	//PB0 - ADC1_IN8 - AD_UT_OP_BW   
 	//PB1 - ADC1_IN9 - AD_UT_OP  
 //	ADC_RegularChannelConfig( ADC1 , ADC_Channel_8 , 1, ADC_SampleTime_3Cycles);     //PB0 - ADC1_IN8 - AD_UT_OP_BW

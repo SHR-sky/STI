@@ -9,10 +9,9 @@
 #include "Delay.h"
 #include "mySPI.h"
 #include "ADCDMA.h"
-#include "AD8302.h"
-#include "AD9959.h"
 #include "DAC.h"
-
+#include "stm32_dsp.h"
+//#include "table_fft.h"
 #include "arm_math.h" // 包含DSP库
 
 

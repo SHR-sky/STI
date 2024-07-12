@@ -27,21 +27,21 @@ void TIM4_Init(void){
 }
 
 
-//TIM5 32bit
-void TIM5_Init(void){
+//TIM6 32bit
+void TIM6_Init(void){
 	
-	RCC_APB1PeriphClockCmd(RCC_APB1Periph_TIM5,ENABLE); 			//TIM5 时钟使能
+	RCC_APB1PeriphClockCmd(RCC_APB1Periph_TIM6,ENABLE); 			//TIM5 时钟使能
 	                                                                
-	TIM_InternalClockConfig(TIM5);                                  
+	TIM_InternalClockConfig(TIM6);                                  
 	TIM_TimeBaseInitTypeDef TIM_TimeBaseInitStructure;				//时基结构体
 	TIM_TimeBaseInitStructure.TIM_Period = 83;                     //设置自动重装载值
 	TIM_TimeBaseInitStructure.TIM_Prescaler = 0x0;                   //设置预分频值
 	TIM_TimeBaseInitStructure.TIM_ClockDivision = 0;                //设置时钟分割
 	TIM_TimeBaseInitStructure.TIM_CounterMode = TIM_CounterMode_Up; //向上计数模式
 	                                                                
-	TIM_SelectOutputTrigger(TIM5,TIM_TRGOSource_Update);            //更新溢出向外触发
-	TIM_TimeBaseInit(TIM5, &TIM_TimeBaseInitStructure);             //时基初始化
-	TIM_Cmd(TIM5, ENABLE);                                          //定时器使能
+	TIM_SelectOutputTrigger(TIM6,TIM_TRGOSource_Update);            //更新溢出向外触发
+	TIM_TimeBaseInit(TIM6, &TIM_TimeBaseInitStructure);             //时基初始化
+	TIM_Cmd(TIM6, ENABLE);                                          //定时器使能
 }
 
 //DAC1; PA4; DMA_CH7; DMA1_Stream5; TIM4;
@@ -98,6 +98,15 @@ void DA1_Init(){
 	DMA_Cmd(DMA1_Stream5,ENABLE);		//DMA1_Stream5 使能
 	DAC_DMACmd(DAC_Channel_1, ENABLE);	//DAC1_DMA 使能  	
 	DAC_Cmd(DAC_Channel_1,ENABLE); 		//DAC1 使能
+	
+	NVIC_InitTypeDef NVIC_InitStructure;     /* Configure one bit for preemption priority */
+	NVIC_PriorityGroupConfig(NVIC_PriorityGroup_1);     
+	NVIC_InitStructure.NVIC_IRQChannel = DMA1_Stream5_IRQn;     
+	NVIC_InitStructure.NVIC_IRQChannelPreemptionPriority = 1;
+	NVIC_InitStructure.NVIC_IRQChannelSubPriority = 1;
+	NVIC_InitStructure.NVIC_IRQChannelCmd = ENABLE;          
+	NVIC_Init(&NVIC_InitStructure);
+	
 	DMA_ITConfig(DMA1_Stream5, DMA_IT_TC, ENABLE);
 }
 
@@ -132,7 +141,7 @@ void DA2_Init(){
 	//DAC配置初始化
 	DAC_InitStructure.DAC_LFSRUnmask_TriangleAmplitude = DAC_LFSRUnmask_Bit0;
 	DAC_InitStructure.DAC_OutputBuffer = DAC_OutputBuffer_Disable;
-	DAC_InitStructure.DAC_Trigger = DAC_Trigger_T5_TRGO;					//！！！定时器触发转换 一次转移数组里的一个数据 TIM5
+	DAC_InitStructure.DAC_Trigger = DAC_Trigger_T6_TRGO;					//！！！定时器触发转换 一次转移数组里的一个数据 TIM5
 	DAC_InitStructure.DAC_WaveGeneration = DAC_WaveGeneration_None;         
 	DAC_Init(DAC_Channel_2, &DAC_InitStructure);                            //DAC2初始化
 		//DAC设置数据对齐
