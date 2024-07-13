@@ -1,9 +1,10 @@
 #include "sys.h"
 
 uint8_t flag = 0;
-uint8_t mode_flag = 0;
-double diff_phi_per5 = 0;
-int change_phi = 53;
+uint8_t mode_flag = 1;
+double diff_phi_per5_1 = 0;
+double diff_phi_per5_0 = 0;
+int change_phi = 90;
 // diff_phi = 1166.666666/(fre[1]*5+10)
 
 
@@ -105,20 +106,26 @@ short Tri_Wave[200*19] =
 };
 		
 extern u8 do_ad_flag1;
+extern u8 do_ad_flag2;
 		
 int main()
 {
 again:
-	
+	int cnt0 = 0;
+	int cnt1 = 0;
+	wave_type[0] = 0;
+	wave_type[1] = 0;
+	Serial_Init();
 	ADC_GPIO_Init();						    // ADC引脚初始化。
 	TIM3_Config();                     // 触发ADC采样频率，采样频率2MHz
 	ADC_Config();                               // ADC 2000K采样频率，采集6000个数据，需要花费3ms
 	ADC_DMA_Trig( ADC1_DMA_Size ); 	// 开始AD采集，设置采样点数
-	
+	for(int i=0; i<10000; i++);
 	cal_2frqs(fre);
 	fft_cal_2types(fre,wave_type);
 	
-	diff_phi_per5 = 1166.666666/(fre[1]*5+10);
+	diff_phi_per5_1 = 1166.666666/(fre[1]*5+10);
+	diff_phi_per5_0 = 1166.666666/(fre[0]*5+10);
 
 	
 	if(wave_type[0]==0)
@@ -152,39 +159,115 @@ again:
 	
 	TIM4_Init();
 	DA1_Init();
+	//TIM4->CNT = 65535-(4438)-TIM4->CNT;
 	TIM6_Init();
 	DA2_Init();
+	TIM_Cmd(TIM4, ENABLE);  
+	TIM_Cmd(TIM6, ENABLE);  
+	
 	
 	
 	//int temp_int0,temp_int1;
-	if(mode_flag==1)
-		TIM6->CNT = 65535-((short)(diff_phi_per5*(double)change_phi)-TIM6->CNT);
+	//if(mode_flag==1)
+		//TIM6->CNT = 65535-((short)(diff_phi_per5*(double)change_phi)-TIM6->CNT);
 	
 	while (1)	
     {	
+		if(mode_flag==0)
+		{
+			do_ad_flag2 = 0;
+			while(do_ad_flag2==0);
+			ADC_DMA_Trig( ADC1_DMA_Size );
+			get_pos_angle();
+			delayTime1 = (8400.0*pos_angle_1 / (3.1415926*((double)fre[1]+ 2.0))+0.5);
+			TIM6->CNT = 65535 - (delayTime1-TIM6->CNT);
+			
+			do_ad_flag1 = 0;
+			while(do_ad_flag1==0);
+			ADC_DMA_Trig( ADC1_DMA_Size );
+			get_pos_angle();
+			delayTime0 = (8400.0*pos_angle_0 / (3.1415926*((double)fre[0]+ 2.0))+0.5);
+			TIM4->CNT = 65535 - (delayTime0-TIM4->CNT);
+		} 
+		else 
+		{
+			//int t = 12.0*(double)change_phi/360.0 * 1000.0/(double)(fre[0]*2+10)/4.0;
+			int t= (double)change_phi/360.0 * (1000.0/(fre[1]*2.0+10.0))*30.71;
+			if(change_phi!=0)
+			{
+				//TIM4->CNT = 65535-(t)-TIM4->CNT;
+				//TIM6->CNT = 65535-((short)t)-TIM6->CNT;
+				//TIM4->CNT = 65535-(short)t-TIM4->CNT;
+				//TIM4->CNT = 65536 -(t-TIM4->CNT);
+				change_phi = 0;
+				// t/tb * 360 = phi
+				// tb = 1000/(fre[1]*2+10)
+				/*
+				if(change_phi>0)
+				{
+					TIM6->CNT = 65535-((short)(diff_phi_per5_1*(double)change_phi)-TIM6->CNT);
+					change_phi = 0;
+				}
+				else
+				{
+					if((int)(TIM6->CNT-diff_phi_per5_1*(double)change_phi)<75)
+					{
+						TIM6->CNT = TIM6->CNT-diff_phi_per5_1*(double)change_phi;
+					}
+					else
+					{
+						TIM6->CNT = 80;
+					}
+					//TIM6->CNT = 65535-((short)(diff_phi_per5*(double)change_phi)-TIM6->CNT);
+					change_phi = 0;
+				}
+				*/
+			}
+			
+		}
+		// Former 
+		/*
 		do_ad_flag1 = 0;//标志启动AD标志清零，等待完成一次DAC的DMA传输中断中置位
-		while(do_ad_flag1==0);
+		do_ad_flag2 = 0;
+		while(do_ad_flag1==0&&do_ad_flag2==0);
 		ADC_DMA_Trig( ADC1_DMA_Size );
 		get_pos_angle();
 		if(mode_flag==0)
 		{
-			delayTime0 = (8400.0*pos_angle_0 / (3.1415926*((double)fre[0]+ 2.0))+0.5);
-			delayTime1 = (8400.0*pos_angle_1 / (3.1415926*((double)fre[1]+ 2.0))+0.5);
+			if(do_ad_flag2==1)
+			{
+				delayTime1 = (8400.0*pos_angle_1 / (3.1415926*((double)fre[1]+ 2.0))+0.5);
+				TIM6->CNT = 65535 - (delayTime1-TIM6->CNT);
+			}
+			if(do_ad_flag1==1)
+			{
+				delayTime0 = (8400.0*pos_angle_0 / (3.1415926*((double)fre[0]+ 2.0))+0.5);
+				TIM4->CNT = 65535 - (delayTime0-TIM4->CNT);
+			}
 
-			TIM4->CNT = 65535 - (delayTime0-TIM4->CNT);
-			TIM6->CNT = 65535 - (delayTime1-TIM6->CNT);
 		} else 
 		{
-			continue;
+			if(change_phi!=0)
+			{
+				TIM6->CNT = 65535-((short)(diff_phi_per5*(double)change_phi)-TIM6->CNT);
+				change_phi = 0;
+			}
+			
 		}
-		
+		*/
 		if(flag == 1)
 		{
+			NVIC_SystemReset();
+			for(int i=0; i<=10000; i++);
+			NVIC_SystemReset();
+			wave_type[0] = 0;
+			wave_type[1] = 0;
 			flag = 0;
+			change_phi = 0;
+			//mode_flag = 0;
 			goto again; 
 		}
     }
-	
 }
 
 
@@ -313,7 +396,7 @@ void fft_cal_2types(unsigned char *frq, unsigned char *wave_type) // 根据输�
     mag_1harmo = mag[index - 1] + mag[index] + mag[index + 1];
     mag_3harmo = mag[harmo3_index - 1] + mag[harmo3_index] + mag[harmo3_index + 1];
     k = mag_1harmo / mag_3harmo;
-    if (k > 300)
+    if (k > 100)
         wave_type[0] = 0; // 三次谐波较小，说明是正弦波
     else
         wave_type[0] = 1; // 三次谐波较大，说明是三角波
@@ -331,7 +414,7 @@ void fft_cal_2types(unsigned char *frq, unsigned char *wave_type) // 根据输�
     mag_1harmo = mag[index - 1] + mag[index] + mag[index + 1];
     mag_3harmo = mag[harmo3_index - 1] + mag[harmo3_index] + mag[harmo3_index + 1];
     k = mag_1harmo / mag_3harmo;
-    if (k > 300)
+    if (k > 100)
         wave_type[1] = 0; // 三次谐波较小，说明是正弦波
     else
         wave_type[1] = 1; // 三次谐波较大，说明是三角波

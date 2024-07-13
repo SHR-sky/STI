@@ -2,6 +2,7 @@
 
 //主频84M
 u8 do_ad_flag1;
+u8 do_ad_flag2;
 uint16_t meDA1_Value[DA1_Value_Length] = {
 	2142, 2236, 2329, 2421, 2512, 2600, 2687, 2771, 2852, 2930, 3004, 3075, 3141, 3204, 3262, 3314, 3362, 3405, 3443, 3475, 3501, 3521, 3536, 3545, 3548, 3545, 3536, 3521, 3501, 3475, 3443, 3405, 3362, 3314, 3262, 3204, 3141, 3075, 3004, 2930, 2852, 2771, 2687, 2600, 2512, 2421, 2329, 2236, 2142, 2048, 1954, 1860, 1767, 1675, 1584, 1496, 1409, 1325, 1244, 1166, 1092, 1021, 955, 892, 834, 782, 734, 691, 653, 621, 595, 575, 560, 551, 548, 551, 560, 575, 595, 621, 653, 691, 734, 782, 834, 892, 955, 1021, 1092, 1166, 1244, 1325, 1409, 1496, 1584, 1675, 1767, 1860, 1954, 2048, 2142, 2236, 2329, 2421, 2512, 2600, 2687, 2771, 2852, 2930, 3004, 3075, 3141, 3204, 3262, 3314, 3362, 3405, 3443, 3475, 3501, 3521, 3536, 3545, 3548, 3545, 3536, 3521, 3501, 3475, 3443, 3405, 3362, 3314, 3262, 3204, 3141, 3075, 3004, 2930, 2852, 2771, 2687, 2600, 2512, 2421, 2329, 2236, 2142, 2048, 1954, 1860, 1767, 1675, 1584, 1496, 1409, 1325, 1244, 1166, 1092, 1021, 955, 892, 834, 782, 734, 691, 653, 621, 595, 575, 560, 551, 548, 551, 560, 575, 595, 621, 653, 691, 734, 782, 834, 892, 955, 1021, 1092, 1166, 1244, 1325, 1409, 1496, 1584, 1675, 1767, 1860, 1954, 2048
 };
@@ -23,7 +24,7 @@ void TIM4_Init(void){
 	                                                                
 	TIM_SelectOutputTrigger(TIM4,TIM_TRGOSource_Update);			//更新溢出向外触发
 	TIM_TimeBaseInit(TIM4, &TIM_TimeBaseInitStructure); 			//时基初始化
-	TIM_Cmd(TIM4, ENABLE);                                          //定时器使能
+	//TIM_Cmd(TIM4, ENABLE);                                          //定时器使能
 }
 
 
@@ -41,7 +42,7 @@ void TIM6_Init(void){
 	                                                                
 	TIM_SelectOutputTrigger(TIM6,TIM_TRGOSource_Update);            //更新溢出向外触发
 	TIM_TimeBaseInit(TIM6, &TIM_TimeBaseInitStructure);             //时基初始化
-	TIM_Cmd(TIM6, ENABLE);                                          //定时器使能
+	//TIM_Cmd(TIM6, ENABLE);                                          //定时器使能
 }
 
 //DAC1; PA4; DMA_CH7; DMA1_Stream5; TIM4;
@@ -169,9 +170,27 @@ void DA2_Init(){
 	DMA_InitStructure.DMA_PeripheralInc = DMA_PeripheralInc_Disable;                //外设不自增
 	DMA_Init(DMA1_Stream6,&DMA_InitStructure);			                            //DMA1_Stream6 初始化 
 	
+	NVIC_InitTypeDef NVIC_InitStructure;     /* Configure one bit for preemption priority */
+	NVIC_PriorityGroupConfig(NVIC_PriorityGroup_1);     
+	NVIC_InitStructure.NVIC_IRQChannel = DMA1_Stream6_IRQn;     
+	NVIC_InitStructure.NVIC_IRQChannelPreemptionPriority = 1;
+	NVIC_InitStructure.NVIC_IRQChannelSubPriority = 0;
+	NVIC_InitStructure.NVIC_IRQChannelCmd = ENABLE;          
+	NVIC_Init(&NVIC_InitStructure);
+	
+	DMA_ITConfig(DMA1_Stream6, DMA_IT_TC, ENABLE);
+	
 	DMA_Cmd(DMA1_Stream6,ENABLE);				//DMA1_Stream6 使能
 	DAC_DMACmd(DAC_Channel_2, ENABLE);          //DAC2_DMA 使能  	
 	DAC_Cmd(DAC_Channel_2,ENABLE);              //DAC2 使能
+}
+
+void DMA1_Stream6_IRQHandler(void)
+{
+	if(DMA_GetITStatus(DMA1_Stream6,DMA_IT_TCIF6)) {//判断通道2是否传输完成
+		DMA_ClearITPendingBit(DMA1_Stream6,DMA_IT_TCIF6);    //清除通道2传输完成标志位
+		do_ad_flag2 = 1;//把全局标志置位，表示可以同步开始AD转换了
+     }
 }
 
 /*
