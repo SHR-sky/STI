@@ -181,6 +181,7 @@ void USART2_IRQHandler(void)
 		}
 		else 
 		{
+			//NVIC_SystemReset();
 			mode_flag = 1;
 			change_phi = Res;
 			/*

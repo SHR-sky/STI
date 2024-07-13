@@ -4,7 +4,7 @@ uint8_t flag = 0;
 uint8_t mode_flag = 1;
 double diff_phi_per5_1 = 0;
 double diff_phi_per5_0 = 0;
-int change_phi = 90;
+int change_phi = 0;
 // diff_phi = 1166.666666/(fre[1]*5+10)
 
 
@@ -128,7 +128,7 @@ again:
 	diff_phi_per5_0 = 1166.666666/(fre[0]*5+10);
 
 	
-	if(wave_type[0]==0)
+	if(wave_type[0]==0||wave_type[0]==1)
 	{
 		for(int i=0; i<200; i++)
 		{
@@ -142,7 +142,7 @@ again:
 			meDA1_Value[i] = Tri_Wave[(fre[0])*200+i];
 		}
 	}
-	if(wave_type[1]==0)
+	if(wave_type[1]==0||wave_type[1]==1)
 	{
 		for(int i=0; i<200; i++)
 		{
@@ -192,10 +192,10 @@ again:
 		else 
 		{
 			//int t = 12.0*(double)change_phi/360.0 * 1000.0/(double)(fre[0]*2+10)/4.0;
-			int t= (double)change_phi/360.0 * (1000.0/(fre[1]*2.0+10.0))*30.71;
+			int t= (double)change_phi/360.0 * (1000.0/(fre[1]*2.0+10.0))*29.71;
 			if(change_phi!=0)
 			{
-				//TIM4->CNT = 65535-(t)-TIM4->CNT;
+				TIM4->CNT = 65535-(t)-TIM4->CNT;
 				//TIM6->CNT = 65535-((short)t)-TIM6->CNT;
 				//TIM4->CNT = 65535-(short)t-TIM4->CNT;
 				//TIM4->CNT = 65536 -(t-TIM4->CNT);
