@@ -1,7 +1,7 @@
 #include "sys.h"
 
 uint8_t flag = 0;
-uint8_t mode_flag = 1;
+uint8_t mode_flag = 0;
 double diff_phi_per5_1 = 0;
 double diff_phi_per5_0 = 0;
 int change_phi = 0;
@@ -128,7 +128,7 @@ again:
 	diff_phi_per5_0 = 1166.666666/(fre[0]*5+10);
 
 	
-	if(wave_type[0]==0||wave_type[0]==1)
+	if(wave_type[0]==0)
 	{
 		for(int i=0; i<200; i++)
 		{
@@ -142,7 +142,7 @@ again:
 			meDA1_Value[i] = Tri_Wave[(fre[0])*200+i];
 		}
 	}
-	if(wave_type[1]==0||wave_type[1]==1)
+	if(wave_type[1]==0)
 	{
 		for(int i=0; i<200; i++)
 		{
@@ -396,7 +396,7 @@ void fft_cal_2types(unsigned char *frq, unsigned char *wave_type) // 根据输�
     mag_1harmo = mag[index - 1] + mag[index] + mag[index + 1];
     mag_3harmo = mag[harmo3_index - 1] + mag[harmo3_index] + mag[harmo3_index + 1];
     k = mag_1harmo / mag_3harmo;
-    if (k > 100)
+    if (k > 200)
         wave_type[0] = 0; // 三次谐波较小，说明是正弦波
     else
         wave_type[0] = 1; // 三次谐波较大，说明是三角波
@@ -414,7 +414,7 @@ void fft_cal_2types(unsigned char *frq, unsigned char *wave_type) // 根据输�
     mag_1harmo = mag[index - 1] + mag[index] + mag[index + 1];
     mag_3harmo = mag[harmo3_index - 1] + mag[harmo3_index] + mag[harmo3_index + 1];
     k = mag_1harmo / mag_3harmo;
-    if (k > 100)
+    if (k > 200)
         wave_type[1] = 0; // 三次谐波较小，说明是正弦波
     else
         wave_type[1] = 1; // 三次谐波较大，说明是三角波
@@ -441,7 +441,7 @@ void fft_cal_2types(unsigned char *frq, unsigned char *wave_type) // 根据输�
         harmo5_index = temp_float + 0.5;     // 进行四舍五入取整
         mag_5harmo = mag[harmo5_index - 1] + mag[harmo5_index] + mag[harmo5_index + 1];
         k = mag_1harmo / mag_5harmo;
-        if (k > 500)
+        if (k > 200)
             wave_type[0] = 0; // 5次谐波较小，说明是正弦波
         else
             wave_type[0] = 1; // 5次谐波较大，说明是三角波
