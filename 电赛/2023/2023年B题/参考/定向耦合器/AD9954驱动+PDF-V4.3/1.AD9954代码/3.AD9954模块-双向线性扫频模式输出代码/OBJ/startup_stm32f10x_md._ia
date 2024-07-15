@@ -1,0 +1,6 @@
+--cpu Cortex-M3 -g --apcs=interwork 
+-I C:\Users\Administrator\Desktop\临时文件\AD9854\DDS开发板-点频9854(ok)\USER\RTE
+-I E:\Keil_v5\ARM\PACK\Keil\STM32F1xx_DFP\2.2.0
+-I E:\Keil_v5\ARM\CMSIS\Include
+--pd "__UVISION_VERSION SETA 514" --pd "STM32F10X_HD SETA 1"
+--list ..\lis\startup_stm32f10x_md.lst --xref -o ..\obj\startup_stm32f10x_md.o --depend ..\obj\startup_stm32f10x_md.d "..\CMSIS\CM3\STARTUP\startup_stm32f10x_md.s"

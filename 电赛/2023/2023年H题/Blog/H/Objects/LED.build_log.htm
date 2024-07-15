@@ -1,0 +1,111 @@
+<html>
+<body>
+<pre>
+<h1>礦ision Build Log</h1>
+<h2>Tool Versions:</h2>
+IDE-Version: μVision V5.38.0.0
+Copyright (C) 2022 ARM Ltd and ARM Germany GmbH. All rights reserved.
+License Information: SHR sky, HUST, LIC=585FJ-U8N75-63BMB-20N43-LB2KB-H1EEJ
+ 
+Tool Versions:
+Toolchain:       MDK-ARM Plus  Version: 5.38.0.0
+Toolchain Path:  F:\keil\core\ARM\ARMCC\Bin
+C Compiler:      Armcc.exe V5.06 update 7 (build 960)
+Assembler:       Armasm.exe V5.06 update 7 (build 960)
+Linker/Locator:  ArmLink.exe V5.06 update 7 (build 960)
+Library Manager: ArmAr.exe V5.06 update 7 (build 960)
+Hex Converter:   FromElf.exe V5.06 update 7 (build 960)
+CPU DLL:         SARMCM3.DLL V5.38.0.0
+Dialog DLL:      DARMSTM.DLL V1.69.1.0
+Target DLL:      STLink\ST-LINKIII-KEIL_SWO.dll V3.1.0.0
+Dialog DLL:      TCM.DLL V1.56.4.0
+ 
+<h2>Project:</h2>
+F:\STI\电赛\2023\2023年H题\Blog\H\LED.uvprojx
+Project File Date:  07/12/2024
+
+<h2>Output:</h2>
+*** Using Compiler 'V5.06 update 7 (build 960)', folder: 'F:\keil\core\ARM\ARMCC\Bin'
+Rebuild target 'Target 1'
+assembling startup_stm32f10x_md.s...
+compiling core_cm3.c...
+compiling misc.c...
+compiling stm32f10x_dma.c...
+compiling stm32f10x_can.c...
+compiling stm32f10x_adc.c...
+compiling stm32f10x_dbgmcu.c...
+compiling stm32f10x_crc.c...
+compiling system_stm32f10x.c...
+compiling stm32f10x_dac.c...
+compiling stm32f10x_cec.c...
+compiling stm32f10x_bkp.c...
+compiling stm32f10x_exti.c...
+compiling stm32f10x_fsmc.c...
+compiling stm32f10x_flash.c...
+compiling stm32f10x_iwdg.c...
+compiling stm32f10x_i2c.c...
+compiling stm32f10x_gpio.c...
+compiling stm32f10x_pwr.c...
+compiling stm32f10x_rtc.c...
+compiling stm32f10x_rcc.c...
+compiling stm32f10x_sdio.c...
+compiling stm32f10x_wwdg.c...
+compiling stm32f10x_spi.c...
+compiling stm32f10x_usart.c...
+compiling Timer.c...
+compiling Delay.c...
+compiling stm32f10x_tim.c...
+compiling AD.c...
+Hardware\AD.c(46): error:  #20: identifier "ADCConvertedValue" is undefined
+     DMA_InitStructure.DMA_MemoryBaseAddr = (uint32_t)ADCConvertedValue;//目标地址
+Hardware\AD.c(58): warning:  #1-D: last line of file ends without a newline
+   }
+Hardware\AD.c: 1 warning, 1 error
+compiling DA.c...
+compiling main.c...
+User\main.c(31): error:  #20: identifier "DA1_Value_Length" is undefined
+  extern uint16_t meDA1_Value[DA1_Value_Length];
+User\main.c(35): error:  #20: identifier "ADC1_DMA_Size" is undefined
+  extern u16 ADC1_ConvertedValue[ ADC1_DMA_Size ];
+User\main.c(96): warning:  #223-D: function "ADC_GPIO_Init" declared implicitly
+  	ADC_GPIO_Init();						    // ADC引脚初始化。
+User\main.c(97): warning:  #223-D: function "TIM3_Config" declared implicitly
+  	TIM3_Config();                     // 触发ADC采样频率，采样频率2MHz
+User\main.c(99): warning:  #223-D: function "ADC_DMA_Trig" declared implicitly
+  	ADC_DMA_Trig( ADC1_DMA_Size ); 	// 开始AD采集，设置采样点数
+User\main.c(108): error:  #29: expected an expression
+  	for(int i=0; i<200; i++)
+User\main.c(108): error:  #20: identifier "i" is undefined
+  	for(int i=0; i<200; i++)
+User\main.c(114): warning:  #223-D: function "TIM4_Init" declared implicitly
+  	TIM4_Init();
+User\main.c(115): warning:  #223-D: function "DA1_Init" declared implicitly
+  	DA1_Init();
+User\main.c(116): warning:  #223-D: function "TIM5_Init" declared implicitly
+  	TIM5_Init();
+User\main.c(117): warning:  #223-D: function "DA2_Init" declared implicitly
+  	DA2_Init();
+User\main.c(263): warning:  #177-D: variable "i"  was declared but never referenced
+      unsigned char i = 0;
+User\main.c(289): warning:  #550-D: variable "indata"  was set but never used
+      short indata[2048], outdata[2048], i;
+User\main.c: 9 warnings, 4 errors
+compiling stm32f10x_it.c...
+".\Objects\LED.axf" - 5 Error(s), 10 Warning(s).
+
+<h2>Software Packages used:</h2>
+
+Package Vendor: Keil
+                https://www.keil.com/pack/Keil.STM32F1xx_DFP.2.4.1.pack
+                Keil.STM32F1xx_DFP.2.4.1
+                STMicroelectronics STM32F1 Series Device Support, Drivers and Examples
+
+<h2>Collection of Component include folders:</h2>
+  F:/keil/Pack/Keil/STM32F1xx_DFP/2.4.1/Device/Include
+
+<h2>Collection of Component Files used:</h2>
+Target not created.
+Build Time Elapsed:  00:00:01
+</pre>
+</body>
+</html>
