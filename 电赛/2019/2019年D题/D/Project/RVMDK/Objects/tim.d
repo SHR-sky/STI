@@ -47,3 +47,4 @@
 .\objects\tim.o: ..\..\Libraries\CMSIS\Include\core_cm4.h
 .\objects\tim.o: F:\keil\core\ARM\ARMCC\Bin\..\include\string.h
 .\objects\tim.o: F:\keil\core\ARM\ARMCC\Bin\..\include\math.h
+.\objects\tim.o: ..\..\User\fft\inc\stm32_dsp.h

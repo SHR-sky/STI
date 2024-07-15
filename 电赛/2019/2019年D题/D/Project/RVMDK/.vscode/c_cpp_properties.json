@@ -10,9 +10,12 @@
                 "f:\\STI\\电赛\\2019\\2019年D题\\D\\Hardware",
                 "f:\\STI\\电赛\\2019\\2019年D题\\D\\Libraries\\DSP\\include",
                 "f:\\STI\\电赛\\2019\\2019年D题\\D\\Libraries\\DSP\\src",
+                "f:\\STI\\电赛\\2019\\2019年D题\\D\\User\\fft\\inc",
+                "f:\\STI\\电赛\\2019\\2019年D题\\D\\User\\fft\\src",
                 "f:\\STI\\电赛\\2019\\2019年D题\\D\\Libraries\\CMSIS\\Device\\ST\\STM32F4xx\\Source\\Templates\\arm",
                 "f:\\STI\\电赛\\2019\\2019年D题\\D\\Libraries\\STM32F4xx_StdPeriph_Driver\\src",
-                "f:\\STI\\电赛\\2019\\2019年D题\\D\\Libraries\\CMSIS\\Device\\ST\\STM32F4xx\\Source\\Templates"
+                "f:\\STI\\电赛\\2019\\2019年D题\\D\\Libraries\\CMSIS\\Device\\ST\\STM32F4xx\\Source\\Templates",
+                "f:\\STI\\电赛\\2019\\2019年D题\\D\\User\\fft\\src\\asm\\arm"
             ],
             "defines": [
                 "USE_STDPERIPH_DRIVER",

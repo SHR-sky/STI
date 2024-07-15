@@ -341,7 +341,7 @@
               <MiscControls></MiscControls>
               <Define>USE_STDPERIPH_DRIVER,USE_STM324xG_EVAL,__CC_ARM,__TARGET_FPU_VFP,__FPU_PRESENT,__FPU_USED,ARM_MATH_CM4</Define>
               <Undefine></Undefine>
-              <IncludePath>..\..\Libraries\CMSIS\Include;..\..\Libraries\CMSIS\Device\ST\STM32F4xx\Include;..\..\Libraries\STM32F4xx_StdPeriph_Driver\inc;..\..\User;..\..\Hardware;..\..\Libraries\DSP\include;..\..\Libraries\DSP\src</IncludePath>
+              <IncludePath>..\..\Libraries\CMSIS\Include;..\..\Libraries\CMSIS\Device\ST\STM32F4xx\Include;..\..\Libraries\STM32F4xx_StdPeriph_Driver\inc;..\..\User;..\..\Hardware;..\..\Libraries\DSP\include;..\..\Libraries\DSP\src;..\..\User\fft\inc;..\..\User\fft\src</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -776,6 +776,31 @@
           </Files>
         </Group>
         <Group>
+          <GroupName>DSP</GroupName>
+          <Files>
+            <File>
+              <FileName>arm_common_tables.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>..\..\Libraries\DSP\include\arm_common_tables.h</FilePath>
+            </File>
+            <File>
+              <FileName>arm_const_structs.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>..\..\Libraries\DSP\include\arm_const_structs.h</FilePath>
+            </File>
+            <File>
+              <FileName>arm_math.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>..\..\Libraries\DSP\include\arm_math.h</FilePath>
+            </File>
+            <File>
+              <FileName>arm_cortexM4lf_math.lib</FileName>
+              <FileType>4</FileType>
+              <FilePath>..\..\Libraries\DSP\src\arm_cortexM4lf_math.lib</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
           <GroupName>Hardware</GroupName>
           <Files>
             <File>
@@ -848,30 +873,30 @@
               <FileType>1</FileType>
               <FilePath>..\..\User\stm32f4xx_it.c</FilePath>
             </File>
-          </Files>
-        </Group>
-        <Group>
-          <GroupName>DSP</GroupName>
-          <Files>
             <File>
-              <FileName>arm_common_tables.h</FileName>
+              <FileName>stm32_dsp.h</FileName>
               <FileType>5</FileType>
-              <FilePath>..\..\Libraries\DSP\include\arm_common_tables.h</FilePath>
+              <FilePath>..\..\User\fft\inc\stm32_dsp.h</FilePath>
             </File>
             <File>
-              <FileName>arm_const_structs.h</FileName>
+              <FileName>table_fft.h</FileName>
               <FileType>5</FileType>
-              <FilePath>..\..\Libraries\DSP\include\arm_const_structs.h</FilePath>
+              <FilePath>..\..\User\fft\inc\table_fft.h</FilePath>
             </File>
             <File>
-              <FileName>arm_math.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>..\..\Libraries\DSP\include\arm_math.h</FilePath>
+              <FileName>cr4_fft_64_stm32.s</FileName>
+              <FileType>2</FileType>
+              <FilePath>..\..\User\fft\src\asm\arm\cr4_fft_64_stm32.s</FilePath>
             </File>
             <File>
-              <FileName>arm_cortexM4lf_math.lib</FileName>
-              <FileType>4</FileType>
-              <FilePath>..\..\Libraries\DSP\src\arm_cortexM4lf_math.lib</FilePath>
+              <FileName>cr4_fft_256_stm32.s</FileName>
+              <FileType>2</FileType>
+              <FilePath>..\..\User\fft\src\asm\arm\cr4_fft_256_stm32.s</FilePath>
+            </File>
+            <File>
+              <FileName>cr4_fft_1024_stm32.s</FileName>
+              <FileType>2</FileType>
+              <FilePath>..\..\User\fft\src\asm\arm\cr4_fft_1024_stm32.s</FilePath>
             </File>
           </Files>
         </Group>
