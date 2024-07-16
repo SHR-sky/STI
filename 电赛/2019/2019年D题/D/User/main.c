@@ -47,8 +47,27 @@ void Cal_Fre_up(void);
 void Cal_curve(void);
 void judge_cir(void);
 
+extern u16 ADC1_ConvertedValue[ADC1_DMA_Size]; // ADC1采样值，ADC2采样值
+extern u16 ADC2_ConvertedValue[ADC1_DMA_Size];
+
 int main()
 {
+	DFPlayer_Init();
+    ADC_GPIO_Init();             // ADC引脚初始化。
+    TIM3_Config();               // 触发ADC采样频率，采样频率100kHz
+    ADC_Config();                // ADC 100K采样频率，采集1024个数据，需要花费11ms
+	ADC1_DMA_Trig(ADC1_DMA_Size);
+	Serial_Init();
+	for(int i=0; i<100000; i++); // 等待采样结束
+	while(1)
+	{
+		//Serial_SendByte(0x1);
+		//Serial_Printf("1\r\n");
+		delay_s(1);
+		//for(int i=0; i<100000; i++);
+	}
+	
+	/*
 	Adc_Init();
 
 	AD9959_Init();
@@ -79,6 +98,7 @@ int main()
 			judge_cir();
 		}
 	}
+	*/
 }
 
 double get_Vpp(ADC_TypeDef *kADCx, u8 ch)

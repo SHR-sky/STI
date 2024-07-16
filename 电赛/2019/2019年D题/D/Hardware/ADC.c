@@ -5,7 +5,8 @@ int adcvota ;
 int i,sum,avgvota;
 
 // ADC1 - PA1 CH1 Vin
-// ADC2 - PC1 CH1 Vout
+// ADC2 - PC1 CH11 Vout
+// ADC3 - PF6 CH4 ADC3_IN4
 //初始化ADC
 //这里我们仅以规则通道为例
 //我们默认将开启通道0~3																	   

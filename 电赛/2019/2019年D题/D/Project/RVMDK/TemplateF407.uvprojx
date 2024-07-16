@@ -858,6 +858,26 @@
               <FileType>5</FileType>
               <FilePath>..\..\Hardware\ADC.h</FilePath>
             </File>
+            <File>
+              <FileName>ADCDMA.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\Hardware\ADCDMA.c</FilePath>
+            </File>
+            <File>
+              <FileName>ADCDMA.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>..\..\Hardware\ADCDMA.h</FilePath>
+            </File>
+            <File>
+              <FileName>DFPlayer.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\Hardware\DFPlayer.c</FilePath>
+            </File>
+            <File>
+              <FileName>DFPlayer.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>..\..\Hardware\DFPlayer.h</FilePath>
+            </File>
           </Files>
         </Group>
         <Group>

@@ -6,13 +6,18 @@ void Serial_Init(void)
 {
 
 	// USART2_TX PA2 USART2_RX PA3
+	// USART2_TX PD5 USART2_RX PD6
 	// USART2_CTS PD3 USART2_RTS PD4
 
 	/*open the clock*/
 	RCC_AHB1PeriphClockCmd(RCC_AHB1Periph_GPIOA, ENABLE);
+	//RCC_AHB1PeriphClockCmd(RCC_AHB1Periph_GPIOD, ENABLE);
 
 	GPIO_PinAFConfig(GPIOA, GPIO_PinSource2, GPIO_AF_USART2);
 	GPIO_PinAFConfig(GPIOA, GPIO_PinSource3, GPIO_AF_USART2);
+	
+	//GPIO_PinAFConfig(GPIOD, GPIO_PinSource5, GPIO_AF_USART2);
+	//GPIO_PinAFConfig(GPIOD, GPIO_PinSource6, GPIO_AF_USART2);
 
 	/* define the struct */
 	GPIO_InitTypeDef GPIO_InitStruct;
@@ -21,20 +26,22 @@ void Serial_Init(void)
 	
 	// TX
 	GPIO_InitStruct.GPIO_Mode = GPIO_Mode_AF;
-	// GPIO_InitStruct.GPIO_Mode = GPIO_Mode_OUT;
 	GPIO_InitStruct.GPIO_OType = GPIO_OType_PP;
 	GPIO_InitStruct.GPIO_Pin = GPIO_Pin_2;
+	//GPIO_InitStruct.GPIO_Pin = GPIO_Pin_5;
 	GPIO_InitStruct.GPIO_PuPd = GPIO_PuPd_UP;
 	GPIO_InitStruct.GPIO_Speed = GPIO_Speed_50MHz;
 
 	/* 四、调用初始化函数，写入寄存器 */
 	GPIO_Init(GPIOA, &GPIO_InitStruct);
+	//GPIO_Init(GPIOD, &GPIO_InitStruct);
 
 	// RX
 	GPIO_InitStruct.GPIO_Mode = GPIO_Mode_AF;
 	GPIO_InitStruct.GPIO_Pin = GPIO_Pin_3;
 	GPIO_Init(GPIOA, &GPIO_InitStruct);
-
+	//GPIO_InitStruct.GPIO_Pin = GPIO_Pin_6;
+	//GPIO_Init(GPIOD, &GPIO_InitStruct);
 
 	// 发送STM32数据
 
@@ -172,7 +179,8 @@ void USART2_IRQHandler(void)
 	if (USART_GetFlagStatus(USART2, USART_FLAG_RXNE) == SET)
 	{
 		Res = USART_ReceiveData(USART2);
-		
+		//Serial_Printf("%x \r\n",Res);
+		Serial_SendByte(Res);
 		if(Res==0x1)
 		{
 

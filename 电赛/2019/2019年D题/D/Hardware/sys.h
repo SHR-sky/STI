@@ -9,6 +9,8 @@
 #include "AD9959.h"
 #include "arm_math.h" // 包含DSP库
 #include "stm32_dsp.h"
+#include "ADCDMA.h"
+#include "DAC.h"
 
 
 
