@@ -183,7 +183,7 @@
 
   <Group>
     <GroupName>STARTUP</GroupName>
-    <tvExp>0</tvExp>
+    <tvExp>1</tvExp>
     <tvExpOptDlg>0</tvExpOptDlg>
     <cbSel>0</cbSel>
     <RteFlg>0</RteFlg>
@@ -970,8 +970,8 @@
       <tvExp>0</tvExp>
       <tvExpOptDlg>0</tvExpOptDlg>
       <bDave2>0</bDave2>
-      <PathWithFileName>..\..\Hardware\DFPlayer.c</PathWithFileName>
-      <FilenameWithoutPath>DFPlayer.c</FilenameWithoutPath>
+      <PathWithFileName>..\..\Hardware\ADS8688.c</PathWithFileName>
+      <FilenameWithoutPath>ADS8688.c</FilenameWithoutPath>
       <RteFlg>0</RteFlg>
       <bShared>0</bShared>
     </File>
@@ -982,8 +982,8 @@
       <tvExp>0</tvExp>
       <tvExpOptDlg>0</tvExpOptDlg>
       <bDave2>0</bDave2>
-      <PathWithFileName>..\..\Hardware\DFPlayer.h</PathWithFileName>
-      <FilenameWithoutPath>DFPlayer.h</FilenameWithoutPath>
+      <PathWithFileName>..\..\Hardware\ADS8688.h</PathWithFileName>
+      <FilenameWithoutPath>ADS8688.h</FilenameWithoutPath>
       <RteFlg>0</RteFlg>
       <bShared>0</bShared>
     </File>

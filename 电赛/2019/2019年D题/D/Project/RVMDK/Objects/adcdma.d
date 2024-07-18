@@ -50,4 +50,4 @@
 .\objects\adcdma.o: ..\..\User\fft\inc\stm32_dsp.h
 .\objects\adcdma.o: ..\..\Hardware\ADCDMA.h
 .\objects\adcdma.o: ..\..\Hardware\DAC.h
-.\objects\adcdma.o: ..\..\Hardware\DFPlayer.h
+.\objects\adcdma.o: ..\..\Hardware\ADS8688.h

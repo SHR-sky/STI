@@ -50,5 +50,5 @@
 .\objects\serial.o: ..\..\User\fft\inc\stm32_dsp.h
 .\objects\serial.o: ..\..\Hardware\ADCDMA.h
 .\objects\serial.o: ..\..\Hardware\DAC.h
-.\objects\serial.o: ..\..\Hardware\DFPlayer.h
+.\objects\serial.o: ..\..\Hardware\ADS8688.h
 .\objects\serial.o: E:\SoftLib\Keil_v5\ARM\ARMCC\Bin\..\include\stdarg.h

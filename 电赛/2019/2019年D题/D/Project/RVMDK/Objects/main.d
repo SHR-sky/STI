@@ -49,4 +49,4 @@
 .\objects\main.o: ..\..\User\fft\inc\stm32_dsp.h
 .\objects\main.o: ..\..\Hardware\ADCDMA.h
 .\objects\main.o: ..\..\Hardware\DAC.h
-.\objects\main.o: ..\..\Hardware\DFPlayer.h
+.\objects\main.o: ..\..\Hardware\ADS8688.h

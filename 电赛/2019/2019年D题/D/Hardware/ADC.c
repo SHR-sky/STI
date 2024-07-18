@@ -18,22 +18,21 @@ void  Adc_Init(void)
 	
 	ADC_CommonInitTypeDef ADC_CommonInitStruct;
 	
-	//开启ADC1时钟
-	RCC_APB2PeriphClockCmd(RCC_APB2Periph_ADC2|RCC_APB2Periph_ADC1, ENABLE);
+	//开启ADC3时钟
+	RCC_APB2PeriphClockCmd(RCC_APB2Periph_ADC3, ENABLE);
 	
-	//开启GPIO时钟 PA5
-	RCC_AHB1PeriphClockCmd(RCC_AHB1Periph_GPIOC|RCC_AHB1Periph_GPIOA, ENABLE); 
+	//开启GPIO时钟 PF6
+	RCC_AHB1PeriphClockCmd(RCC_AHB1Periph_GPIOF, ENABLE); 
 	
 	
 	//GPIO初始化 初始化为模拟功能
-	gpio_InitTypeDef.GPIO_Pin = GPIO_Pin_1;
+	gpio_InitTypeDef.GPIO_Pin = GPIO_Pin_6;
 	gpio_InitTypeDef.GPIO_Mode = GPIO_Mode_AN;
 	gpio_InitTypeDef.GPIO_PuPd = GPIO_PuPd_NOPULL;
-	GPIO_Init(GPIOC, &gpio_InitTypeDef);
-	GPIO_Init(GPIOA, &gpio_InitTypeDef);
+	GPIO_Init(GPIOF, &gpio_InitTypeDef);
 	
-	RCC_APB2PeriphResetCmd(RCC_APB2Periph_ADC2|RCC_APB2Periph_ADC1,ENABLE);	  //ADC1复位
-	RCC_APB2PeriphResetCmd(RCC_APB2Periph_ADC2|RCC_APB2Periph_ADC1,DISABLE);	//复位结束	
+	RCC_APB2PeriphResetCmd(RCC_APB2Periph_ADC3,ENABLE);	  //ADC1复位
+	RCC_APB2PeriphResetCmd(RCC_APB2Periph_ADC3,DISABLE);	//复位结束	
 	
 	
 	//初始化ADC_CCR寄存器
@@ -50,12 +49,10 @@ void  Adc_Init(void)
 	ADC_InitStruct.ADC_NbrOfConversion = 1;
 	ADC_InitStruct.ADC_Resolution = ADC_Resolution_12b;
 	ADC_InitStruct.ADC_ScanConvMode = DISABLE;
-	ADC_Init(ADC2, &ADC_InitStruct);
-	ADC_Init(ADC1, &ADC_InitStruct);
+	ADC_Init(ADC3, &ADC_InitStruct);
 	
 	//使能ADC
-	ADC_Cmd(ADC2, ENABLE);
-	ADC_Cmd(ADC1, ENABLE);
+	ADC_Cmd(ADC3, ENABLE);
 	
 }				  
 

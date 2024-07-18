@@ -1455,7 +1455,7 @@ F (..\..\Libraries\DSP\src\arm_cortexM4lf_math.lib)(0x6694C5EA)()
 F (..\..\Hardware\Serial.c)(0x66965ACD)(--c99 -c --cpu Cortex-M4.fp.sp -D__MICROLIB -g -O0 --apcs=interwork --split_sections -I ..\..\Libraries\CMSIS\Include -I ..\..\Libraries\CMSIS\Device\ST\STM32F4xx\Include -I ..\..\Libraries\STM32F4xx_StdPeriph_Driver\inc -I ..\..\User -I ..\..\Hardware -I ..\..\Libraries\DSP\include -I ..\..\Libraries\DSP\src -I ..\..\User\fft\inc -I ..\..\User\fft\src-IE:\SoftLib\Keil_Arm_pack\Keil\STM32F4xx_DFP\2.17.1\Drivers\CMSIS\Device\ST\STM32F4xx\Include-D__UVISION_VERSION="538" -DSTM32F407xx -DUSE_STDPERIPH_DRIVER -DUSE_STM324xG_EVAL -D__CC_ARM -D__TARGET_FPU_VFP -D__FPU_PRESENT -D__FPU_USED -DARM_MATH_CM4-o .\objects\serial.o --omf_browse .\objects\serial.crf --depend .\objects\serial.d)
 I (..\..\Hardware\Serial.h)(0x6694C5E9)
 I (E:\SoftLib\Keil_v5\ARM\ARMCC\include\stdio.h)(0x60252374)
-I (..\..\Hardware\sys.h)(0x66965CB3)
+I (..\..\Hardware\sys.h)(0x6697B363)
 I (..\..\Libraries\CMSIS\Device\ST\STM32F4xx\Include\stm32f4xx.h)(0x6694C5E9)
 I (..\..\Libraries\CMSIS\Include\core_cm4.h)(0x6694C5E9)
 I (E:\SoftLib\Keil_v5\ARM\ARMCC\include\stdint.h)(0x6025237E)
@@ -1493,19 +1493,19 @@ I (..\..\Libraries\STM32F4xx_StdPeriph_Driver\inc\stm32f4xx_fsmc.h)(0x6694C5EA)
 I (..\..\Hardware\TIM.h)(0x6694C5E9)
 I (..\..\Hardware\Delay.h)(0x6694C5E9)
 I (..\..\Hardware\ADC.h)(0x66963063)
-I (..\..\Hardware\AD9959.h)(0x6694C5E9)
+I (..\..\Hardware\AD9959.h)(0x6697560E)
 I (..\..\Libraries\CMSIS\Include\arm_math.h)(0x6694C5E9)
 I (E:\SoftLib\Keil_v5\ARM\ARMCC\include\string.h)(0x6025237E)
 I (E:\SoftLib\Keil_v5\ARM\ARMCC\include\math.h)(0x60252378)
 I (..\..\User\fft\inc\stm32_dsp.h)(0x66961D76)
 I (..\..\Hardware\ADCDMA.h)(0x66963F8E)
 I (..\..\Hardware\DAC.h)(0x6690C554)
-I (..\..\Hardware\DFPlayer.h)(0x6693DBED)
+I (..\..\Hardware\ADS8688.h)(0x6697D4AF)
 I (E:\SoftLib\Keil_v5\ARM\ARMCC\include\stdarg.h)(0x60252376)
 F (..\..\Hardware\Serial.h)(0x6694C5E9)()
 F (..\..\Hardware\TIM.c)(0x6694C5E9)(--c99 -c --cpu Cortex-M4.fp.sp -D__MICROLIB -g -O0 --apcs=interwork --split_sections -I ..\..\Libraries\CMSIS\Include -I ..\..\Libraries\CMSIS\Device\ST\STM32F4xx\Include -I ..\..\Libraries\STM32F4xx_StdPeriph_Driver\inc -I ..\..\User -I ..\..\Hardware -I ..\..\Libraries\DSP\include -I ..\..\Libraries\DSP\src -I ..\..\User\fft\inc -I ..\..\User\fft\src-IE:\SoftLib\Keil_Arm_pack\Keil\STM32F4xx_DFP\2.17.1\Drivers\CMSIS\Device\ST\STM32F4xx\Include-D__UVISION_VERSION="538" -DSTM32F407xx -DUSE_STDPERIPH_DRIVER -DUSE_STM324xG_EVAL -D__CC_ARM -D__TARGET_FPU_VFP -D__FPU_PRESENT -D__FPU_USED -DARM_MATH_CM4-o .\objects\tim.o --omf_browse .\objects\tim.crf --depend .\objects\tim.d)
 I (..\..\Hardware\TIM.h)(0x6694C5E9)
-I (..\..\Hardware\sys.h)(0x66965CB3)
+I (..\..\Hardware\sys.h)(0x6697B363)
 I (..\..\Libraries\CMSIS\Device\ST\STM32F4xx\Include\stm32f4xx.h)(0x6694C5E9)
 I (..\..\Libraries\CMSIS\Include\core_cm4.h)(0x6694C5E9)
 I (E:\SoftLib\Keil_v5\ARM\ARMCC\include\stdint.h)(0x6025237E)
@@ -1544,18 +1544,18 @@ I (..\..\Hardware\Serial.h)(0x6694C5E9)
 I (E:\SoftLib\Keil_v5\ARM\ARMCC\include\stdio.h)(0x60252374)
 I (..\..\Hardware\Delay.h)(0x6694C5E9)
 I (..\..\Hardware\ADC.h)(0x66963063)
-I (..\..\Hardware\AD9959.h)(0x6694C5E9)
+I (..\..\Hardware\AD9959.h)(0x6697560E)
 I (..\..\Libraries\CMSIS\Include\arm_math.h)(0x6694C5E9)
 I (E:\SoftLib\Keil_v5\ARM\ARMCC\include\string.h)(0x6025237E)
 I (E:\SoftLib\Keil_v5\ARM\ARMCC\include\math.h)(0x60252378)
 I (..\..\User\fft\inc\stm32_dsp.h)(0x66961D76)
 I (..\..\Hardware\ADCDMA.h)(0x66963F8E)
 I (..\..\Hardware\DAC.h)(0x6690C554)
-I (..\..\Hardware\DFPlayer.h)(0x6693DBED)
+I (..\..\Hardware\ADS8688.h)(0x6697D4AF)
 F (..\..\Hardware\TIM.h)(0x6694C5E9)()
-F (..\..\Hardware\Delay.c)(0x6694C5E9)(--c99 -c --cpu Cortex-M4.fp.sp -D__MICROLIB -g -O0 --apcs=interwork --split_sections -I ..\..\Libraries\CMSIS\Include -I ..\..\Libraries\CMSIS\Device\ST\STM32F4xx\Include -I ..\..\Libraries\STM32F4xx_StdPeriph_Driver\inc -I ..\..\User -I ..\..\Hardware -I ..\..\Libraries\DSP\include -I ..\..\Libraries\DSP\src -I ..\..\User\fft\inc -I ..\..\User\fft\src-IE:\SoftLib\Keil_Arm_pack\Keil\STM32F4xx_DFP\2.17.1\Drivers\CMSIS\Device\ST\STM32F4xx\Include-D__UVISION_VERSION="538" -DSTM32F407xx -DUSE_STDPERIPH_DRIVER -DUSE_STM324xG_EVAL -D__CC_ARM -D__TARGET_FPU_VFP -D__FPU_PRESENT -D__FPU_USED -DARM_MATH_CM4-o .\objects\delay.o --omf_browse .\objects\delay.crf --depend .\objects\delay.d)
+F (..\..\Hardware\Delay.c)(0x6697CA62)(--c99 -c --cpu Cortex-M4.fp.sp -D__MICROLIB -g -O0 --apcs=interwork --split_sections -I ..\..\Libraries\CMSIS\Include -I ..\..\Libraries\CMSIS\Device\ST\STM32F4xx\Include -I ..\..\Libraries\STM32F4xx_StdPeriph_Driver\inc -I ..\..\User -I ..\..\Hardware -I ..\..\Libraries\DSP\include -I ..\..\Libraries\DSP\src -I ..\..\User\fft\inc -I ..\..\User\fft\src-IE:\SoftLib\Keil_Arm_pack\Keil\STM32F4xx_DFP\2.17.1\Drivers\CMSIS\Device\ST\STM32F4xx\Include-D__UVISION_VERSION="538" -DSTM32F407xx -DUSE_STDPERIPH_DRIVER -DUSE_STM324xG_EVAL -D__CC_ARM -D__TARGET_FPU_VFP -D__FPU_PRESENT -D__FPU_USED -DARM_MATH_CM4-o .\objects\delay.o --omf_browse .\objects\delay.crf --depend .\objects\delay.d)
 I (..\..\Hardware\Delay.h)(0x6694C5E9)
-I (..\..\Hardware\sys.h)(0x66965CB3)
+I (..\..\Hardware\sys.h)(0x6697B363)
 I (..\..\Libraries\CMSIS\Device\ST\STM32F4xx\Include\stm32f4xx.h)(0x6694C5E9)
 I (..\..\Libraries\CMSIS\Include\core_cm4.h)(0x6694C5E9)
 I (E:\SoftLib\Keil_v5\ARM\ARMCC\include\stdint.h)(0x6025237E)
@@ -1594,19 +1594,19 @@ I (..\..\Hardware\TIM.h)(0x6694C5E9)
 I (..\..\Hardware\Serial.h)(0x6694C5E9)
 I (E:\SoftLib\Keil_v5\ARM\ARMCC\include\stdio.h)(0x60252374)
 I (..\..\Hardware\ADC.h)(0x66963063)
-I (..\..\Hardware\AD9959.h)(0x6694C5E9)
+I (..\..\Hardware\AD9959.h)(0x6697560E)
 I (..\..\Libraries\CMSIS\Include\arm_math.h)(0x6694C5E9)
 I (E:\SoftLib\Keil_v5\ARM\ARMCC\include\string.h)(0x6025237E)
 I (E:\SoftLib\Keil_v5\ARM\ARMCC\include\math.h)(0x60252378)
 I (..\..\User\fft\inc\stm32_dsp.h)(0x66961D76)
 I (..\..\Hardware\ADCDMA.h)(0x66963F8E)
 I (..\..\Hardware\DAC.h)(0x6690C554)
-I (..\..\Hardware\DFPlayer.h)(0x6693DBED)
+I (..\..\Hardware\ADS8688.h)(0x6697D4AF)
 F (..\..\Hardware\Delay.h)(0x6694C5E9)()
-F (..\..\Hardware\sys.h)(0x66965CB3)()
-F (..\..\Hardware\AD9959.c)(0x6694C5E9)(--c99 -c --cpu Cortex-M4.fp.sp -D__MICROLIB -g -O0 --apcs=interwork --split_sections -I ..\..\Libraries\CMSIS\Include -I ..\..\Libraries\CMSIS\Device\ST\STM32F4xx\Include -I ..\..\Libraries\STM32F4xx_StdPeriph_Driver\inc -I ..\..\User -I ..\..\Hardware -I ..\..\Libraries\DSP\include -I ..\..\Libraries\DSP\src -I ..\..\User\fft\inc -I ..\..\User\fft\src-IE:\SoftLib\Keil_Arm_pack\Keil\STM32F4xx_DFP\2.17.1\Drivers\CMSIS\Device\ST\STM32F4xx\Include-D__UVISION_VERSION="538" -DSTM32F407xx -DUSE_STDPERIPH_DRIVER -DUSE_STM324xG_EVAL -D__CC_ARM -D__TARGET_FPU_VFP -D__FPU_PRESENT -D__FPU_USED -DARM_MATH_CM4-o .\objects\ad9959.o --omf_browse .\objects\ad9959.crf --depend .\objects\ad9959.d)
-I (..\..\Hardware\AD9959.h)(0x6694C5E9)
-I (..\..\Hardware\sys.h)(0x66965CB3)
+F (..\..\Hardware\sys.h)(0x6697B363)()
+F (..\..\Hardware\AD9959.c)(0x669755F6)(--c99 -c --cpu Cortex-M4.fp.sp -D__MICROLIB -g -O0 --apcs=interwork --split_sections -I ..\..\Libraries\CMSIS\Include -I ..\..\Libraries\CMSIS\Device\ST\STM32F4xx\Include -I ..\..\Libraries\STM32F4xx_StdPeriph_Driver\inc -I ..\..\User -I ..\..\Hardware -I ..\..\Libraries\DSP\include -I ..\..\Libraries\DSP\src -I ..\..\User\fft\inc -I ..\..\User\fft\src-IE:\SoftLib\Keil_Arm_pack\Keil\STM32F4xx_DFP\2.17.1\Drivers\CMSIS\Device\ST\STM32F4xx\Include-D__UVISION_VERSION="538" -DSTM32F407xx -DUSE_STDPERIPH_DRIVER -DUSE_STM324xG_EVAL -D__CC_ARM -D__TARGET_FPU_VFP -D__FPU_PRESENT -D__FPU_USED -DARM_MATH_CM4-o .\objects\ad9959.o --omf_browse .\objects\ad9959.crf --depend .\objects\ad9959.d)
+I (..\..\Hardware\AD9959.h)(0x6697560E)
+I (..\..\Hardware\sys.h)(0x6697B363)
 I (..\..\Libraries\CMSIS\Device\ST\STM32F4xx\Include\stm32f4xx.h)(0x6694C5E9)
 I (..\..\Libraries\CMSIS\Include\core_cm4.h)(0x6694C5E9)
 I (E:\SoftLib\Keil_v5\ARM\ARMCC\include\stdint.h)(0x6025237E)
@@ -1652,11 +1652,11 @@ I (E:\SoftLib\Keil_v5\ARM\ARMCC\include\math.h)(0x60252378)
 I (..\..\User\fft\inc\stm32_dsp.h)(0x66961D76)
 I (..\..\Hardware\ADCDMA.h)(0x66963F8E)
 I (..\..\Hardware\DAC.h)(0x6690C554)
-I (..\..\Hardware\DFPlayer.h)(0x6693DBED)
-F (..\..\Hardware\AD9959.h)(0x6694C5E9)()
-F (..\..\Hardware\ADC.c)(0x669635CF)(--c99 -c --cpu Cortex-M4.fp.sp -D__MICROLIB -g -O0 --apcs=interwork --split_sections -I ..\..\Libraries\CMSIS\Include -I ..\..\Libraries\CMSIS\Device\ST\STM32F4xx\Include -I ..\..\Libraries\STM32F4xx_StdPeriph_Driver\inc -I ..\..\User -I ..\..\Hardware -I ..\..\Libraries\DSP\include -I ..\..\Libraries\DSP\src -I ..\..\User\fft\inc -I ..\..\User\fft\src-IE:\SoftLib\Keil_Arm_pack\Keil\STM32F4xx_DFP\2.17.1\Drivers\CMSIS\Device\ST\STM32F4xx\Include-D__UVISION_VERSION="538" -DSTM32F407xx -DUSE_STDPERIPH_DRIVER -DUSE_STM324xG_EVAL -D__CC_ARM -D__TARGET_FPU_VFP -D__FPU_PRESENT -D__FPU_USED -DARM_MATH_CM4-o .\objects\adc.o --omf_browse .\objects\adc.crf --depend .\objects\adc.d)
+I (..\..\Hardware\ADS8688.h)(0x6697D4AF)
+F (..\..\Hardware\AD9959.h)(0x6697560E)()
+F (..\..\Hardware\ADC.c)(0x6697585E)(--c99 -c --cpu Cortex-M4.fp.sp -D__MICROLIB -g -O0 --apcs=interwork --split_sections -I ..\..\Libraries\CMSIS\Include -I ..\..\Libraries\CMSIS\Device\ST\STM32F4xx\Include -I ..\..\Libraries\STM32F4xx_StdPeriph_Driver\inc -I ..\..\User -I ..\..\Hardware -I ..\..\Libraries\DSP\include -I ..\..\Libraries\DSP\src -I ..\..\User\fft\inc -I ..\..\User\fft\src-IE:\SoftLib\Keil_Arm_pack\Keil\STM32F4xx_DFP\2.17.1\Drivers\CMSIS\Device\ST\STM32F4xx\Include-D__UVISION_VERSION="538" -DSTM32F407xx -DUSE_STDPERIPH_DRIVER -DUSE_STM324xG_EVAL -D__CC_ARM -D__TARGET_FPU_VFP -D__FPU_PRESENT -D__FPU_USED -DARM_MATH_CM4-o .\objects\adc.o --omf_browse .\objects\adc.crf --depend .\objects\adc.d)
 I (..\..\Hardware\ADC.h)(0x66963063)
-I (..\..\Hardware\sys.h)(0x66965CB3)
+I (..\..\Hardware\sys.h)(0x6697B363)
 I (..\..\Libraries\CMSIS\Device\ST\STM32F4xx\Include\stm32f4xx.h)(0x6694C5E9)
 I (..\..\Libraries\CMSIS\Include\core_cm4.h)(0x6694C5E9)
 I (E:\SoftLib\Keil_v5\ARM\ARMCC\include\stdint.h)(0x6025237E)
@@ -1695,18 +1695,18 @@ I (..\..\Hardware\TIM.h)(0x6694C5E9)
 I (..\..\Hardware\Serial.h)(0x6694C5E9)
 I (E:\SoftLib\Keil_v5\ARM\ARMCC\include\stdio.h)(0x60252374)
 I (..\..\Hardware\Delay.h)(0x6694C5E9)
-I (..\..\Hardware\AD9959.h)(0x6694C5E9)
+I (..\..\Hardware\AD9959.h)(0x6697560E)
 I (..\..\Libraries\CMSIS\Include\arm_math.h)(0x6694C5E9)
 I (E:\SoftLib\Keil_v5\ARM\ARMCC\include\string.h)(0x6025237E)
 I (E:\SoftLib\Keil_v5\ARM\ARMCC\include\math.h)(0x60252378)
 I (..\..\User\fft\inc\stm32_dsp.h)(0x66961D76)
 I (..\..\Hardware\ADCDMA.h)(0x66963F8E)
 I (..\..\Hardware\DAC.h)(0x6690C554)
-I (..\..\Hardware\DFPlayer.h)(0x6693DBED)
+I (..\..\Hardware\ADS8688.h)(0x6697D4AF)
 F (..\..\Hardware\ADC.h)(0x66963063)()
-F (..\..\Hardware\ADCDMA.c)(0x66963F97)(--c99 -c --cpu Cortex-M4.fp.sp -D__MICROLIB -g -O0 --apcs=interwork --split_sections -I ..\..\Libraries\CMSIS\Include -I ..\..\Libraries\CMSIS\Device\ST\STM32F4xx\Include -I ..\..\Libraries\STM32F4xx_StdPeriph_Driver\inc -I ..\..\User -I ..\..\Hardware -I ..\..\Libraries\DSP\include -I ..\..\Libraries\DSP\src -I ..\..\User\fft\inc -I ..\..\User\fft\src-IE:\SoftLib\Keil_Arm_pack\Keil\STM32F4xx_DFP\2.17.1\Drivers\CMSIS\Device\ST\STM32F4xx\Include-D__UVISION_VERSION="538" -DSTM32F407xx -DUSE_STDPERIPH_DRIVER -DUSE_STM324xG_EVAL -D__CC_ARM -D__TARGET_FPU_VFP -D__FPU_PRESENT -D__FPU_USED -DARM_MATH_CM4-o .\objects\adcdma.o --omf_browse .\objects\adcdma.crf --depend .\objects\adcdma.d)
+F (..\..\Hardware\ADCDMA.c)(0x6697576C)(--c99 -c --cpu Cortex-M4.fp.sp -D__MICROLIB -g -O0 --apcs=interwork --split_sections -I ..\..\Libraries\CMSIS\Include -I ..\..\Libraries\CMSIS\Device\ST\STM32F4xx\Include -I ..\..\Libraries\STM32F4xx_StdPeriph_Driver\inc -I ..\..\User -I ..\..\Hardware -I ..\..\Libraries\DSP\include -I ..\..\Libraries\DSP\src -I ..\..\User\fft\inc -I ..\..\User\fft\src-IE:\SoftLib\Keil_Arm_pack\Keil\STM32F4xx_DFP\2.17.1\Drivers\CMSIS\Device\ST\STM32F4xx\Include-D__UVISION_VERSION="538" -DSTM32F407xx -DUSE_STDPERIPH_DRIVER -DUSE_STM324xG_EVAL -D__CC_ARM -D__TARGET_FPU_VFP -D__FPU_PRESENT -D__FPU_USED -DARM_MATH_CM4-o .\objects\adcdma.o --omf_browse .\objects\adcdma.crf --depend .\objects\adcdma.d)
 I (..\..\Hardware\ADCDMA.h)(0x66963F8E)
-I (..\..\Hardware\sys.h)(0x66965CB3)
+I (..\..\Hardware\sys.h)(0x6697B363)
 I (..\..\Libraries\CMSIS\Device\ST\STM32F4xx\Include\stm32f4xx.h)(0x6694C5E9)
 I (..\..\Libraries\CMSIS\Include\core_cm4.h)(0x6694C5E9)
 I (E:\SoftLib\Keil_v5\ARM\ARMCC\include\stdint.h)(0x6025237E)
@@ -1746,17 +1746,17 @@ I (..\..\Hardware\Serial.h)(0x6694C5E9)
 I (E:\SoftLib\Keil_v5\ARM\ARMCC\include\stdio.h)(0x60252374)
 I (..\..\Hardware\Delay.h)(0x6694C5E9)
 I (..\..\Hardware\ADC.h)(0x66963063)
-I (..\..\Hardware\AD9959.h)(0x6694C5E9)
+I (..\..\Hardware\AD9959.h)(0x6697560E)
 I (..\..\Libraries\CMSIS\Include\arm_math.h)(0x6694C5E9)
 I (E:\SoftLib\Keil_v5\ARM\ARMCC\include\string.h)(0x6025237E)
 I (E:\SoftLib\Keil_v5\ARM\ARMCC\include\math.h)(0x60252378)
 I (..\..\User\fft\inc\stm32_dsp.h)(0x66961D76)
 I (..\..\Hardware\DAC.h)(0x6690C554)
-I (..\..\Hardware\DFPlayer.h)(0x6693DBED)
+I (..\..\Hardware\ADS8688.h)(0x6697D4AF)
 F (..\..\Hardware\ADCDMA.h)(0x66963F8E)()
-F (..\..\Hardware\DFPlayer.c)(0x66965C9D)(--c99 -c --cpu Cortex-M4.fp.sp -D__MICROLIB -g -O0 --apcs=interwork --split_sections -I ..\..\Libraries\CMSIS\Include -I ..\..\Libraries\CMSIS\Device\ST\STM32F4xx\Include -I ..\..\Libraries\STM32F4xx_StdPeriph_Driver\inc -I ..\..\User -I ..\..\Hardware -I ..\..\Libraries\DSP\include -I ..\..\Libraries\DSP\src -I ..\..\User\fft\inc -I ..\..\User\fft\src-IE:\SoftLib\Keil_Arm_pack\Keil\STM32F4xx_DFP\2.17.1\Drivers\CMSIS\Device\ST\STM32F4xx\Include-D__UVISION_VERSION="538" -DSTM32F407xx -DUSE_STDPERIPH_DRIVER -DUSE_STM324xG_EVAL -D__CC_ARM -D__TARGET_FPU_VFP -D__FPU_PRESENT -D__FPU_USED -DARM_MATH_CM4-o .\objects\dfplayer.o --omf_browse .\objects\dfplayer.crf --depend .\objects\dfplayer.d)
-I (..\..\Hardware\DFPlayer.h)(0x6693DBED)
-I (..\..\Hardware\sys.h)(0x66965CB3)
+F (..\..\Hardware\ADS8688.c)(0x6697D946)(--c99 -c --cpu Cortex-M4.fp.sp -D__MICROLIB -g -O0 --apcs=interwork --split_sections -I ..\..\Libraries\CMSIS\Include -I ..\..\Libraries\CMSIS\Device\ST\STM32F4xx\Include -I ..\..\Libraries\STM32F4xx_StdPeriph_Driver\inc -I ..\..\User -I ..\..\Hardware -I ..\..\Libraries\DSP\include -I ..\..\Libraries\DSP\src -I ..\..\User\fft\inc -I ..\..\User\fft\src-IE:\SoftLib\Keil_Arm_pack\Keil\STM32F4xx_DFP\2.17.1\Drivers\CMSIS\Device\ST\STM32F4xx\Include-D__UVISION_VERSION="538" -DSTM32F407xx -DUSE_STDPERIPH_DRIVER -DUSE_STM324xG_EVAL -D__CC_ARM -D__TARGET_FPU_VFP -D__FPU_PRESENT -D__FPU_USED -DARM_MATH_CM4-o .\objects\ads8688.o --omf_browse .\objects\ads8688.crf --depend .\objects\ads8688.d)
+I (..\..\Hardware\ads8688.h)(0x6697D4AF)
+I (..\..\Hardware\sys.h)(0x6697B363)
 I (..\..\Libraries\CMSIS\Device\ST\STM32F4xx\Include\stm32f4xx.h)(0x6694C5E9)
 I (..\..\Libraries\CMSIS\Include\core_cm4.h)(0x6694C5E9)
 I (E:\SoftLib\Keil_v5\ARM\ARMCC\include\stdint.h)(0x6025237E)
@@ -1796,16 +1796,16 @@ I (..\..\Hardware\Serial.h)(0x6694C5E9)
 I (E:\SoftLib\Keil_v5\ARM\ARMCC\include\stdio.h)(0x60252374)
 I (..\..\Hardware\Delay.h)(0x6694C5E9)
 I (..\..\Hardware\ADC.h)(0x66963063)
-I (..\..\Hardware\AD9959.h)(0x6694C5E9)
+I (..\..\Hardware\AD9959.h)(0x6697560E)
 I (..\..\Libraries\CMSIS\Include\arm_math.h)(0x6694C5E9)
 I (E:\SoftLib\Keil_v5\ARM\ARMCC\include\string.h)(0x6025237E)
 I (E:\SoftLib\Keil_v5\ARM\ARMCC\include\math.h)(0x60252378)
 I (..\..\User\fft\inc\stm32_dsp.h)(0x66961D76)
 I (..\..\Hardware\ADCDMA.h)(0x66963F8E)
 I (..\..\Hardware\DAC.h)(0x6690C554)
-F (..\..\Hardware\DFPlayer.h)(0x6693DBED)()
-F (..\..\User\main.c)(0x66965CA7)(--c99 -c --cpu Cortex-M4.fp.sp -D__MICROLIB -g -O0 --apcs=interwork --split_sections -I ..\..\Libraries\CMSIS\Include -I ..\..\Libraries\CMSIS\Device\ST\STM32F4xx\Include -I ..\..\Libraries\STM32F4xx_StdPeriph_Driver\inc -I ..\..\User -I ..\..\Hardware -I ..\..\Libraries\DSP\include -I ..\..\Libraries\DSP\src -I ..\..\User\fft\inc -I ..\..\User\fft\src-IE:\SoftLib\Keil_Arm_pack\Keil\STM32F4xx_DFP\2.17.1\Drivers\CMSIS\Device\ST\STM32F4xx\Include-D__UVISION_VERSION="538" -DSTM32F407xx -DUSE_STDPERIPH_DRIVER -DUSE_STM324xG_EVAL -D__CC_ARM -D__TARGET_FPU_VFP -D__FPU_PRESENT -D__FPU_USED -DARM_MATH_CM4-o .\objects\main.o --omf_browse .\objects\main.crf --depend .\objects\main.d)
-I (..\..\Hardware\sys.h)(0x66965CB3)
+F (..\..\Hardware\ADS8688.h)(0x6697D4AF)()
+F (..\..\User\main.c)(0x6697DEA4)(--c99 -c --cpu Cortex-M4.fp.sp -D__MICROLIB -g -O0 --apcs=interwork --split_sections -I ..\..\Libraries\CMSIS\Include -I ..\..\Libraries\CMSIS\Device\ST\STM32F4xx\Include -I ..\..\Libraries\STM32F4xx_StdPeriph_Driver\inc -I ..\..\User -I ..\..\Hardware -I ..\..\Libraries\DSP\include -I ..\..\Libraries\DSP\src -I ..\..\User\fft\inc -I ..\..\User\fft\src-IE:\SoftLib\Keil_Arm_pack\Keil\STM32F4xx_DFP\2.17.1\Drivers\CMSIS\Device\ST\STM32F4xx\Include-D__UVISION_VERSION="538" -DSTM32F407xx -DUSE_STDPERIPH_DRIVER -DUSE_STM324xG_EVAL -D__CC_ARM -D__TARGET_FPU_VFP -D__FPU_PRESENT -D__FPU_USED -DARM_MATH_CM4-o .\objects\main.o --omf_browse .\objects\main.crf --depend .\objects\main.d)
+I (..\..\Hardware\sys.h)(0x6697B363)
 I (..\..\Libraries\CMSIS\Device\ST\STM32F4xx\Include\stm32f4xx.h)(0x6694C5E9)
 I (..\..\Libraries\CMSIS\Include\core_cm4.h)(0x6694C5E9)
 I (E:\SoftLib\Keil_v5\ARM\ARMCC\include\stdint.h)(0x6025237E)
@@ -1845,14 +1845,14 @@ I (..\..\Hardware\Serial.h)(0x6694C5E9)
 I (E:\SoftLib\Keil_v5\ARM\ARMCC\include\stdio.h)(0x60252374)
 I (..\..\Hardware\Delay.h)(0x6694C5E9)
 I (..\..\Hardware\ADC.h)(0x66963063)
-I (..\..\Hardware\AD9959.h)(0x6694C5E9)
+I (..\..\Hardware\AD9959.h)(0x6697560E)
 I (..\..\Libraries\CMSIS\Include\arm_math.h)(0x6694C5E9)
 I (E:\SoftLib\Keil_v5\ARM\ARMCC\include\string.h)(0x6025237E)
 I (E:\SoftLib\Keil_v5\ARM\ARMCC\include\math.h)(0x60252378)
 I (..\..\User\fft\inc\stm32_dsp.h)(0x66961D76)
 I (..\..\Hardware\ADCDMA.h)(0x66963F8E)
 I (..\..\Hardware\DAC.h)(0x6690C554)
-I (..\..\Hardware\DFPlayer.h)(0x6693DBED)
+I (..\..\Hardware\ADS8688.h)(0x6697D4AF)
 F (..\..\User\stm32f4xx_it.c)(0x6694C5EA)(--c99 -c --cpu Cortex-M4.fp.sp -D__MICROLIB -g -O0 --apcs=interwork --split_sections -I ..\..\Libraries\CMSIS\Include -I ..\..\Libraries\CMSIS\Device\ST\STM32F4xx\Include -I ..\..\Libraries\STM32F4xx_StdPeriph_Driver\inc -I ..\..\User -I ..\..\Hardware -I ..\..\Libraries\DSP\include -I ..\..\Libraries\DSP\src -I ..\..\User\fft\inc -I ..\..\User\fft\src-IE:\SoftLib\Keil_Arm_pack\Keil\STM32F4xx_DFP\2.17.1\Drivers\CMSIS\Device\ST\STM32F4xx\Include-D__UVISION_VERSION="538" -DSTM32F407xx -DUSE_STDPERIPH_DRIVER -DUSE_STM324xG_EVAL -D__CC_ARM -D__TARGET_FPU_VFP -D__FPU_PRESENT -D__FPU_USED -DARM_MATH_CM4-o .\objects\stm32f4xx_it.o --omf_browse .\objects\stm32f4xx_it.crf --depend .\objects\stm32f4xx_it.d)
 I (..\..\User\stm32f4xx_it.h)(0x6694C5EA)
 I (..\..\Libraries\CMSIS\Device\ST\STM32F4xx\Include\stm32f4xx.h)(0x6694C5E9)

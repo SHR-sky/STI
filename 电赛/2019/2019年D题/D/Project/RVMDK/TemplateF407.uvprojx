@@ -869,14 +869,14 @@
               <FilePath>..\..\Hardware\ADCDMA.h</FilePath>
             </File>
             <File>
-              <FileName>DFPlayer.c</FileName>
+              <FileName>ADS8688.c</FileName>
               <FileType>1</FileType>
-              <FilePath>..\..\Hardware\DFPlayer.c</FilePath>
+              <FilePath>..\..\Hardware\ADS8688.c</FilePath>
             </File>
             <File>
-              <FileName>DFPlayer.h</FileName>
+              <FileName>ADS8688.h</FileName>
               <FileType>5</FileType>
-              <FilePath>..\..\Hardware\DFPlayer.h</FilePath>
+              <FilePath>..\..\Hardware\ADS8688.h</FilePath>
             </File>
           </Files>
         </Group>

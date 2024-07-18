@@ -1,7 +1,8 @@
 #include "ADCDMA.h"
  
  
-//ADC的GPIO配置：PB1 - ADC1_IN9
+// ADC的GPIO配置：
+// PB1 - ADC1_IN9
 // PC1 - ADC2-IN11
 void ADC_GPIO_Init(void)
 {
@@ -16,7 +17,6 @@ void ADC_GPIO_Init(void)
 	GPIO_Init( GPIOB , &GPIO_InitStructure );
 	GPIO_Init( GPIOC , &GPIO_InitStructure );
 }
- 
  
 //TIM3初始化，作为ADC的采样触发源
 //Fre：ADC采样频率

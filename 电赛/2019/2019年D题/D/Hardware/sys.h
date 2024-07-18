@@ -11,8 +11,7 @@
 #include "stm32_dsp.h"
 #include "ADCDMA.h"
 #include "DAC.h"
-
-
+#include "ADS8688.h"
 
 
 // //0,不支持ucos
