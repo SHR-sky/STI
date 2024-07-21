@@ -9,8 +9,8 @@
 #define SDIO0       PDout(3)
 
 #define PS0         PDout(4)
-#define PS1         PDout(5)
-#define PS2         PDout(6)
+#define PS1         PEout(5)
+#define PS2         PEout(6)
 #define PS3         PDout(7)
 
 #define SDIO1       PDout(8)
@@ -99,7 +99,6 @@ void AD9959_SetPhase_Sweep(uint8_t Channel, uint16_t s_data,uint16_t e_data,uint
 /********************************************************************************************/
 
 #endif
-
 
 
 

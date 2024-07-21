@@ -878,6 +878,26 @@
               <FileType>5</FileType>
               <FilePath>..\..\Hardware\ADS8688.h</FilePath>
             </File>
+            <File>
+              <FileName>AD9833.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\Hardware\AD9833.c</FilePath>
+            </File>
+            <File>
+              <FileName>AD9833.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>..\..\Hardware\AD9833.h</FilePath>
+            </File>
+            <File>
+              <FileName>DFPlayer.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\Hardware\DFPlayer.c</FilePath>
+            </File>
+            <File>
+              <FileName>DFPlayer.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>..\..\Hardware\DFPlayer.h</FilePath>
+            </File>
           </Files>
         </Group>
         <Group>

@@ -50,4 +50,5 @@
 .\objects\dfplayer.o: ..\..\User\fft\inc\stm32_dsp.h
 .\objects\dfplayer.o: ..\..\Hardware\ADCDMA.h
 .\objects\dfplayer.o: ..\..\Hardware\DAC.h
-.\objects\dfplayer.o: ..\..\Hardware\DFPlayer.h
+.\objects\dfplayer.o: ..\..\Hardware\ADS8688.h
+.\objects\dfplayer.o: E:\SoftLib\Keil_v5\ARM\ARMCC\Bin\..\include\stdarg.h

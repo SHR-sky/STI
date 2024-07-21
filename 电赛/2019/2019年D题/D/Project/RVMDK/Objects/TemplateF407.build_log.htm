@@ -22,35 +22,37 @@ Dialog DLL:      TCM.DLL V1.56.4.0
  
 <h2>Project:</h2>
 D:\SoftLib\Code\STM32\STI\电赛\2019\2019年D题\D\Project\RVMDK\TemplateF407.uvprojx
-Project File Date:  07/17/2024
+Project File Date:  07/19/2024
 
 <h2>Output:</h2>
 *** Using Compiler 'V5.06 update 7 (build 960)', folder: 'E:\SoftLib\Keil_v5\ARM\ARMCC\Bin'
 Build target 'Control'
 compiling main.c...
-..\..\User\main.c(122): warning:  #111-D: statement is unreachable
-  	AD9959_Init();
-..\..\User\main.c(219): warning:  #1035-D: single-precision operand implicitly converted to double-precision
+..\..\User\main.c(204): warning:  #111-D: statement is unreachable
+  	arm_cfft_radix4_init_f32(&scfft,FFT_LENGTH,0,1); // 鍒濆鍖朏FT鍙傛暟
+..\..\User\main.c(335): warning:  #1035-D: single-precision operand implicitly converted to double-precision
   			if (1.5 * sum / (2 * N) < datas)
-..\..\User\main.c(222): warning:  #1035-D: single-precision operand implicitly converted to double-precision
+..\..\User\main.c(338): warning:  #1035-D: single-precision operand implicitly converted to double-precision
   				output[3 * outlen + 1] = 1.0 * (2 * datas) / (FFT_LENGTH * 1.0);				  // 璁＄畻骞呭害
-..\..\User\main.c(248): warning:  #550-D: variable "zhiliu"  was set but never used
+..\..\User\main.c(364): warning:  #550-D: variable "zhiliu"  was set but never used
   	double zhiliu, HZ, amp, phase;
-..\..\User\main.c(248): warning:  #550-D: variable "HZ"  was set but never used
+..\..\User\main.c(364): warning:  #550-D: variable "HZ"  was set but never used
   	double zhiliu, HZ, amp, phase;
-..\..\User\main.c(248): warning:  #550-D: variable "phase"  was set but never used
+..\..\User\main.c(364): warning:  #550-D: variable "phase"  was set but never used
   	double zhiliu, HZ, amp, phase;
-..\..\User\main.c(249): warning:  #177-D: variable "temp"  was declared but never referenced
+..\..\User\main.c(365): warning:  #177-D: variable "temp"  was declared but never referenced
   	u8 temp[40];
-..\..\User\main.c(250): warning:  #177-D: variable "i"  was declared but never referenced
+..\..\User\main.c(366): warning:  #177-D: variable "i"  was declared but never referenced
   	int i;
-..\..\User\main.c(251): warning:  #550-D: variable "freamplen"  was set but never used
+..\..\User\main.c(367): warning:  #550-D: variable "freamplen"  was set but never used
   	u16 freamplen; // freamp闀垮害鐨勪竴鍗?
-..\..\User\main.c: 9 warnings, 0 errors
+..\..\User\main.c(423): warning:  #550-D: variable "jV4"  was set but never used
+  	double jV1,jV2,jV3,jV4,jV,jV3_2;
+..\..\User\main.c: 10 warnings, 0 errors
 linking...
-Program Size: Code=8840 RO-data=35240 RW-data=56 ZI-data=73752  
+Program Size: Code=13592 RO-data=488 RW-data=1804 ZI-data=24580  
 FromELF: creating hex file...
-".\Objects\TemplateF407.axf" - 0 Error(s), 9 Warning(s).
+".\Objects\TemplateF407.axf" - 0 Error(s), 10 Warning(s).
 
 <h2>Software Packages used:</h2>
 
@@ -63,7 +65,7 @@ Package Vendor: Keil
   E:/SoftLib/Keil_Arm_pack/Keil/STM32F4xx_DFP/2.17.1/Drivers/CMSIS/Device/ST/STM32F4xx/Include
 
 <h2>Collection of Component Files used:</h2>
-Build Time Elapsed:  00:00:01
+Build Time Elapsed:  00:00:02
 </pre>
 </body>
 </html>

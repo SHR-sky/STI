@@ -50,3 +50,5 @@
 .\objects\main.o: ..\..\Hardware\ADCDMA.h
 .\objects\main.o: ..\..\Hardware\DAC.h
 .\objects\main.o: ..\..\Hardware\ADS8688.h
+.\objects\main.o: ..\..\Hardware\DFPlayer.h
+.\objects\main.o: E:\SoftLib\Keil_v5\ARM\ARMCC\Bin\..\include\stdlib.h

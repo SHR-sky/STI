@@ -49,6 +49,8 @@
 ".\objects\adc.o"
 ".\objects\adcdma.o"
 ".\objects\ads8688.o"
+".\objects\ad9833.o"
+".\objects\dfplayer.o"
 ".\objects\main.o"
 ".\objects\stm32f4xx_it.o"
 ".\objects\cr4_fft_64_stm32.o"

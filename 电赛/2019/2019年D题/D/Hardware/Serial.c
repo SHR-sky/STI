@@ -172,7 +172,7 @@ uint8_t Serial_LookUpData(void)
 }
 
 
-
+extern uint8_t mod_flag;
 short Res;
 void USART2_IRQHandler(void)
 {
@@ -183,11 +183,11 @@ void USART2_IRQHandler(void)
 		Serial_SendByte(Res);
 		if(Res==0x1)
 		{
-
+			mod_flag = 1;
 		}
-		else 
+		else if(Res==0x2)
 		{
-			
+			mod_flag = 2;
 		}
 		
 		USART_ClearITPendingBit(USART2, USART_IT_RXNE);
