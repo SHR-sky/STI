@@ -5,6 +5,36 @@
 
 short diffSampleWave[SAMPLE_LENGTH - 1];
 
+u8 AppoximateWaveJudge(void)
+{
+    int cnt = 0;
+    double percent;
+    for (int i = 0; i < SAMPLE_LENGTH; i++)
+    {
+        if (SAMPLE_WAVE[i] >= COMPARE_VALUE)
+        {
+            cnt += 1;
+        }
+    }
+    percent = (double)cnt / (double)SAMPLE_LENGTH;
+    if (percent > PERCENTAGE_RECT)
+    {
+        return RECT_WAVE;
+    }
+    else if (percent > PERCENTAGE_SIN)
+    {
+        return SIN_WAVE;
+    }
+    else if (percent > PERCENTAGE_TRI)
+    {
+        return TRI_WAVE;
+    }
+    else
+    {
+        return NONE_OF_ABOVE;
+    }
+}
+
 u8 WaveJudge(void)
 {
     int mmax = 0;
