@@ -9,17 +9,34 @@ uint8_t mode_flag = 0;
 #define Contrl2 PAout(2)
 #define Contrl3 PAout(3)
 
-double AV = 0;
+// 单刀三掷开关
+/* 
+00 off 
+01 1on 10 2on 11 3on
+*/
+
+#define SW_R_1 PBout(1)
+#define SW_R_2 PBout(2)
+//#define SW_R_3 PBout(3)
+
+
 
 // 千欧
 #define R1 1    // 电阻测量
 #define R2 60   // 电阻测量
-#define R3 10   // 电压测量
-#define R4 1    // 
-#define R5 10
-#define R6 100
 
-#define Rs 10
+#define R3 10   // 电压测量
+#define R4 1    // 电压测量 100mV
+#define R5 10   // 电压测量 1V
+#define R6 100  // 电压测量 10V
+
+
+#define Rs1 1000  // 电阻测量 采样电阻
+#define Rs2 100
+#define Rs3 10
+
+
+double AV = 0;
 
 double V_real = 0;
 double I_real = 0;
@@ -96,12 +113,26 @@ void Cal_I(void)
 {
     double Vout = Get_Adc_Average(ADC2, CH0, 100);
     // mA
-    I_real = (Vout - 3.3/2 ) * 1 / 0.0003 * 10
+    I_real = (Vout - 3.3/2 ) * 1 / 0.0003 * 10;
 }
 
 void Cal_R(void)
 {
     double Vout = Get_Adc_Average(ADC3, CH0, 100);
     // Uref为3.3V
-    Rx = (3.3 * R2) / (Vout * R1) - Rs;
+    SW_R_1 = 1;
+    SW_R_2 = 0;
+    Rx = (3.3 * R2) / (Vout * R1) - Rs1;
+    if(Rx < 100)
+    {
+        SW_R_1 = 0;
+        SW_R_2 = 1;
+        Rx = (3.3 * R2) / (Vout * R1) - Rs2;
+        if(Rx<10)
+        {
+            SW_R_1 = 1;
+            SW_R_2 = 1;
+            Rx = (3.3 * R2) / (Vout * R1) - Rs3;
+        }
+    }
 }
