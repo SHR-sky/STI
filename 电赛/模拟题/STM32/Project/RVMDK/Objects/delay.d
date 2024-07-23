@@ -44,3 +44,4 @@
 .\objects\delay.o: ..\..\Hardware\ADCDMA.h
 .\objects\delay.o: ..\..\Hardware\DAC.h
 .\objects\delay.o: ..\..\Hardware\GPIO.h
+.\objects\delay.o: ..\..\Hardware\EXTI.h

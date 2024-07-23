@@ -1,15 +1,5 @@
 #include "Delay.h"
-u8 per_us;				//每1us定时器节拍
-u32 per_ms;	
 
-static u8  fac_us=0;		   
-static u16 fac_ms=0;
-void delay_init(u8 SYSCLK)
-{
-  SysTick->CTRL&=~(1<<2);
-  fac_us=SYSCLK/8;
-  fac_ms=((u32)SYSCLK*1000)/8;
-}
 
 /**
   * @brief  微秒级延时
@@ -18,15 +8,11 @@ void delay_init(u8 SYSCLK)
   */
 void delay_us(uint32_t xus)
 {
-  u32 temp;	    	 
-  SysTick->LOAD=xus*fac_us;  		 
-  SysTick->VAL=0x00;
-  SysTick->CTRL=0x01 ;	 
-  do
-  {
-    temp=SysTick->CTRL;
-  }while((temp&0x01)&&!(temp&(1<<16)));
-  SysTick->CTRL=0x00;
+	SysTick->LOAD = 168 * xus;				//设置定时器重装值
+	SysTick->VAL = 0x00;					//清空当前计数值
+	SysTick->CTRL = 0x00000005;				//设置时钟源为HCLK，启动定时器
+	while(!(SysTick->CTRL & 0x00010000));	//等待计数到0
+	SysTick->CTRL = 0x00000004;				//关闭定时器
 }
 
 /**

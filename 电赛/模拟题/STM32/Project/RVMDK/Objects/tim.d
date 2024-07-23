@@ -44,3 +44,4 @@
 .\objects\tim.o: ..\..\Hardware\ADCDMA.h
 .\objects\tim.o: ..\..\Hardware\DAC.h
 .\objects\tim.o: ..\..\Hardware\GPIO.h
+.\objects\tim.o: ..\..\Hardware\EXTI.h

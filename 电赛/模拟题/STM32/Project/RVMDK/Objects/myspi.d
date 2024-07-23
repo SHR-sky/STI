@@ -44,3 +44,4 @@
 .\objects\myspi.o: ..\..\Hardware\ADCDMA.h
 .\objects\myspi.o: ..\..\Hardware\DAC.h
 .\objects\myspi.o: ..\..\Hardware\GPIO.h
+.\objects\myspi.o: ..\..\Hardware\EXTI.h

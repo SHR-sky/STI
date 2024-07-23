@@ -164,17 +164,26 @@ uint8_t Serial_LookUpData(void)
 	return 0;
 }
 
-extern uint8_t flag;
-extern uint8_t mode_flag;
-extern int change_phi;
+extern char str[100];
+extern u8 sendFlag;
+u8 uartIndex;
 
 short Res;
 void USART2_IRQHandler(void)
 {
 	if (USART_GetFlagStatus(USART2, USART_FLAG_RXNE) == SET)
 	{
-		Res = USART_ReceiveData(USART2);	
 		USART_ClearITPendingBit(USART2, USART_IT_RXNE);
+		Res = USART_ReceiveData(USART2);
+		str[uartIndex] = Res;
+		uartIndex += 1;
+		if(Res == 0xff)
+		{
+			str[uartIndex - 1] = '\0';
+			Serial_Printf("Send:%s\r\n",str);
+			uartIndex = 0;
+			sendFlag = 1;
+		}
 		// Write you code
 	}
 }

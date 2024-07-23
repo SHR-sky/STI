@@ -44,3 +44,4 @@
 .\objects\gpio.o: ..\..\Hardware\ADCDMA.h
 .\objects\gpio.o: ..\..\Hardware\DAC.h
 .\objects\gpio.o: ..\..\Hardware\GPIO.h
+.\objects\gpio.o: ..\..\Hardware\EXTI.h
