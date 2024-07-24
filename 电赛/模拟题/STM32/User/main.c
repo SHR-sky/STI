@@ -38,13 +38,21 @@ int main()
 	Serial_Printf("OK!\r\n");
 	float t = 0;
 	float data[4];
-	GetSpectrum();
-	GetPowerMagAndPha();
-	Serial_Printf("THD:%lf\r\n",CalcTHD(5));
-	for(int i=0; i<100; i++)
+	CalcFFT();
+	GetPowerMag();
+	//GetPowerMagAndPha();
+	//Serial_Printf("THD:%lf\r\n",CalcTHD(5))
+	/*for(int i=0; i<500; i++)
 	{
-		Serial_Printf("MagBufArray:%d\r\n",MagBufArray[i]);
-	}
+		//Serial_Printf("%ld\r\n ",MagBufArray[i]);
+		data[0] = (float)MagBufArray[i];
+		JustFloat_Send(data,1);
+		delay_ms(10);
+		//Serial_Printf("MagBufArray:%d\r\n",MagBufArray[i]);
+	}*/
+	Serial_Printf("Max:%d\r\n",GetMaxSpec(0));
+	Serial_Printf("THD:%lf\r\n",CalcTHD(10));
+	while(1);	
 	/*
 	while(1)
 	{
