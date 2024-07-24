@@ -45,4 +45,8 @@
 .\objects\serial.o: ..\..\Hardware\DAC.h
 .\objects\serial.o: ..\..\Hardware\GPIO.h
 .\objects\serial.o: ..\..\Hardware\EXTI.h
+.\objects\serial.o: ..\..\Hardware\VOFA.h
+.\objects\serial.o: ..\..\Hardware\FFTAnalysis.h
+.\objects\serial.o: ..\..\User\fft\inc\stm32_dsp.h
+.\objects\serial.o: E:\SoftLib\Keil_v5\ARM\ARMCC\Bin\..\include\math.h
 .\objects\serial.o: E:\SoftLib\Keil_v5\ARM\ARMCC\Bin\..\include\stdarg.h

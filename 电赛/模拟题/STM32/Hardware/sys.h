@@ -11,6 +11,8 @@
 #include "DAC.h"
 #include "GPIO.h"
 #include "EXTI.h"
+#include "VOFA.h"
+#include "FFTAnalysis.h"
 
 
 

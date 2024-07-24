@@ -45,3 +45,7 @@
 .\objects\exti.o: ..\..\Hardware\DAC.h
 .\objects\exti.o: ..\..\Hardware\GPIO.h
 .\objects\exti.o: ..\..\Hardware\EXTI.h
+.\objects\exti.o: ..\..\Hardware\VOFA.h
+.\objects\exti.o: ..\..\Hardware\FFTAnalysis.h
+.\objects\exti.o: ..\..\User\fft\inc\stm32_dsp.h
+.\objects\exti.o: E:\SoftLib\Keil_v5\ARM\ARMCC\Bin\..\include\math.h

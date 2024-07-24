@@ -1,4 +1,5 @@
 #include "sys.h"
+#include "math.h"
 
 // 发送字符串
 u8 str[100];
@@ -28,9 +29,36 @@ short ADCConvertedValue[ADC_DMA_Size]; // ADC采集数据 2000个点
 u8 sendFlag = 0;
 u8 receiveFlag = 0;
 
+extern long MagBufArray[SAMPLE_NODE_NUM / 2];  // 幅值
+extern u16 MagBufIndex[SAMPLE_NODE_NUM / 2];   // 赋值从大到小的索引
+extern double PhaBufArray[SAMPLE_NODE_NUM / 2];
 int main()
 {
 	Serial_Init();
+	Serial_Printf("OK!\r\n");
+	float t = 0;
+	float data[4];
+	GetSpectrum();
+	GetPowerMagAndPha();
+	Serial_Printf("THD:%lf\r\n",CalcTHD(5));
+	for(int i=0; i<100; i++)
+	{
+		Serial_Printf("MagBufArray:%d\r\n",MagBufArray[i]);
+	}
+	/*
+	while(1)
+	{
+		t += 0.1;
+		// 发送数据
+		float data[4];  
+		data[0] = sin(t);
+		data[1] = sin(2*t);
+		data[2] = sin(3*t);
+		data[3] = sin(4*t);
+		JustFloat_Send(data,1);
+		delay_ms(100);
+	}*/
+	//Serial_Printf("Hello!\r\n");
 	GPIO_OUT_Init();
 	Timer_Init();
 	exti_init();

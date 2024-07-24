@@ -1,6 +1,6 @@
 Dependencies for Project 'TemplateF407', Target 'Control': (DO NOT MODIFY !)
 CompilerVersion: 5060960::V5.06 update 7 (build 960)::.\ARMCC
-F (..\..\Libraries\CMSIS\Device\ST\STM32F4xx\Source\Templates\arm\startup_stm32f40xx.s)(0x66921584)(--cpu Cortex-M4.fp.sp -g --apcs=interwork --pd "__MICROLIB SETA 1"-IE:\SoftLib\Keil_Arm_pack\Keil\STM32F4xx_DFP\2.17.1\Drivers\CMSIS\Device\ST\STM32F4xx\Include--pd "__UVISION_VERSION SETA 538" --pd "STM32F407xx SETA 1"--list .\listings\startup_stm32f40xx.lst --xref -o .\objects\startup_stm32f40xx.o --depend .\objects\startup_stm32f40xx.d)
+F (..\..\Libraries\CMSIS\Device\ST\STM32F4xx\Source\Templates\arm\startup_stm32f40xx.s)(0x66A0FC61)(--cpu Cortex-M4.fp.sp -g --apcs=interwork --pd "__MICROLIB SETA 1"-IE:\SoftLib\Keil_Arm_pack\Keil\STM32F4xx_DFP\2.17.1\Drivers\CMSIS\Device\ST\STM32F4xx\Include--pd "__UVISION_VERSION SETA 538" --pd "STM32F407xx SETA 1"--list .\listings\startup_stm32f40xx.lst --xref -o .\objects\startup_stm32f40xx.o --depend .\objects\startup_stm32f40xx.d)
 F (..\..\Libraries\STM32F4xx_StdPeriph_Driver\src\misc.c)(0x6689F6FA)(--c99 -c --cpu Cortex-M4.fp.sp -D__MICROLIB -g -O0 --apcs=interwork --split_sections -I ..\..\Libraries\CMSIS\Include -I ..\..\Libraries\CMSIS\Device\ST\STM32F4xx\Include -I ..\..\Libraries\STM32F4xx_StdPeriph_Driver\inc -I ..\..\User -I ..\..\Hardware -I ..\..\User\fft\inc -I ..\..\User\fft\src\asm\arm-IE:\SoftLib\Keil_Arm_pack\Keil\STM32F4xx_DFP\2.17.1\Drivers\CMSIS\Device\ST\STM32F4xx\Include-D__UVISION_VERSION="538" -DSTM32F407xx -DUSE_STDPERIPH_DRIVER -DUSE_STM324xG_EVAL-o .\objects\misc.o --omf_browse .\objects\misc.crf --depend .\objects\misc.d)
 I (..\..\Libraries\STM32F4xx_StdPeriph_Driver\inc\misc.h)(0x6689F6FA)
 I (..\..\Libraries\CMSIS\Device\ST\STM32F4xx\Include\stm32f4xx.h)(0x6689F6F9)
@@ -1451,7 +1451,7 @@ I (..\..\Libraries\STM32F4xx_StdPeriph_Driver\inc\stm32f4xx_fsmc.h)(0x6689F6FA)
 F (..\..\Hardware\Serial.c)(0x669F6F21)(--c99 -c --cpu Cortex-M4.fp.sp -D__MICROLIB -g -O0 --apcs=interwork --split_sections -I ..\..\Libraries\CMSIS\Include -I ..\..\Libraries\CMSIS\Device\ST\STM32F4xx\Include -I ..\..\Libraries\STM32F4xx_StdPeriph_Driver\inc -I ..\..\User -I ..\..\Hardware -I ..\..\User\fft\inc -I ..\..\User\fft\src\asm\arm-IE:\SoftLib\Keil_Arm_pack\Keil\STM32F4xx_DFP\2.17.1\Drivers\CMSIS\Device\ST\STM32F4xx\Include-D__UVISION_VERSION="538" -DSTM32F407xx -DUSE_STDPERIPH_DRIVER -DUSE_STM324xG_EVAL-o .\objects\serial.o --omf_browse .\objects\serial.crf --depend .\objects\serial.d)
 I (..\..\Hardware\Serial.h)(0x6689F6F9)
 I (E:\SoftLib\Keil_v5\ARM\ARMCC\include\stdio.h)(0x60252374)
-I (..\..\Hardware\sys.h)(0x669F6F21)
+I (..\..\Hardware\sys.h)(0x66A0EBB4)
 I (..\..\Libraries\CMSIS\Device\ST\STM32F4xx\Include\stm32f4xx.h)(0x6689F6F9)
 I (..\..\Libraries\CMSIS\Include\core_cm4.h)(0x6689F6FA)
 I (E:\SoftLib\Keil_v5\ARM\ARMCC\include\stdint.h)(0x6025237E)
@@ -1492,11 +1492,15 @@ I (..\..\Hardware\ADCDMA.h)(0x669D216C)
 I (..\..\Hardware\DAC.h)(0x6690C554)
 I (..\..\Hardware\GPIO.h)(0x669F6F21)
 I (..\..\Hardware\EXTI.h)(0x669F4E09)
+I (..\..\Hardware\VOFA.h)(0x66A0B7D2)
+I (..\..\Hardware\FFTAnalysis.h)(0x66A1010F)
+I (..\..\User\fft\inc\stm32_dsp.h)(0x6690CC44)
+I (E:\SoftLib\Keil_v5\ARM\ARMCC\include\math.h)(0x60252378)
 I (E:\SoftLib\Keil_v5\ARM\ARMCC\include\stdarg.h)(0x60252376)
 F (..\..\Hardware\Serial.h)(0x6689F6F9)()
-F (..\..\Hardware\TIM.c)(0x669E19E8)(--c99 -c --cpu Cortex-M4.fp.sp -D__MICROLIB -g -O0 --apcs=interwork --split_sections -I ..\..\Libraries\CMSIS\Include -I ..\..\Libraries\CMSIS\Device\ST\STM32F4xx\Include -I ..\..\Libraries\STM32F4xx_StdPeriph_Driver\inc -I ..\..\User -I ..\..\Hardware -I ..\..\User\fft\inc -I ..\..\User\fft\src\asm\arm-IE:\SoftLib\Keil_Arm_pack\Keil\STM32F4xx_DFP\2.17.1\Drivers\CMSIS\Device\ST\STM32F4xx\Include-D__UVISION_VERSION="538" -DSTM32F407xx -DUSE_STDPERIPH_DRIVER -DUSE_STM324xG_EVAL-o .\objects\tim.o --omf_browse .\objects\tim.crf --depend .\objects\tim.d)
+F (..\..\Hardware\TIM.c)(0x66A0EB74)(--c99 -c --cpu Cortex-M4.fp.sp -D__MICROLIB -g -O0 --apcs=interwork --split_sections -I ..\..\Libraries\CMSIS\Include -I ..\..\Libraries\CMSIS\Device\ST\STM32F4xx\Include -I ..\..\Libraries\STM32F4xx_StdPeriph_Driver\inc -I ..\..\User -I ..\..\Hardware -I ..\..\User\fft\inc -I ..\..\User\fft\src\asm\arm-IE:\SoftLib\Keil_Arm_pack\Keil\STM32F4xx_DFP\2.17.1\Drivers\CMSIS\Device\ST\STM32F4xx\Include-D__UVISION_VERSION="538" -DSTM32F407xx -DUSE_STDPERIPH_DRIVER -DUSE_STM324xG_EVAL-o .\objects\tim.o --omf_browse .\objects\tim.crf --depend .\objects\tim.d)
 I (..\..\Hardware\TIM.h)(0x669D0EFA)
-I (..\..\Hardware\sys.h)(0x669F6F21)
+I (..\..\Hardware\sys.h)(0x66A0EBB4)
 I (..\..\Libraries\CMSIS\Device\ST\STM32F4xx\Include\stm32f4xx.h)(0x6689F6F9)
 I (..\..\Libraries\CMSIS\Include\core_cm4.h)(0x6689F6FA)
 I (E:\SoftLib\Keil_v5\ARM\ARMCC\include\stdint.h)(0x6025237E)
@@ -1538,10 +1542,14 @@ I (..\..\Hardware\ADCDMA.h)(0x669D216C)
 I (..\..\Hardware\DAC.h)(0x6690C554)
 I (..\..\Hardware\GPIO.h)(0x669F6F21)
 I (..\..\Hardware\EXTI.h)(0x669F4E09)
+I (..\..\Hardware\VOFA.h)(0x66A0B7D2)
+I (..\..\Hardware\FFTAnalysis.h)(0x66A1010F)
+I (..\..\User\fft\inc\stm32_dsp.h)(0x6690CC44)
+I (E:\SoftLib\Keil_v5\ARM\ARMCC\include\math.h)(0x60252378)
 F (..\..\Hardware\TIM.h)(0x669D0EFA)()
 F (..\..\Hardware\Delay.c)(0x669F6F21)(--c99 -c --cpu Cortex-M4.fp.sp -D__MICROLIB -g -O0 --apcs=interwork --split_sections -I ..\..\Libraries\CMSIS\Include -I ..\..\Libraries\CMSIS\Device\ST\STM32F4xx\Include -I ..\..\Libraries\STM32F4xx_StdPeriph_Driver\inc -I ..\..\User -I ..\..\Hardware -I ..\..\User\fft\inc -I ..\..\User\fft\src\asm\arm-IE:\SoftLib\Keil_Arm_pack\Keil\STM32F4xx_DFP\2.17.1\Drivers\CMSIS\Device\ST\STM32F4xx\Include-D__UVISION_VERSION="538" -DSTM32F407xx -DUSE_STDPERIPH_DRIVER -DUSE_STM324xG_EVAL-o .\objects\delay.o --omf_browse .\objects\delay.crf --depend .\objects\delay.d)
 I (..\..\Hardware\Delay.h)(0x6689F6F9)
-I (..\..\Hardware\sys.h)(0x669F6F21)
+I (..\..\Hardware\sys.h)(0x66A0EBB4)
 I (..\..\Libraries\CMSIS\Device\ST\STM32F4xx\Include\stm32f4xx.h)(0x6689F6F9)
 I (..\..\Libraries\CMSIS\Include\core_cm4.h)(0x6689F6FA)
 I (E:\SoftLib\Keil_v5\ARM\ARMCC\include\stdint.h)(0x6025237E)
@@ -1583,11 +1591,15 @@ I (..\..\Hardware\ADCDMA.h)(0x669D216C)
 I (..\..\Hardware\DAC.h)(0x6690C554)
 I (..\..\Hardware\GPIO.h)(0x669F6F21)
 I (..\..\Hardware\EXTI.h)(0x669F4E09)
+I (..\..\Hardware\VOFA.h)(0x66A0B7D2)
+I (..\..\Hardware\FFTAnalysis.h)(0x66A1010F)
+I (..\..\User\fft\inc\stm32_dsp.h)(0x6690CC44)
+I (E:\SoftLib\Keil_v5\ARM\ARMCC\include\math.h)(0x60252378)
 F (..\..\Hardware\Delay.h)(0x6689F6F9)()
-F (..\..\Hardware\sys.h)(0x669F6F21)()
+F (..\..\Hardware\sys.h)(0x66A0EBB4)()
 F (..\..\Hardware\mySPI.c)(0x6689F6F9)(--c99 -c --cpu Cortex-M4.fp.sp -D__MICROLIB -g -O0 --apcs=interwork --split_sections -I ..\..\Libraries\CMSIS\Include -I ..\..\Libraries\CMSIS\Device\ST\STM32F4xx\Include -I ..\..\Libraries\STM32F4xx_StdPeriph_Driver\inc -I ..\..\User -I ..\..\Hardware -I ..\..\User\fft\inc -I ..\..\User\fft\src\asm\arm-IE:\SoftLib\Keil_Arm_pack\Keil\STM32F4xx_DFP\2.17.1\Drivers\CMSIS\Device\ST\STM32F4xx\Include-D__UVISION_VERSION="538" -DSTM32F407xx -DUSE_STDPERIPH_DRIVER -DUSE_STM324xG_EVAL-o .\objects\myspi.o --omf_browse .\objects\myspi.crf --depend .\objects\myspi.d)
 I (..\..\Hardware\mySPI.h)(0x6689F6F9)
-I (..\..\Hardware\sys.h)(0x669F6F21)
+I (..\..\Hardware\sys.h)(0x66A0EBB4)
 I (..\..\Libraries\CMSIS\Device\ST\STM32F4xx\Include\stm32f4xx.h)(0x6689F6F9)
 I (..\..\Libraries\CMSIS\Include\core_cm4.h)(0x6689F6FA)
 I (E:\SoftLib\Keil_v5\ARM\ARMCC\include\stdint.h)(0x6025237E)
@@ -1630,10 +1642,14 @@ I (..\..\Hardware\ADCDMA.h)(0x669D216C)
 I (..\..\Hardware\DAC.h)(0x6690C554)
 I (..\..\Hardware\GPIO.h)(0x669F6F21)
 I (..\..\Hardware\EXTI.h)(0x669F4E09)
+I (..\..\Hardware\VOFA.h)(0x66A0B7D2)
+I (..\..\Hardware\FFTAnalysis.h)(0x66A1010F)
+I (..\..\User\fft\inc\stm32_dsp.h)(0x6690CC44)
+I (E:\SoftLib\Keil_v5\ARM\ARMCC\include\math.h)(0x60252378)
 F (..\..\Hardware\mySPI.h)(0x6689F6F9)()
 F (..\..\Hardware\ADCDMA.c)(0x669D212A)(--c99 -c --cpu Cortex-M4.fp.sp -D__MICROLIB -g -O0 --apcs=interwork --split_sections -I ..\..\Libraries\CMSIS\Include -I ..\..\Libraries\CMSIS\Device\ST\STM32F4xx\Include -I ..\..\Libraries\STM32F4xx_StdPeriph_Driver\inc -I ..\..\User -I ..\..\Hardware -I ..\..\User\fft\inc -I ..\..\User\fft\src\asm\arm-IE:\SoftLib\Keil_Arm_pack\Keil\STM32F4xx_DFP\2.17.1\Drivers\CMSIS\Device\ST\STM32F4xx\Include-D__UVISION_VERSION="538" -DSTM32F407xx -DUSE_STDPERIPH_DRIVER -DUSE_STM324xG_EVAL-o .\objects\adcdma.o --omf_browse .\objects\adcdma.crf --depend .\objects\adcdma.d)
 I (..\..\Hardware\ADCDMA.h)(0x669D216C)
-I (..\..\Hardware\sys.h)(0x669F6F21)
+I (..\..\Hardware\sys.h)(0x66A0EBB4)
 I (..\..\Libraries\CMSIS\Device\ST\STM32F4xx\Include\stm32f4xx.h)(0x6689F6F9)
 I (..\..\Libraries\CMSIS\Include\core_cm4.h)(0x6689F6FA)
 I (E:\SoftLib\Keil_v5\ARM\ARMCC\include\stdint.h)(0x6025237E)
@@ -1675,10 +1691,14 @@ I (..\..\Hardware\Delay.h)(0x6689F6F9)
 I (..\..\Hardware\DAC.h)(0x6690C554)
 I (..\..\Hardware\GPIO.h)(0x669F6F21)
 I (..\..\Hardware\EXTI.h)(0x669F4E09)
+I (..\..\Hardware\VOFA.h)(0x66A0B7D2)
+I (..\..\Hardware\FFTAnalysis.h)(0x66A1010F)
+I (..\..\User\fft\inc\stm32_dsp.h)(0x6690CC44)
+I (E:\SoftLib\Keil_v5\ARM\ARMCC\include\math.h)(0x60252378)
 F (..\..\Hardware\ADCDMA.h)(0x669D216C)()
 F (..\..\Hardware\GPIO.c)(0x669F6F21)(--c99 -c --cpu Cortex-M4.fp.sp -D__MICROLIB -g -O0 --apcs=interwork --split_sections -I ..\..\Libraries\CMSIS\Include -I ..\..\Libraries\CMSIS\Device\ST\STM32F4xx\Include -I ..\..\Libraries\STM32F4xx_StdPeriph_Driver\inc -I ..\..\User -I ..\..\Hardware -I ..\..\User\fft\inc -I ..\..\User\fft\src\asm\arm-IE:\SoftLib\Keil_Arm_pack\Keil\STM32F4xx_DFP\2.17.1\Drivers\CMSIS\Device\ST\STM32F4xx\Include-D__UVISION_VERSION="538" -DSTM32F407xx -DUSE_STDPERIPH_DRIVER -DUSE_STM324xG_EVAL-o .\objects\gpio.o --omf_browse .\objects\gpio.crf --depend .\objects\gpio.d)
 I (..\..\Hardware\GPIO.h)(0x669F6F21)
-I (..\..\Hardware\sys.h)(0x669F6F21)
+I (..\..\Hardware\sys.h)(0x66A0EBB4)
 I (..\..\Libraries\CMSIS\Device\ST\STM32F4xx\Include\stm32f4xx.h)(0x6689F6F9)
 I (..\..\Libraries\CMSIS\Include\core_cm4.h)(0x6689F6FA)
 I (E:\SoftLib\Keil_v5\ARM\ARMCC\include\stdint.h)(0x6025237E)
@@ -1720,10 +1740,14 @@ I (..\..\Hardware\Delay.h)(0x6689F6F9)
 I (..\..\Hardware\ADCDMA.h)(0x669D216C)
 I (..\..\Hardware\DAC.h)(0x6690C554)
 I (..\..\Hardware\EXTI.h)(0x669F4E09)
+I (..\..\Hardware\VOFA.h)(0x66A0B7D2)
+I (..\..\Hardware\FFTAnalysis.h)(0x66A1010F)
+I (..\..\User\fft\inc\stm32_dsp.h)(0x6690CC44)
+I (E:\SoftLib\Keil_v5\ARM\ARMCC\include\math.h)(0x60252378)
 F (..\..\Hardware\GPIO.h)(0x669F6F21)()
 F (..\..\Hardware\EXTI.c)(0x669F4E0C)(--c99 -c --cpu Cortex-M4.fp.sp -D__MICROLIB -g -O0 --apcs=interwork --split_sections -I ..\..\Libraries\CMSIS\Include -I ..\..\Libraries\CMSIS\Device\ST\STM32F4xx\Include -I ..\..\Libraries\STM32F4xx_StdPeriph_Driver\inc -I ..\..\User -I ..\..\Hardware -I ..\..\User\fft\inc -I ..\..\User\fft\src\asm\arm-IE:\SoftLib\Keil_Arm_pack\Keil\STM32F4xx_DFP\2.17.1\Drivers\CMSIS\Device\ST\STM32F4xx\Include-D__UVISION_VERSION="538" -DSTM32F407xx -DUSE_STDPERIPH_DRIVER -DUSE_STM324xG_EVAL-o .\objects\exti.o --omf_browse .\objects\exti.crf --depend .\objects\exti.d)
 I (..\..\Hardware\EXTI.h)(0x669F4E09)
-I (..\..\Hardware\sys.h)(0x669F6F21)
+I (..\..\Hardware\sys.h)(0x66A0EBB4)
 I (..\..\Libraries\CMSIS\Device\ST\STM32F4xx\Include\stm32f4xx.h)(0x6689F6F9)
 I (..\..\Libraries\CMSIS\Include\core_cm4.h)(0x6689F6FA)
 I (E:\SoftLib\Keil_v5\ARM\ARMCC\include\stdint.h)(0x6025237E)
@@ -1765,9 +1789,14 @@ I (..\..\Hardware\Delay.h)(0x6689F6F9)
 I (..\..\Hardware\ADCDMA.h)(0x669D216C)
 I (..\..\Hardware\DAC.h)(0x6690C554)
 I (..\..\Hardware\GPIO.h)(0x669F6F21)
+I (..\..\Hardware\VOFA.h)(0x66A0B7D2)
+I (..\..\Hardware\FFTAnalysis.h)(0x66A1010F)
+I (..\..\User\fft\inc\stm32_dsp.h)(0x6690CC44)
+I (E:\SoftLib\Keil_v5\ARM\ARMCC\include\math.h)(0x60252378)
 F (..\..\Hardware\EXTI.h)(0x669F4E09)()
-F (..\..\User\main.c)(0x669F6F22)(--c99 -c --cpu Cortex-M4.fp.sp -D__MICROLIB -g -O0 --apcs=interwork --split_sections -I ..\..\Libraries\CMSIS\Include -I ..\..\Libraries\CMSIS\Device\ST\STM32F4xx\Include -I ..\..\Libraries\STM32F4xx_StdPeriph_Driver\inc -I ..\..\User -I ..\..\Hardware -I ..\..\User\fft\inc -I ..\..\User\fft\src\asm\arm-IE:\SoftLib\Keil_Arm_pack\Keil\STM32F4xx_DFP\2.17.1\Drivers\CMSIS\Device\ST\STM32F4xx\Include-D__UVISION_VERSION="538" -DSTM32F407xx -DUSE_STDPERIPH_DRIVER -DUSE_STM324xG_EVAL-o .\objects\main.o --omf_browse .\objects\main.crf --depend .\objects\main.d)
-I (..\..\Hardware\sys.h)(0x669F6F21)
+F (..\..\Hardware\VOFA.c)(0x66A0B820)(--c99 -c --cpu Cortex-M4.fp.sp -D__MICROLIB -g -O0 --apcs=interwork --split_sections -I ..\..\Libraries\CMSIS\Include -I ..\..\Libraries\CMSIS\Device\ST\STM32F4xx\Include -I ..\..\Libraries\STM32F4xx_StdPeriph_Driver\inc -I ..\..\User -I ..\..\Hardware -I ..\..\User\fft\inc -I ..\..\User\fft\src\asm\arm-IE:\SoftLib\Keil_Arm_pack\Keil\STM32F4xx_DFP\2.17.1\Drivers\CMSIS\Device\ST\STM32F4xx\Include-D__UVISION_VERSION="538" -DSTM32F407xx -DUSE_STDPERIPH_DRIVER -DUSE_STM324xG_EVAL-o .\objects\vofa.o --omf_browse .\objects\vofa.crf --depend .\objects\vofa.d)
+I (..\..\Hardware\VOFA.h)(0x66A0B7D2)
+I (..\..\Hardware\sys.h)(0x66A0EBB4)
 I (..\..\Libraries\CMSIS\Device\ST\STM32F4xx\Include\stm32f4xx.h)(0x6689F6F9)
 I (..\..\Libraries\CMSIS\Include\core_cm4.h)(0x6689F6FA)
 I (E:\SoftLib\Keil_v5\ARM\ARMCC\include\stdint.h)(0x6025237E)
@@ -1810,6 +1839,107 @@ I (..\..\Hardware\ADCDMA.h)(0x669D216C)
 I (..\..\Hardware\DAC.h)(0x6690C554)
 I (..\..\Hardware\GPIO.h)(0x669F6F21)
 I (..\..\Hardware\EXTI.h)(0x669F4E09)
+I (..\..\Hardware\FFTAnalysis.h)(0x66A1010F)
+I (..\..\User\fft\inc\stm32_dsp.h)(0x6690CC44)
+I (E:\SoftLib\Keil_v5\ARM\ARMCC\include\math.h)(0x60252378)
+F (..\..\Hardware\VOFA.h)(0x66A0B7D2)()
+F (..\..\Hardware\FFTAnalysis.c)(0x66A10261)(--c99 -c --cpu Cortex-M4.fp.sp -D__MICROLIB -g -O0 --apcs=interwork --split_sections -I ..\..\Libraries\CMSIS\Include -I ..\..\Libraries\CMSIS\Device\ST\STM32F4xx\Include -I ..\..\Libraries\STM32F4xx_StdPeriph_Driver\inc -I ..\..\User -I ..\..\Hardware -I ..\..\User\fft\inc -I ..\..\User\fft\src\asm\arm-IE:\SoftLib\Keil_Arm_pack\Keil\STM32F4xx_DFP\2.17.1\Drivers\CMSIS\Device\ST\STM32F4xx\Include-D__UVISION_VERSION="538" -DSTM32F407xx -DUSE_STDPERIPH_DRIVER -DUSE_STM324xG_EVAL-o .\objects\fftanalysis.o --omf_browse .\objects\fftanalysis.crf --depend .\objects\fftanalysis.d)
+I (..\..\Hardware\FFTAnalysis.h)(0x66A1010F)
+I (..\..\Hardware\sys.h)(0x66A0EBB4)
+I (..\..\Libraries\CMSIS\Device\ST\STM32F4xx\Include\stm32f4xx.h)(0x6689F6F9)
+I (..\..\Libraries\CMSIS\Include\core_cm4.h)(0x6689F6FA)
+I (E:\SoftLib\Keil_v5\ARM\ARMCC\include\stdint.h)(0x6025237E)
+I (..\..\Libraries\CMSIS\Include\core_cmInstr.h)(0x6689F6FA)
+I (..\..\Libraries\CMSIS\Include\core_cmFunc.h)(0x6689F6FA)
+I (..\..\Libraries\CMSIS\Include\core_cmSimd.h)(0x6689F6FA)
+I (..\..\Libraries\CMSIS\Device\ST\STM32F4xx\Include\system_stm32f4xx.h)(0x6689F6F9)
+I (..\..\User\stm32f4xx_conf.h)(0x6689F6FB)
+I (..\..\Libraries\STM32F4xx_StdPeriph_Driver\inc\stm32f4xx_adc.h)(0x6689F6FA)
+I (..\..\Libraries\STM32F4xx_StdPeriph_Driver\inc\stm32f4xx_crc.h)(0x6689F6FA)
+I (..\..\Libraries\STM32F4xx_StdPeriph_Driver\inc\stm32f4xx_dbgmcu.h)(0x6689F6FA)
+I (..\..\Libraries\STM32F4xx_StdPeriph_Driver\inc\stm32f4xx_dma.h)(0x6689F6FA)
+I (..\..\Libraries\STM32F4xx_StdPeriph_Driver\inc\stm32f4xx_exti.h)(0x6689F6FA)
+I (..\..\Libraries\STM32F4xx_StdPeriph_Driver\inc\stm32f4xx_flash.h)(0x6689F6FA)
+I (..\..\Libraries\STM32F4xx_StdPeriph_Driver\inc\stm32f4xx_gpio.h)(0x6689F6FA)
+I (..\..\Libraries\STM32F4xx_StdPeriph_Driver\inc\stm32f4xx_i2c.h)(0x6689F6FA)
+I (..\..\Libraries\STM32F4xx_StdPeriph_Driver\inc\stm32f4xx_iwdg.h)(0x6689F6FA)
+I (..\..\Libraries\STM32F4xx_StdPeriph_Driver\inc\stm32f4xx_pwr.h)(0x6689F6FA)
+I (..\..\Libraries\STM32F4xx_StdPeriph_Driver\inc\stm32f4xx_rcc.h)(0x6689F6FA)
+I (..\..\Libraries\STM32F4xx_StdPeriph_Driver\inc\stm32f4xx_rtc.h)(0x6689F6FA)
+I (..\..\Libraries\STM32F4xx_StdPeriph_Driver\inc\stm32f4xx_sdio.h)(0x6689F6FA)
+I (..\..\Libraries\STM32F4xx_StdPeriph_Driver\inc\stm32f4xx_spi.h)(0x6689F6FA)
+I (..\..\Libraries\STM32F4xx_StdPeriph_Driver\inc\stm32f4xx_syscfg.h)(0x6689F6FA)
+I (..\..\Libraries\STM32F4xx_StdPeriph_Driver\inc\stm32f4xx_tim.h)(0x6689F6FA)
+I (..\..\Libraries\STM32F4xx_StdPeriph_Driver\inc\stm32f4xx_usart.h)(0x6689F6FA)
+I (..\..\Libraries\STM32F4xx_StdPeriph_Driver\inc\stm32f4xx_wwdg.h)(0x6689F6FA)
+I (..\..\Libraries\STM32F4xx_StdPeriph_Driver\inc\misc.h)(0x6689F6FA)
+I (..\..\Libraries\STM32F4xx_StdPeriph_Driver\inc\stm32f4xx_cryp.h)(0x6689F6FA)
+I (..\..\Libraries\STM32F4xx_StdPeriph_Driver\inc\stm32f4xx_hash.h)(0x6689F6FA)
+I (..\..\Libraries\STM32F4xx_StdPeriph_Driver\inc\stm32f4xx_rng.h)(0x6689F6FA)
+I (..\..\Libraries\STM32F4xx_StdPeriph_Driver\inc\stm32f4xx_can.h)(0x6689F6FA)
+I (..\..\Libraries\STM32F4xx_StdPeriph_Driver\inc\stm32f4xx_dac.h)(0x6689F6FA)
+I (..\..\Libraries\STM32F4xx_StdPeriph_Driver\inc\stm32f4xx_dcmi.h)(0x6689F6FA)
+I (..\..\Libraries\STM32F4xx_StdPeriph_Driver\inc\stm32f4xx_fsmc.h)(0x6689F6FA)
+I (..\..\Hardware\TIM.h)(0x669D0EFA)
+I (..\..\Hardware\Serial.h)(0x6689F6F9)
+I (E:\SoftLib\Keil_v5\ARM\ARMCC\include\stdio.h)(0x60252374)
+I (..\..\Hardware\Delay.h)(0x6689F6F9)
+I (..\..\Hardware\ADCDMA.h)(0x669D216C)
+I (..\..\Hardware\DAC.h)(0x6690C554)
+I (..\..\Hardware\GPIO.h)(0x669F6F21)
+I (..\..\Hardware\EXTI.h)(0x669F4E09)
+I (..\..\Hardware\VOFA.h)(0x66A0B7D2)
+I (..\..\User\fft\inc\stm32_dsp.h)(0x6690CC44)
+I (E:\SoftLib\Keil_v5\ARM\ARMCC\include\math.h)(0x60252378)
+F (..\..\Hardware\FFTAnalysis.h)(0x66A1010F)()
+F (..\..\User\main.c)(0x66A101F1)(--c99 -c --cpu Cortex-M4.fp.sp -D__MICROLIB -g -O0 --apcs=interwork --split_sections -I ..\..\Libraries\CMSIS\Include -I ..\..\Libraries\CMSIS\Device\ST\STM32F4xx\Include -I ..\..\Libraries\STM32F4xx_StdPeriph_Driver\inc -I ..\..\User -I ..\..\Hardware -I ..\..\User\fft\inc -I ..\..\User\fft\src\asm\arm-IE:\SoftLib\Keil_Arm_pack\Keil\STM32F4xx_DFP\2.17.1\Drivers\CMSIS\Device\ST\STM32F4xx\Include-D__UVISION_VERSION="538" -DSTM32F407xx -DUSE_STDPERIPH_DRIVER -DUSE_STM324xG_EVAL-o .\objects\main.o --omf_browse .\objects\main.crf --depend .\objects\main.d)
+I (..\..\Hardware\sys.h)(0x66A0EBB4)
+I (..\..\Libraries\CMSIS\Device\ST\STM32F4xx\Include\stm32f4xx.h)(0x6689F6F9)
+I (..\..\Libraries\CMSIS\Include\core_cm4.h)(0x6689F6FA)
+I (E:\SoftLib\Keil_v5\ARM\ARMCC\include\stdint.h)(0x6025237E)
+I (..\..\Libraries\CMSIS\Include\core_cmInstr.h)(0x6689F6FA)
+I (..\..\Libraries\CMSIS\Include\core_cmFunc.h)(0x6689F6FA)
+I (..\..\Libraries\CMSIS\Include\core_cmSimd.h)(0x6689F6FA)
+I (..\..\Libraries\CMSIS\Device\ST\STM32F4xx\Include\system_stm32f4xx.h)(0x6689F6F9)
+I (..\..\User\stm32f4xx_conf.h)(0x6689F6FB)
+I (..\..\Libraries\STM32F4xx_StdPeriph_Driver\inc\stm32f4xx_adc.h)(0x6689F6FA)
+I (..\..\Libraries\STM32F4xx_StdPeriph_Driver\inc\stm32f4xx_crc.h)(0x6689F6FA)
+I (..\..\Libraries\STM32F4xx_StdPeriph_Driver\inc\stm32f4xx_dbgmcu.h)(0x6689F6FA)
+I (..\..\Libraries\STM32F4xx_StdPeriph_Driver\inc\stm32f4xx_dma.h)(0x6689F6FA)
+I (..\..\Libraries\STM32F4xx_StdPeriph_Driver\inc\stm32f4xx_exti.h)(0x6689F6FA)
+I (..\..\Libraries\STM32F4xx_StdPeriph_Driver\inc\stm32f4xx_flash.h)(0x6689F6FA)
+I (..\..\Libraries\STM32F4xx_StdPeriph_Driver\inc\stm32f4xx_gpio.h)(0x6689F6FA)
+I (..\..\Libraries\STM32F4xx_StdPeriph_Driver\inc\stm32f4xx_i2c.h)(0x6689F6FA)
+I (..\..\Libraries\STM32F4xx_StdPeriph_Driver\inc\stm32f4xx_iwdg.h)(0x6689F6FA)
+I (..\..\Libraries\STM32F4xx_StdPeriph_Driver\inc\stm32f4xx_pwr.h)(0x6689F6FA)
+I (..\..\Libraries\STM32F4xx_StdPeriph_Driver\inc\stm32f4xx_rcc.h)(0x6689F6FA)
+I (..\..\Libraries\STM32F4xx_StdPeriph_Driver\inc\stm32f4xx_rtc.h)(0x6689F6FA)
+I (..\..\Libraries\STM32F4xx_StdPeriph_Driver\inc\stm32f4xx_sdio.h)(0x6689F6FA)
+I (..\..\Libraries\STM32F4xx_StdPeriph_Driver\inc\stm32f4xx_spi.h)(0x6689F6FA)
+I (..\..\Libraries\STM32F4xx_StdPeriph_Driver\inc\stm32f4xx_syscfg.h)(0x6689F6FA)
+I (..\..\Libraries\STM32F4xx_StdPeriph_Driver\inc\stm32f4xx_tim.h)(0x6689F6FA)
+I (..\..\Libraries\STM32F4xx_StdPeriph_Driver\inc\stm32f4xx_usart.h)(0x6689F6FA)
+I (..\..\Libraries\STM32F4xx_StdPeriph_Driver\inc\stm32f4xx_wwdg.h)(0x6689F6FA)
+I (..\..\Libraries\STM32F4xx_StdPeriph_Driver\inc\misc.h)(0x6689F6FA)
+I (..\..\Libraries\STM32F4xx_StdPeriph_Driver\inc\stm32f4xx_cryp.h)(0x6689F6FA)
+I (..\..\Libraries\STM32F4xx_StdPeriph_Driver\inc\stm32f4xx_hash.h)(0x6689F6FA)
+I (..\..\Libraries\STM32F4xx_StdPeriph_Driver\inc\stm32f4xx_rng.h)(0x6689F6FA)
+I (..\..\Libraries\STM32F4xx_StdPeriph_Driver\inc\stm32f4xx_can.h)(0x6689F6FA)
+I (..\..\Libraries\STM32F4xx_StdPeriph_Driver\inc\stm32f4xx_dac.h)(0x6689F6FA)
+I (..\..\Libraries\STM32F4xx_StdPeriph_Driver\inc\stm32f4xx_dcmi.h)(0x6689F6FA)
+I (..\..\Libraries\STM32F4xx_StdPeriph_Driver\inc\stm32f4xx_fsmc.h)(0x6689F6FA)
+I (..\..\Hardware\TIM.h)(0x669D0EFA)
+I (..\..\Hardware\Serial.h)(0x6689F6F9)
+I (E:\SoftLib\Keil_v5\ARM\ARMCC\include\stdio.h)(0x60252374)
+I (..\..\Hardware\Delay.h)(0x6689F6F9)
+I (..\..\Hardware\ADCDMA.h)(0x669D216C)
+I (..\..\Hardware\DAC.h)(0x6690C554)
+I (..\..\Hardware\GPIO.h)(0x669F6F21)
+I (..\..\Hardware\EXTI.h)(0x669F4E09)
+I (..\..\Hardware\VOFA.h)(0x66A0B7D2)
+I (..\..\Hardware\FFTAnalysis.h)(0x66A1010F)
+I (..\..\User\fft\inc\stm32_dsp.h)(0x6690CC44)
+I (E:\SoftLib\Keil_v5\ARM\ARMCC\include\math.h)(0x60252378)
 F (..\..\User\stm32f4xx_it.c)(0x6689F6FB)(--c99 -c --cpu Cortex-M4.fp.sp -D__MICROLIB -g -O0 --apcs=interwork --split_sections -I ..\..\Libraries\CMSIS\Include -I ..\..\Libraries\CMSIS\Device\ST\STM32F4xx\Include -I ..\..\Libraries\STM32F4xx_StdPeriph_Driver\inc -I ..\..\User -I ..\..\Hardware -I ..\..\User\fft\inc -I ..\..\User\fft\src\asm\arm-IE:\SoftLib\Keil_Arm_pack\Keil\STM32F4xx_DFP\2.17.1\Drivers\CMSIS\Device\ST\STM32F4xx\Include-D__UVISION_VERSION="538" -DSTM32F407xx -DUSE_STDPERIPH_DRIVER -DUSE_STM324xG_EVAL-o .\objects\stm32f4xx_it.o --omf_browse .\objects\stm32f4xx_it.crf --depend .\objects\stm32f4xx_it.d)
 I (..\..\User\stm32f4xx_it.h)(0x6689F6FB)
 I (..\..\Libraries\CMSIS\Device\ST\STM32F4xx\Include\stm32f4xx.h)(0x6689F6F9)

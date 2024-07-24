@@ -45,3 +45,7 @@
 .\objects\delay.o: ..\..\Hardware\DAC.h
 .\objects\delay.o: ..\..\Hardware\GPIO.h
 .\objects\delay.o: ..\..\Hardware\EXTI.h
+.\objects\delay.o: ..\..\Hardware\VOFA.h
+.\objects\delay.o: ..\..\Hardware\FFTAnalysis.h
+.\objects\delay.o: ..\..\User\fft\inc\stm32_dsp.h
+.\objects\delay.o: E:\SoftLib\Keil_v5\ARM\ARMCC\Bin\..\include\math.h

@@ -853,6 +853,26 @@
               <FileType>5</FileType>
               <FilePath>..\..\Hardware\EXTI.h</FilePath>
             </File>
+            <File>
+              <FileName>VOFA.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\Hardware\VOFA.c</FilePath>
+            </File>
+            <File>
+              <FileName>VOFA.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>..\..\Hardware\VOFA.h</FilePath>
+            </File>
+            <File>
+              <FileName>FFTAnalysis.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\Hardware\FFTAnalysis.c</FilePath>
+            </File>
+            <File>
+              <FileName>FFTAnalysis.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>..\..\Hardware\FFTAnalysis.h</FilePath>
+            </File>
           </Files>
         </Group>
         <Group>
