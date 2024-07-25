@@ -1,15 +1,15 @@
 // TIM4
 #include "TIM.h"
 
-#define ARR_NUM 250
-#define PSC_NUM 84
+#define ARR_NUM 5600 //5600
+#define PSC_NUM 1000 //500
 
 void Timer_Init(void)
 {
 
 	NVIC_InitTypeDef NVIC_InitStructure;
 	// -------------------------------
-	// TIM 2 定时500us自动中断
+	// TIM 2 定时15Hz自动中断
 	RCC_APB1PeriphClockCmd(RCC_APB1Periph_TIM2, ENABLE);   
 	TIM_TimeBaseInitTypeDef  TIM_TimeBaseStructure;  
     TIM_TimeBaseStructure.TIM_Period = (ARR_NUM-1); 

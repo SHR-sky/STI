@@ -46,6 +46,5 @@
 .\objects\tim.o: ..\..\Hardware\GPIO.h
 .\objects\tim.o: ..\..\Hardware\EXTI.h
 .\objects\tim.o: ..\..\Hardware\VOFA.h
-.\objects\tim.o: ..\..\Hardware\FFTAnalysis.h
-.\objects\tim.o: ..\..\User\fft\inc\stm32_dsp.h
-.\objects\tim.o: E:\SoftLib\Keil_v5\ARM\ARMCC\Bin\..\include\math.h
+.\objects\tim.o: ..\..\Hardware\AD9959Serial.h
+.\objects\tim.o: E:\SoftLib\Keil_v5\ARM\ARMCC\Bin\..\include\stdarg.h

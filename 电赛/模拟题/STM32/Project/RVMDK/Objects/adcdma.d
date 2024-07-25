@@ -46,6 +46,5 @@
 .\objects\adcdma.o: ..\..\Hardware\GPIO.h
 .\objects\adcdma.o: ..\..\Hardware\EXTI.h
 .\objects\adcdma.o: ..\..\Hardware\VOFA.h
-.\objects\adcdma.o: ..\..\Hardware\FFTAnalysis.h
-.\objects\adcdma.o: ..\..\User\fft\inc\stm32_dsp.h
-.\objects\adcdma.o: E:\SoftLib\Keil_v5\ARM\ARMCC\Bin\..\include\math.h
+.\objects\adcdma.o: ..\..\Hardware\AD9959Serial.h
+.\objects\adcdma.o: E:\SoftLib\Keil_v5\ARM\ARMCC\Bin\..\include\stdarg.h

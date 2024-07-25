@@ -864,14 +864,24 @@
               <FilePath>..\..\Hardware\VOFA.h</FilePath>
             </File>
             <File>
-              <FileName>FFTAnalysis.c</FileName>
+              <FileName>AD9959Serial.c</FileName>
               <FileType>1</FileType>
-              <FilePath>..\..\Hardware\FFTAnalysis.c</FilePath>
+              <FilePath>..\..\Hardware\AD9959Serial.c</FilePath>
             </File>
             <File>
-              <FileName>FFTAnalysis.h</FileName>
+              <FileName>AD9959Serial.h</FileName>
               <FileType>5</FileType>
-              <FilePath>..\..\Hardware\FFTAnalysis.h</FilePath>
+              <FilePath>..\..\Hardware\AD9959Serial.h</FilePath>
+            </File>
+            <File>
+              <FileName>ADC.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\Hardware\ADC.c</FilePath>
+            </File>
+            <File>
+              <FileName>ADC.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>..\..\Hardware\ADC.h</FilePath>
             </File>
           </Files>
         </Group>

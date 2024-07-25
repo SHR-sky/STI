@@ -24,8 +24,8 @@ void TIM3_Config()
 	RCC_APB1PeriphClockCmd( RCC_APB1Periph_TIM3 , ENABLE );			   //开启时钟
 	
 	//TIM3时间基准配置
-	TIM_TimeBaseStructure.TIM_Period = 83 ; // 计数84 , 84M/84 = 1M
-	TIM_TimeBaseStructure.TIM_Prescaler = 124; // 125预分频  1M/125 = 8K
+	TIM_TimeBaseStructure.TIM_Period = 5600-1 ; // 计数84 , 84M/84 = 1M
+	TIM_TimeBaseStructure.TIM_Prescaler = 500-1; // 125预分频  1M/125 = 8K
 	TIM_TimeBaseStructure.TIM_ClockDivision = 0;
 	TIM_TimeBaseStructure.TIM_CounterMode = TIM_CounterMode_Up;
 	TIM_TimeBaseInit( TIM3 , &TIM_TimeBaseStructure );

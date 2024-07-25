@@ -19,9 +19,9 @@ void DecodeInfo(void); // 解码
 // 空闲拉高
 // 2个bit低电平代表传输开始，10个bit高电平代表传输结束
 // 每个字符以8bit传输
-// 最多100个字符
-// 共800 + 2 + 10 = 812个bit
-// 一个定时器250us, 不超过0.25s可传送所有数据 共
+// 最多10个字符
+// 共80 + 2 + 10 = 92个bit
+// 一个定时器15Hz,, 不超过6.1s可传送所有数据 共
 // 一个定时器125us DMA 收集2000个点 0.25接收 解读数据 2个点为1bit
 		
 short ADCConvertedValue[ADC_DMA_Size]; // ADC采集数据 2000个点
@@ -29,44 +29,10 @@ short ADCConvertedValue[ADC_DMA_Size]; // ADC采集数据 2000个点
 u8 sendFlag = 0;
 u8 receiveFlag = 0;
 
-extern long MagBufArray[SAMPLE_NODE_NUM / 2];  // 幅值
-extern u16 MagBufIndex[SAMPLE_NODE_NUM / 2];   // 赋值从大到小的索引
-extern double PhaBufArray[SAMPLE_NODE_NUM / 2];
 int main()
 {
 	Serial_Init();
-	Serial_Printf("OK!\r\n");
-	float t = 0;
-	float data[4];
-	CalcFFT();
-	GetPowerMag();
-	//GetPowerMagAndPha();
-	//Serial_Printf("THD:%lf\r\n",CalcTHD(5))
-	/*for(int i=0; i<500; i++)
-	{
-		//Serial_Printf("%ld\r\n ",MagBufArray[i]);
-		data[0] = (float)MagBufArray[i];
-		JustFloat_Send(data,1);
-		delay_ms(10);
-		//Serial_Printf("MagBufArray:%d\r\n",MagBufArray[i]);
-	}*/
-	Serial_Printf("Max:%d\r\n",GetMaxSpec(0));
-	Serial_Printf("THD:%lf\r\n",CalcTHD(10));
-	while(1);	
-	/*
-	while(1)
-	{
-		t += 0.1;
-		// 发送数据
-		float data[4];  
-		data[0] = sin(t);
-		data[1] = sin(2*t);
-		data[2] = sin(3*t);
-		data[3] = sin(4*t);
-		JustFloat_Send(data,1);
-		delay_ms(100);
-	}*/
-	//Serial_Printf("Hello!\r\n");
+
 	GPIO_OUT_Init();
 	Timer_Init();
 	exti_init();
@@ -77,12 +43,12 @@ int main()
 	ADC_Config();  
 	INFO_SET = 1;
 	ADC_DMA_Trig(ADC_DMA_Size); // 开始采样
-	delay_ms(300); // 等待采样完成	
+	//delay_ms(300); // 等待采样完成	
 
 	clearStr(str,100);
 	clearStr(decodeStr,100);
 	
-	receiveFlag = 0;
+	receiveFlag = 1;
 	sendFlag = 0;
 	str[0] = 'H';
 	str[1] = 'N';
@@ -97,7 +63,8 @@ int main()
 		{
 			ADC_DMA_Trig(ADC_DMA_Size); // 开始采样
 			//Serial_Printf("Receive!\r\n");
-			delay_ms(300); // 等待采样完成
+			delay_ms(6100); // 等待采样完成
+			
 			/*
 			for(int i=0; i<5; i++)
 			{

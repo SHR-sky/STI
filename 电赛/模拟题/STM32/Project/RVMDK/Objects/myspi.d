@@ -46,6 +46,5 @@
 .\objects\myspi.o: ..\..\Hardware\GPIO.h
 .\objects\myspi.o: ..\..\Hardware\EXTI.h
 .\objects\myspi.o: ..\..\Hardware\VOFA.h
-.\objects\myspi.o: ..\..\Hardware\FFTAnalysis.h
-.\objects\myspi.o: ..\..\User\fft\inc\stm32_dsp.h
-.\objects\myspi.o: E:\SoftLib\Keil_v5\ARM\ARMCC\Bin\..\include\math.h
+.\objects\myspi.o: ..\..\Hardware\AD9959Serial.h
+.\objects\myspi.o: E:\SoftLib\Keil_v5\ARM\ARMCC\Bin\..\include\stdarg.h

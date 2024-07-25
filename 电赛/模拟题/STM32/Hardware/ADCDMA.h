@@ -4,7 +4,7 @@
 #include "sys.h"  
  
 //#define ADC1_DMA_Size  25000 //采样点数
-#define ADC_DMA_Size  2000 //采样点数
+#define ADC_DMA_Size  200 //采样点数
  
 void ADC_GPIO_Init(void);
 void TIM3_Config(void);

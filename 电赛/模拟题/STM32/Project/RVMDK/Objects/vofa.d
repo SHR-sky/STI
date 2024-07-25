@@ -46,6 +46,5 @@
 .\objects\vofa.o: ..\..\Hardware\GPIO.h
 .\objects\vofa.o: ..\..\Hardware\EXTI.h
 .\objects\vofa.o: ..\..\Hardware\VOFA.h
-.\objects\vofa.o: ..\..\Hardware\FFTAnalysis.h
-.\objects\vofa.o: ..\..\User\fft\inc\stm32_dsp.h
-.\objects\vofa.o: E:\SoftLib\Keil_v5\ARM\ARMCC\Bin\..\include\math.h
+.\objects\vofa.o: ..\..\Hardware\AD9959Serial.h
+.\objects\vofa.o: E:\SoftLib\Keil_v5\ARM\ARMCC\Bin\..\include\stdarg.h
