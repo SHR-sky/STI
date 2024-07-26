@@ -723,13 +723,13 @@ Symbol: NPT
    Definitions
       At line 46 in file ..\..\User\fft\src\asm\arm\cr4_fft_64_stm32.s
    Uses
-      At line 135 in macro Xp	OPT
+      At line 135 in macro ð€âhGáOPT
       at line 223 in file ..\..\User\fft\src\asm\arm\cr4_fft_64_stm32.s
-      At line 137 in macro Xp	OPT
+      At line 137 in macro ð€âhGáOPT
       at line 223 in file ..\..\User\fft\src\asm\arm\cr4_fft_64_stm32.s
-      At line 139 in macro Xp	OPT
+      At line 139 in macro ð€âhGáOPT
       at line 223 in file ..\..\User\fft\src\asm\arm\cr4_fft_64_stm32.s
-      At line 141 in macro Xp	OPT
+      At line 141 in macro ð€âhGáOPT
       at line 223 in file ..\..\User\fft\src\asm\arm\cr4_fft_64_stm32.s
 
 1 symbol

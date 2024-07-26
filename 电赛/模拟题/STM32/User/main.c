@@ -113,6 +113,7 @@ int main()
 			DecodeInfo(); // 解码
 			Serial_Printf("t1.txt=\"%s\"",decodeStr);
 			Serial_End();
+			clearStr(decodeStr,100);
 			//Serial_Printf("Decode: %s\r\n",decodeStr);
 			//Serial_Printf("Decode 16: %x,%x,%x,%x\r\n",decodeStr[0],decodeStr[1],decodeStr[2],decodeStr[3]);
 			receiveFlag = 0;
@@ -196,7 +197,7 @@ void DecodeInfo(void)
 	u8 recBit = 0;
 	u8 preRecBit = 0;
 	val = 0;
-	if(ADCConvertedValue[1]<HIGH_LOW_DIVISION&&ADCConvertedValue[3]<HIGH_LOW_DIVISION) // 开头两个低电平
+	//if(ADCConvertedValue[2]<HIGH_LOW_DIVISION&&ADCConvertedValue[3]<HIGH_LOW_DIVISION) // 开头两个低电平
 	for(int i=5; i<200; i+=2) // 步进为2
 	{
 		preRecBit = recBit;
