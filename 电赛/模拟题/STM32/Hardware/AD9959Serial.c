@@ -105,5 +105,8 @@ void AD9959_Printf(char *format, ...)
 
 void USART3_IRQHandler(void)
 {
-    USART_ClearITPendingBit(USART3, USART_IT_RXNE);
+	if (USART_GetFlagStatus(USART3, USART_FLAG_RXNE) == SET)
+	{
+		USART_ClearITPendingBit(USART3, USART_IT_RXNE);
+	}
 }

@@ -62,50 +62,6 @@ void Serial_Init(void)
 
 	USART_Cmd(USART2, ENABLE);
 
-	// USART3
-	// ---------------------------------------------------------------------------
-	// 接收ESP32数据
-	NVIC_InitTypeDef NVIC_InitStructure;
-	GPIO_InitTypeDef GPIO_InitStructure;
-	USART_InitTypeDef USART_InitStructure;
-	RCC_APB1PeriphClockCmd(RCC_APB1Periph_USART3, ENABLE);
-	RCC_APB1PeriphClockCmd(RCC_AHB1Periph_GPIOB, ENABLE);
-	//RCC_APB1PeriphClockCmd(RCC_AHB1Periph_DMA1, ENABLE); // 使能DMA传输
-	// USART3_TX   GPIOB.10
-	GPIO_InitStructure.GPIO_Pin = GPIO_Pin_10;
-	GPIO_InitStructure.GPIO_Speed = GPIO_Speed_50MHz;
-	GPIO_InitStructure.GPIO_Mode = GPIO_Mode_AF;
-	GPIO_Init(GPIOB, &GPIO_InitStructure);
-
-	// USART3_RX	  GPIOB.11初始化
-	GPIO_InitStructure.GPIO_Pin = GPIO_Pin_11;
-	GPIO_InitStructure.GPIO_Mode = GPIO_Mode_AF;
-	GPIO_Init(GPIOB, &GPIO_InitStructure);
-
-	// 配置波特率
-	USART_InitStructure.USART_BaudRate = 115200;
-	// 配置 针数据字长
-	USART_InitStructure.USART_WordLength = USART_WordLength_8b;
-	// 配置停止位
-	USART_InitStructure.USART_StopBits = USART_StopBits_1;
-	// 配置校验位
-	USART_InitStructure.USART_Parity = USART_Parity_No;
-	// 配置硬件流控制
-	USART_InitStructure.USART_HardwareFlowControl = USART_HardwareFlowControl_None;
-	// 配置工作模式，收发一起
-	USART_InitStructure.USART_Mode = USART_Mode_Rx | USART_Mode_Tx;
-	// 完成串口的初始化配置
-	USART_Init(USART3, &USART_InitStructure);
-	// 使能串口接收中断
-	USART_ITConfig(USART3, USART_IT_RXNE, ENABLE);
-	USART_ITConfig(USART3, USART_IT_IDLE, ENABLE);
-	USART_Cmd(USART3, ENABLE);
-	// 清除发送完成标志
-	NVIC_InitStructure.NVIC_IRQChannel = USART3_IRQn;
-	NVIC_InitStructure.NVIC_IRQChannelPreemptionPriority = 0X06;
-	NVIC_InitStructure.NVIC_IRQChannelSubPriority = 0X00;
-	NVIC_InitStructure.NVIC_IRQChannelCmd = ENABLE;
-	NVIC_Init(&NVIC_InitStructure);
 }
 
 void Serial_SendByte(uint8_t Byte)
@@ -169,6 +125,7 @@ extern u8 sendFlag;
 u8 uartIndex;
 
 short Res;
+extern u8 mode;
 void USART2_IRQHandler(void)
 {
 	if (USART_GetFlagStatus(USART2, USART_FLAG_RXNE) == SET)
@@ -177,12 +134,16 @@ void USART2_IRQHandler(void)
 		Res = USART_ReceiveData(USART2);
 		str[uartIndex] = Res;
 		uartIndex += 1;
-		if(Res == 0xff)
+		if (Res == 0xff)
 		{
 			str[uartIndex - 1] = '\0';
-			Serial_Printf("Send:%s\r\n",str);
+			//Serial_Printf("t0.txt=\"Send:%s\"", str);
+			//Serial_End();
 			uartIndex = 0;
-			sendFlag = 1;
+			if (mode == 0 || mode == 1) // 双工或只发送
+			{
+				sendFlag = 1;
+			}
 		}
 		// Write you code
 	}

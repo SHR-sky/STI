@@ -9,6 +9,11 @@ u8 strIndex = 0;
 u8 charIndex = 0;
 u8 startIndex = 0;
 
+u8 mode = 0;
+// mode = 0 收发相同
+// mode = 1 只发送
+// mode = 2 只接收
+
 #define INFO_SET PEout(5)
 #define HIGH_LOW_DIVISION 2000
 
@@ -17,22 +22,25 @@ void EncodeSendInfo(void); // 编码与发送
 void DecodeInfo(void); // 解码
 
 // 空闲拉高
-// 2个bit低电平代表传输开始，10个bit高电平代表传输结束
+// 2个bit低电平代表传输开始，16个bit高电平代表传输结束
 // 每个字符以8bit传输
 // 最多10个字符
-// 共80 + 2 + 10 = 92个bit
-// 一个定时器15Hz,, 不超过6.1s可传送所有数据 共
-// 一个定时器125us DMA 收集2000个点 0.25接收 解读数据 2个点为1bit
+// 共80 + 2 + 15 = 98个bit
+// 一个定时器15Hz,, 不超过7s可传送所有数据 共
+// 一个定时器125us DMA 收集200个点 6.1接收 解读数据 2个点为1bit
 		
 short ADCConvertedValue[ADC_DMA_Size]; // ADC采集数据 2000个点
 
 u8 sendFlag = 0;
 u8 receiveFlag = 0;
 
+// PE5 数字信号发送
+// PF0 下降沿接收
+// PB1 ADC DMA 采集
+
 int main()
 {
 	Serial_Init();
-
 	GPIO_OUT_Init();
 	Timer_Init();
 	exti_init();
@@ -42,35 +50,54 @@ int main()
 	TIM3_Config();  
 	ADC_Config();  
 	INFO_SET = 1;
-	ADC_DMA_Trig(ADC_DMA_Size); // 开始采样
-	//delay_ms(300); // 等待采样完成	
-
+	
+	AD9959_Serial_Init();
+	//AD9959_Init();
+	AD9959_Printf("*Init_AD9959()");
+	//delay_s(5);
+	//AD9959_Serial_Init();
+	AD9959_Printf("*InitReset()");
+	//AD9959_Serial_Init();
+	//AD9959_Printf("*Write_frequency(%d,%d)",3,17600);
+	//AD9959_Printf("*Write_Amplitude(%d,%d)",3,710);
+	AD9959_Printf("*Write_frequency(%d,%d)",2,352000); // 352000
+	AD9959_Printf("*Write_Amplitude(%d,%d)",2,710);
+	INFO_SET = 1;
+	//USART_Cmd(USART3, DISABLE); // FIXME
+	
+	Serial_Printf("t1.txt=\"CW\"");
+	Serial_End();
 	clearStr(str,100);
 	clearStr(decodeStr,100);
-	
-	receiveFlag = 1;
+	//Serial_Printf("OK!\r\n");
+	//Serial_Printf("Fine\r\n");
+	receiveFlag = 0;
 	sendFlag = 0;
+	/*
 	str[0] = 'H';
 	str[1] = 'N';
 	str[2] = 'O';
 	str[3] = 'N';
 	str[4] = 'E';
 	str[5] = '\0';
+	*/
 	delay_ms(100);
 	while(1)
 	{
 		if(receiveFlag==1)
 		{
+			Serial_Printf("t1.txt=\"In\"");
+			Serial_End();
 			ADC_DMA_Trig(ADC_DMA_Size); // 开始采样
 			//Serial_Printf("Receive!\r\n");
-			delay_ms(6100); // 等待采样完成
+			delay_ms(6800); // 等待采样完成
 			
 			/*
 			for(int i=0; i<5; i++)
 			{
 				Serial_Printf("%d ",ADCConvertedValue[i]);
 			}
-			for(int i=5; i<300; i++)
+			for(int i=5; i<200; i++)
 			{
 				if((i-5)%16==0)
 				{
@@ -84,8 +111,10 @@ int main()
 			*/
 			
 			DecodeInfo(); // 解码
-			Serial_Printf("Decode: %s\r\n",decodeStr);
-			
+			Serial_Printf("t1.txt=\"%s\"",decodeStr);
+			Serial_End();
+			//Serial_Printf("Decode: %s\r\n",decodeStr);
+			//Serial_Printf("Decode 16: %x,%x,%x,%x\r\n",decodeStr[0],decodeStr[1],decodeStr[2],decodeStr[3]);
 			receiveFlag = 0;
 		}
 		if(sendFlag==1)
@@ -101,7 +130,10 @@ void EXTI0_IRQHandler(void) // 接收到指令
 	if (EXTI_GetITStatus(EXTI_Line0) != RESET) {
 		if(receiveFlag == 0)
 		{
-			receiveFlag = 1;
+			if(mode == 0 || mode == 2) // 双工或者只接收
+			{
+				receiveFlag = 1;
+			}
 		}
 		EXTI_ClearITPendingBit(EXTI_Line0);
 	}
@@ -165,7 +197,7 @@ void DecodeInfo(void)
 	u8 preRecBit = 0;
 	val = 0;
 	if(ADCConvertedValue[1]<HIGH_LOW_DIVISION&&ADCConvertedValue[3]<HIGH_LOW_DIVISION) // 开头两个低电平
-	for(int i=5; i<2000; i+=2) // 步进为2
+	for(int i=5; i<200; i+=2) // 步进为2
 	{
 		preRecBit = recBit;
 		recBit = ADCConvertedValue[i]>HIGH_LOW_DIVISION?1:0;
@@ -177,7 +209,7 @@ void DecodeInfo(void)
 		{
 			recEndIndex = 1; //重新计数
 		}
-		if(recEndIndex>=10) // 连续10个1
+		if(recEndIndex>=15) // 连续10个1
 		{
 			decodeStr[recStrIndex-1] = '\0';
 			recEndIndex = 1;
