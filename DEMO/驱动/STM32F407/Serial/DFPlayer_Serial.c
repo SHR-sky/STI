@@ -6,7 +6,7 @@ u8 volumn = 10;
 
 void DFPlayer_Init(void)
 {
-	// USART1_TX PA9 USART2_RX PA10
+	// USART1_TX PA9 USART1_RX PA10
 
 	/*open the clock*/
 	RCC_AHB1PeriphClockCmd(RCC_AHB1Periph_GPIOA, ENABLE);
@@ -18,7 +18,7 @@ void DFPlayer_Init(void)
 	GPIO_InitTypeDef GPIO_InitStruct;
 
 	/* 三、配置结构体 */
-	
+
 	// TX
 	GPIO_InitStruct.GPIO_Mode = GPIO_Mode_AF;
 	// GPIO_InitStruct.GPIO_Mode = GPIO_Mode_OUT;
@@ -34,7 +34,6 @@ void DFPlayer_Init(void)
 	GPIO_InitStruct.GPIO_Mode = GPIO_Mode_AF;
 	GPIO_InitStruct.GPIO_Pin = GPIO_Pin_10;
 	GPIO_Init(GPIOA, &GPIO_InitStruct);
-
 
 	// 发送STM32数据
 
@@ -66,12 +65,13 @@ void DFPlayer_Init(void)
 void DFPlayer_SendByte(u8 c)
 {
 	USART_SendData(USART1, c);
-	while (USART_GetFlagStatus(USART1, USART_FLAG_TXE) == RESET);
+	while (USART_GetFlagStatus(USART1, USART_FLAG_TXE) == RESET)
+		;
 }
 
 void DFPlayer_VolumnUp(void)
 {
-	if(volumn >= 30)
+	if (volumn >= 30)
 	{
 		volumn = 30;
 	}
@@ -100,7 +100,7 @@ void DFPlayer_VolumnUp(void)
 
 void DFPlayer_VolumnDown(void)
 {
-	if(volumn <= 0)
+	if (volumn <= 0)
 	{
 		volumn = 0;
 	}
@@ -129,11 +129,11 @@ void DFPlayer_VolumnDown(void)
 
 void DFPlayer_VolumnSet(u8 v)
 {
-	if(v >= 30)
+	if (v >= 30)
 	{
 		v = 30;
 	}
-	if(v<=0)
+	if (v <= 0)
 	{
 		v = 0;
 	}
@@ -153,7 +153,7 @@ void DFPlayer_VolumnSet(u8 v)
 	cmd[6] = v;
 	DFPlayer_Checksum();
 	cmd[9] = 0xef;
-	DFPlayer_SendCMD();	
+	DFPlayer_SendCMD();
 }
 
 void DFPlayer_PlayNext(void)
@@ -264,7 +264,8 @@ void DFPlayer_Reset(void)
 void DFPlayer_Checksum(void)
 {
 	uint16_t checksum = 0;
-	for (int i=1; i<7; i++) {
+	for (int i = 1; i < 7; i++)
+	{
 		checksum += cmd[i];
 	}
 	uint16_t leftsum = 0x010000 - checksum;
@@ -274,10 +275,11 @@ void DFPlayer_Checksum(void)
 
 void DFPlayer_SendCMD(void)
 {
-	for(int i=0; i<10; i++)
+	for (int i = 0; i < 10; i++)
 	{
 		DFPlayer_SendByte(cmd[i]);
-		for(int j=0; j<100; j++);
+		for (int j = 0; j < 100; j++)
+			;
 	}
 }
 

@@ -3,7 +3,16 @@
 
 #include "sys.h"
 
-//！！！需TIM触发转换，请额外配置TIM
+/**
+ * @brief Driver for DAC DMA
+ * @details PA4 - DAC1
+ *          PA5 - DAC2
+ * @author Rufish
+ * @date 2024.07.27
+ * @copyright Copyright (c)
+ **/
+
+// ！！！需TIM触发转换，请额外配置TIM
 #define DA1_Value_Length 200
 #define DA2_Value_Length 200
 
@@ -13,9 +22,7 @@ void DA2_Init(void);
 void TIM4_Init(void);
 void TIM6_Init(void);
 
-//uint16_t DA1_GetValue();
-//uint16_t DA2_GetValue();
-
+// uint16_t DA1_GetValue();
+// uint16_t DA2_GetValue();
 
 #endif
-

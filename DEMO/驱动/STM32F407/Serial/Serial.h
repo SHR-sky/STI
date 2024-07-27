@@ -4,6 +4,16 @@
 #include "stdio.h"
 #include "sys.h"
 
+/**
+ * @brief Driver for USART2
+ * @details USART2_TX PA2
+ *          USART2_RX PA3
+ *          Baud Rate:115200
+ * @author Rufish
+ * @date 2024.07.27
+ * @copyright Copyright (c)
+ **/
+
 void Serial_Init(void);
 void Serial_SendByte(uint8_t Byte);
 void Serial_SendNumber(uint32_t Number, uint8_t length);
