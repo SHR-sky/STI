@@ -60,12 +60,21 @@ int main()
 	//AD9959_Serial_Init();
 	//AD9959_Printf("*Write_frequency(%d,%d)",3,17600);
 	//AD9959_Printf("*Write_Amplitude(%d,%d)",3,710);
-	AD9959_Printf("*Write_frequency(%d,%d)",2,352000); // 352000
+	AD9959_Printf("*Write_frequency(%d,%d)",2,17600); // 352000
 	AD9959_Printf("*Write_Amplitude(%d,%d)",2,710);
 	INFO_SET = 1;
 	//USART_Cmd(USART3, DISABLE); // FIXME
 	
-	Serial_Printf("t1.txt=\"CW\"");
+	char show[7]; 
+	show[0] = 0xCE;
+	show[1] = 0xDE;
+	show[2] = 0xD7;
+	show[3] = 0xD6;
+	show[4] = 0xB7;
+	show[5] = 0xFB;
+	show[6] = '\0';
+	
+	Serial_Printf("t1.txt=\"%s\"",show);
 	Serial_End();
 	clearStr(str,100);
 	clearStr(decodeStr,100);
@@ -86,7 +95,7 @@ int main()
 	{
 		if(receiveFlag==1)
 		{
-			Serial_Printf("t1.txt=\"In\"");
+			Serial_Printf("t1.txt=\"Receiving\"");
 			Serial_End();
 			ADC_DMA_Trig(ADC_DMA_Size); // 开始采样
 			//Serial_Printf("Receive!\r\n");
@@ -111,8 +120,16 @@ int main()
 			*/
 			
 			DecodeInfo(); // 解码
-			Serial_Printf("t1.txt=\"%s\"",decodeStr);
-			Serial_End();
+			if(decodeStr[0]==0)
+			{
+				Serial_Printf("t1.txt=\"%s\"",show);
+				Serial_End();
+			}
+			else
+			{
+				Serial_Printf("t1.txt=\"%s\"",decodeStr);
+				Serial_End();
+			}
 			clearStr(decodeStr,100);
 			//Serial_Printf("Decode: %s\r\n",decodeStr);
 			//Serial_Printf("Decode 16: %x,%x,%x,%x\r\n",decodeStr[0],decodeStr[1],decodeStr[2],decodeStr[3]);
