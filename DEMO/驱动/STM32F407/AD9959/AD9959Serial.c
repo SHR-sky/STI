@@ -33,7 +33,7 @@ void AD9959_Serial_Init(void)
 
     // 发送STM32数据
 
-    RCC_APB2PeriphClockCmd(RCC_APB2Periph_USART3, ENABLE);
+    RCC_APB1PeriphClockCmd(RCC_APB1Periph_USART3, ENABLE);
 
     USART_InitTypeDef USART_InitStruct;
     USART_InitStruct.USART_BaudRate = 115200;
@@ -78,20 +78,10 @@ void AD9959_WriteAmp(u8 ch, u32 amp)
     AD9959_Printf("*Write_Amplitude(%d,%d)", ch, amp);
 }
 
-void AD9959_Sweep(u8 ch, u32 Start_freq, u32 End_freq, u32 step, u32 unitTime)
-{
-    for (u32 i = Start_freq; i <= End_freq; i += step)
-    {
-        AD9959_WriteFre(ch, i);
-        delay_us(unitTime);
-    }
-}
-
 void AD9959_SendByte(u8 c)
 {
     USART_SendData(USART3, c);
-    while (USART_GetFlagStatus(USART3, USART_FLAG_TXE) == RESET)
-        ;
+    while (USART_GetFlagStatus(USART3, USART_FLAG_TXE) == RESET);
 }
 
 void AD9959_SendString(char *String)
@@ -101,6 +91,7 @@ void AD9959_SendString(char *String)
         AD9959_SendByte(String[i]);
     }
 }
+
 
 void AD9959_Printf(char *format, ...)
 {
@@ -114,5 +105,8 @@ void AD9959_Printf(char *format, ...)
 
 void USART3_IRQHandler(void)
 {
-    USART_ClearITPendingBit(USART3, USART_IT_RXNE);
+	if (USART_GetFlagStatus(USART3, USART_FLAG_RXNE) == SET)
+	{
+		USART_ClearITPendingBit(USART3, USART_IT_RXNE);
+	}
 }

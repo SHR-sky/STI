@@ -127,6 +127,18 @@ again:
 	diff_phi_per5_1 = 1166.666666/(fre[1]*5+10);
 	diff_phi_per5_0 = 1166.666666/(fre[0]*5+10);
 
+	for(int i=0; i<200; i++)
+	{
+		meDA1_Value[i] = DAC_SIN[i];
+	}
+	TIM4_Init();
+	DA1_Init();
+	//TIM4->CNT = 65535-(4438)-TIM4->CNT;
+	TIM6_Init();
+	DA2_Init();
+	TIM_Cmd(TIM4, ENABLE);  
+	TIM_Cmd(TIM6, ENABLE);  
+	while(1);
 	
 	if(wave_type[0]==0)
 	{

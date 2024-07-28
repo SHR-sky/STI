@@ -5,6 +5,14 @@
 #include "stm32_dsp.h"
 #include "math.h"
 
+/**
+ * @brief FFT
+ * @details SOFTWARE
+ * @author Rufish
+ * @date 2024.07.28
+ * @copyright Copyright (c)
+ **/
+
 /*
 Usage:
 ADC_Value为采样点
@@ -12,6 +20,17 @@ ADC_Value为采样点
 Fs为采样频率，N为采样点，i为第几个
 Vpp = MagBufArray[i]*2/N
 Pha = PhaBufArray[i]
+*/
+
+/*
+	for(int i=0; i<1024; i++)
+	{
+		ADC_Value[i] = ADC1_ConvertedValue[i];
+	}
+	CalcFFT();
+	GetPowerMagAndPha();
+	Serial_Printf("Fre:%d\r\n",(int)(GetMaxSpec(1)*97.656)); // FS = 100K
+	Serial_Printf("THD:%f\r\n",CalcTHD(5));
 */
 
 #define SAMPLE_NODE_NUM 1024 // 1024点FFT

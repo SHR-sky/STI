@@ -10,6 +10,11 @@
  * @copyright Copyright (c)
  **/
 
+/*
+	Adc_Init();
+	Get_Adc(ADC3,ADC_Channel_4);
+*/
+
 void Adc_Init(void);
 uint16_t Get_Adc(ADC_TypeDef *kADCx, u8 ch);
 uint16_t Get_Adc_Average(ADC_TypeDef *kADCx, u8 ch, u8 times);

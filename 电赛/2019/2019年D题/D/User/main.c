@@ -87,7 +87,7 @@ int main()
     GPIO_InitStructure.GPIO_PuPd  = GPIO_PuPd_UP;
     GPIO_Init(GPIOE, &GPIO_InitStructure);	
 	
-	ADS8688_Init(CH0_EN|CH1_EN|CH2_EN|CH3_EN);
+	
 	Set_CH_Range(CHIR_0,ADS8688_IR_N2_5V);
 	Set_CH_Range(CHIR_1,ADS8688_IR_N2_5V);
 	Set_CH_Range(CHIR_2,ADS8688_IR_N2_5V);

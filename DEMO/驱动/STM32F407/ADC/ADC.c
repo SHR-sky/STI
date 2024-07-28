@@ -10,7 +10,7 @@ int i,sum,avgvota;
 //初始化ADC
 //这里我们仅以规则通道为例
 //我们默认将开启通道0~3																	   
-void  Adc_Init(void)
+void Adc_Init(void)
 { 	
 	GPIO_InitTypeDef gpio_InitTypeDef;
 	

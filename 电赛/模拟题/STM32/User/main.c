@@ -60,8 +60,8 @@ int main()
 	//AD9959_Serial_Init();
 	//AD9959_Printf("*Write_frequency(%d,%d)",3,17600);
 	//AD9959_Printf("*Write_Amplitude(%d,%d)",3,710);
-	AD9959_Printf("*Write_frequency(%d,%d)",2,17600); // 352000
-	AD9959_Printf("*Write_Amplitude(%d,%d)",2,710);
+	AD9959_Printf("*Write_frequency(%d,%d)",1,17600); // 352000
+	AD9959_Printf("*Write_Amplitude(%d,%d)",1,710);
 	INFO_SET = 1;
 	//USART_Cmd(USART3, DISABLE); // FIXME
 	

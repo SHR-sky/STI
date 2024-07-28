@@ -1,6 +1,9 @@
 #include "ADCDMA.h"
  
  
+u16 ADC1_ConvertedValue[ ADC1_DMA_Size ];
+u16 ADC2_ConvertedValue[ ADC2_DMA_Size ];
+ 
 // ADC的GPIO配置：
 // PB1 - ADC1_IN9
 // PC1 - ADC2-IN11
@@ -40,8 +43,6 @@ void TIM3_Config()
 #define ADC1_DR_ADDRESS  ((uint32_t)0x4001204C)          //ADC1 DR
 #define ADC2_DR_ADDRESS	 ((uint32_t)0x4001214C)			 //ADC2 DR
 
-u16 ADC1_ConvertedValue[ ADC1_DMA_Size ];
-u16 ADC2_ConvertedValue[ ADC2_DMA_Size ];
 //ADC-DMA触发使能
 //Size：单次传输的数据量
 void ADC1_DMA_Trig( u16 Size )                    
