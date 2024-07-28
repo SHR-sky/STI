@@ -20,8 +20,6 @@ int main()
 	AD9959_Init();
 	AD9959_Set_Fre(CH0,2000000);
 	IO_Update();
-	
-	
 
 	while(1)
 	{
