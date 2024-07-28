@@ -3,6 +3,7 @@
 // AUTHOR: Rufish 2024.07.22
 // REFERENCES: https://zhuanlan.zhihu.com/p/496245337
 
+short AD_Judge_Value[SAMPLE_LENGTH];
 short diffSampleWave[SAMPLE_LENGTH - 1];
 
 u8 AppoximateWaveJudge(void)
@@ -11,7 +12,7 @@ u8 AppoximateWaveJudge(void)
     double percent;
     for (int i = 0; i < SAMPLE_LENGTH; i++)
     {
-        if (SAMPLE_WAVE[i] >= COMPARE_VALUE)
+        if (AD_Judge_Value[i] >= COMPARE_VALUE)
         {
             cnt += 1;
         }
@@ -43,11 +44,11 @@ u8 WaveJudge(void)
     int mmin;
     for (int i = 0; i < SAMPLE_LENGTH - 1; i++) // 找第一个（位于最后的）最大的
     {
-        diffSampleWave[i] = SAMPLE_WAVE[i + 1] - SAMPLE_WAVE[i];
-        if (isInc == 1 && diffSampleWave < 0) // 前一次递增，这次递减，说明前一个数最大
+        diffSampleWave[i] = AD_Judge_Value[i + 1] - AD_Judge_Value[i];
+        if (isInc == 1 && diffSampleWave[i] < 0) // 前一次递增，这次递减，说明前一个数最大
         {
             isInc = 2;
-            mmax = SAMPLE_WAVE[i];
+            mmax = AD_Judge_Value[i];
             indexFirst = i;
             break;
         }
@@ -59,11 +60,11 @@ u8 WaveJudge(void)
     isInc = 0; // 继续寻找
     for (int i = indexFirst + 1; i < SAMPLE_LENGTH - 1; i++)
     {
-        diffSampleWave[i] = SAMPLE_WAVE[i + 1] - SAMPLE_WAVE[i];
-        if (isInc == 1 && diffSampleWave < 0) // 前一次递增，这次递减，说明前一个数最大
+        diffSampleWave[i] = AD_Judge_Value[i + 1] - AD_Judge_Value[i];
+        if (isInc == 1 && diffSampleWave[i] < 0) // 前一次递增，这次递减，说明前一个数最大
         {
             isInc = 2;
-            mmax = SAMPLE_WAVE[i];
+            mmax = AD_Judge_Value[i];
             indexSecond = i;
             break;
         }
@@ -73,10 +74,10 @@ u8 WaveJudge(void)
         }
     }
 
-    mmin = SAMPLE_WAVE[(indexFirst + indexSecond) / 2]; // 最小值
+    mmin = AD_Judge_Value[(indexFirst + indexSecond) / 2]; // 最小值
 
     indexSecond -= 1; // 退后一个点，保持First-Second有一个周期
-    quickSort(diffSampleWave, indexSecond, indexSecond);
+    quickSort(diffSampleWave, indexFirst, indexSecond);
     // 高斯滤波
     indexFirst += 1;  // 去掉最小值
     indexSecond -= 1; // 去掉最大值
@@ -86,7 +87,7 @@ u8 WaveJudge(void)
     {
         sum += diffSampleWave[i];
     }
-    if (sum > 10) // 避免采样误差，大于10，无误差应该为0
+    if (sum > (mmax - mmin) / 8) // 避免采样误差，大于10，无误差应该为0
     {
         return SAWTOOTH_WAVE;
     }
@@ -109,14 +110,14 @@ u8 WaveJudge(void)
             int cnt = 0;
             for (int i = indexFirst; i <= indexSecond; i++)
             {
-                if (SAMPLE_WAVE[i] > dot_3_4)
+                if (AD_Judge_Value[i] > dot_3_4)
                     cnt += 1;
             }
-            if (cnt * 1.0 / ((indexSecond - indexFirst + 1) * 1.0) > 0.76) // 正弦
+            if (cnt * 1.0 / ((indexSecond - indexFirst + 1) * 1.0) > 0.26) // 正弦
             {
                 return SIN_WAVE;
             }
-            else if (cnt * 1.0 / ((indexSecond - indexFirst + 1) * 1.0) > 0.70) // 三角
+            else if (cnt * 1.0 / ((indexSecond - indexFirst + 1) * 1.0) > 0.20) // 三角
             {
                 return TRI_WAVE;
             }

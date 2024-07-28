@@ -8,8 +8,7 @@
 #define PERCENTAGE_SIN 0.28  // 正弦波比例，需手动修正
 #define COMPARE_VALUE 2000   // 比较值，需手动修正
 
-#define SAMPLE_WAVE WAVE_SAMPLE_LIST // WAVE_SAMPLE_LIST为采样数组名，需修改
-#define SAMPLE_LENGTH 1000           // 采样长度，需修改
+#define SAMPLE_LENGTH 1000 // 采样长度，需修改
 
 #define SIN_WAVE 0      // 正弦
 #define TRI_WAVE 1      // 三角

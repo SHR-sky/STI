@@ -10,7 +10,7 @@
  *          PC12 - CLK
  *          PC13 - CS
  *          PC11 - READ_SDO
- * 			3.3v
+ * 			5v
  * @author Rufish
  * @date 2024.07.27
  * @copyright Copyright (c)

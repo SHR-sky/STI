@@ -888,6 +888,16 @@
               <FileType>5</FileType>
               <FilePath>..\..\Hardware\ADF4351.h</FilePath>
             </File>
+            <File>
+              <FileName>VOFA.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\Hardware\VOFA.c</FilePath>
+            </File>
+            <File>
+              <FileName>VOFA.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>..\..\Hardware\VOFA.h</FilePath>
+            </File>
           </Files>
         </Group>
         <Group>

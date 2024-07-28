@@ -13,6 +13,7 @@
 #include "DAC.h"
 #include "ADS8688.h"
 #include "ADF4351.h"
+#include "VOFA.h"
 
 
 // //0,不支持ucos

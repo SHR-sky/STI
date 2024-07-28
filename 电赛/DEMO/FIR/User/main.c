@@ -35,13 +35,14 @@ float32_t B[101] = {
   -0.002364379994766
 };
 
-uint32_t blockSize = 256;
-float pState[356] = {0.0f};
+uint32_t blockSize = 1281;
+float pState[1381] = {0.0f};
 
 
 
 int main()
 {
+	Serial_Init();
 	arm_fir_instance_f32 *S;
 	
 	S = (arm_fir_instance_f32 *)malloc(sizeof(arm_fir_instance_f32));
@@ -51,6 +52,15 @@ int main()
 	}
 	arm_fir_init_f32(S,BL,B,pState,blockSize);
 	arm_fir_f32(S,inbuf,outbuf,blockSize);
+	
+	float data[4];
+	for(int i=0; i<1281; i++)
+	{
+		data[0] = outbuf[i];
+		Serial_Printf("%f\n",outbuf[i]);
+		//JustFloat_Send(data, 0);
+		delay_ms(1);
+	}
 	
 	free(S);
 	S = NULL;
