@@ -779,14 +779,14 @@
           <GroupName>DSP</GroupName>
           <Files>
             <File>
-              <FileName>arm_common_tables.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>..\..\Libraries\DSP\include\arm_common_tables.h</FilePath>
-            </File>
-            <File>
               <FileName>arm_const_structs.h</FileName>
               <FileType>5</FileType>
               <FilePath>..\..\Libraries\DSP\include\arm_const_structs.h</FilePath>
+            </File>
+            <File>
+              <FileName>arm_common_tables.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>..\..\Libraries\DSP\include\arm_common_tables.h</FilePath>
             </File>
             <File>
               <FileName>arm_math.h</FileName>

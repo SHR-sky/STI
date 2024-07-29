@@ -3,9 +3,9 @@
 <title>Static Call Graph - [.\Objects\TemplateF407.axf]</title></head>
 <body><HR>
 <H1>Static Call Graph for image .\Objects\TemplateF407.axf</H1><HR>
-<BR><P>#&#060CALLGRAPH&#062# ARM Linker, 5060960: Last Updated: Mon Jul 29 17:55:06 2024
+<BR><P>#&#060CALLGRAPH&#062# ARM Linker, 5060960: Last Updated: Mon Jul 29 20:24:35 2024
 <BR><P>
-<H3>Maximum Stack Usage =        216 bytes + Unknown(Cycles, Untraceable Function Pointers)</H3><H3>
+<H3>Maximum Stack Usage =        224 bytes + Unknown(Cycles, Untraceable Function Pointers)</H3><H3>
 Call chain for Maximum Stack Depth:</H3>
 main &rArr; Serial_Printf &rArr; vsprintf
 <P>
@@ -650,7 +650,8 @@ Global Symbols
 <P><STRONG><a name="[76]"></a>GPIO_Init</STRONG> (Thumb, 144 bytes, Stack size 20 bytes, stm32f4xx_gpio.o(i.GPIO_Init))
 <BR><BR>[Stack]<UL><LI>Max Depth = 20<LI>Call Chain = GPIO_Init
 </UL>
-<BR>[Called By]<UL><LI><a href="#[74]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;AD9959_Init
+<BR>[Called By]<UL><LI><a href="#[5c]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;main
+<LI><a href="#[74]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;AD9959_Init
 <LI><a href="#[85]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Serial_Init
 </UL>
 
@@ -699,7 +700,8 @@ Global Symbols
 <BR>[Address Reference Count : 1]<UL><LI> startup_stm32f40xx.o(RESET)
 </UL>
 <P><STRONG><a name="[75]"></a>RCC_AHB1PeriphClockCmd</STRONG> (Thumb, 26 bytes, Stack size 0 bytes, stm32f4xx_rcc.o(i.RCC_AHB1PeriphClockCmd))
-<BR><BR>[Called By]<UL><LI><a href="#[74]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;AD9959_Init
+<BR><BR>[Called By]<UL><LI><a href="#[5c]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;main
+<LI><a href="#[74]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;AD9959_Init
 <LI><a href="#[85]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Serial_Init
 </UL>
 
@@ -768,7 +770,7 @@ Global Symbols
 </UL>
 <BR>[Address Reference Count : 1]<UL><LI> startup_stm32f40xx.o(.text)
 </UL>
-<P><STRONG><a name="[30]"></a>USART2_IRQHandler</STRONG> (Thumb, 206 bytes, Stack size 8 bytes, serial.o(i.USART2_IRQHandler))
+<P><STRONG><a name="[30]"></a>USART2_IRQHandler</STRONG> (Thumb, 238 bytes, Stack size 8 bytes, serial.o(i.USART2_IRQHandler))
 <BR><BR>[Stack]<UL><LI>Max Depth = 16<LI>Call Chain = USART2_IRQHandler &rArr; Serial_SendByte
 </UL>
 <BR>[Calls]<UL><LI><a href="#[8f]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Serial_SendByte
@@ -883,10 +885,12 @@ Global Symbols
 <LI><a href="#[83]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;IO_Update
 </UL>
 
-<P><STRONG><a name="[5c]"></a>main</STRONG> (Thumb, 1480 bytes, Stack size 64 bytes, main.o(i.main))
-<BR><BR>[Stack]<UL><LI>Max Depth = 216<LI>Call Chain = main &rArr; Serial_Printf &rArr; vsprintf
+<P><STRONG><a name="[5c]"></a>main</STRONG> (Thumb, 1348 bytes, Stack size 72 bytes, main.o(i.main))
+<BR><BR>[Stack]<UL><LI>Max Depth = 224<LI>Call Chain = main &rArr; Serial_Printf &rArr; vsprintf
 </UL>
-<BR>[Calls]<UL><LI><a href="#[6c]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_i2d
+<BR>[Calls]<UL><LI><a href="#[76]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;GPIO_Init
+<LI><a href="#[75]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;RCC_AHB1PeriphClockCmd
+<LI><a href="#[6c]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_i2d
 <LI><a href="#[6b]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_ddiv
 <LI><a href="#[63]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_dadd
 <LI><a href="#[6e]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_d2iz

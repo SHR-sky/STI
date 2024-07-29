@@ -775,8 +775,8 @@
       <tvExp>0</tvExp>
       <tvExpOptDlg>0</tvExpOptDlg>
       <bDave2>0</bDave2>
-      <PathWithFileName>..\..\Libraries\DSP\include\arm_common_tables.h</PathWithFileName>
-      <FilenameWithoutPath>arm_common_tables.h</FilenameWithoutPath>
+      <PathWithFileName>..\..\Libraries\DSP\include\arm_const_structs.h</PathWithFileName>
+      <FilenameWithoutPath>arm_const_structs.h</FilenameWithoutPath>
       <RteFlg>0</RteFlg>
       <bShared>0</bShared>
     </File>
@@ -787,8 +787,8 @@
       <tvExp>0</tvExp>
       <tvExpOptDlg>0</tvExpOptDlg>
       <bDave2>0</bDave2>
-      <PathWithFileName>..\..\Libraries\DSP\include\arm_const_structs.h</PathWithFileName>
-      <FilenameWithoutPath>arm_const_structs.h</FilenameWithoutPath>
+      <PathWithFileName>..\..\Libraries\DSP\include\arm_common_tables.h</PathWithFileName>
+      <FilenameWithoutPath>arm_common_tables.h</FilenameWithoutPath>
       <RteFlg>0</RteFlg>
       <bShared>0</bShared>
     </File>

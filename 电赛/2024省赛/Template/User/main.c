@@ -15,7 +15,7 @@ int AmAmpAdjust = 0;  // AM波可调
 int delayTime = 0; // 延迟时间
 int pha = 0; // 延迟相位
 
-int outBaseFre = 35; // 载波频率
+int outBaseFre = 35; // 载波频率m
 int outAmFre = 2; // AM频率
 int outBaseAmp = 200; // 载波vpp
 int outAmAmp = 50; // AMvpp
@@ -24,14 +24,26 @@ int outPha = 0;
 int Vpp2Num(int vpp, uint8_t Channel);
 int Angle2Num(int angle);
 
+#define RELAY_CTR PCout(13)
+
 int main()
 {
+	
+	GPIO_InitTypeDef  GPIO_InitStructure;
+	RCC_AHB1PeriphClockCmd(RCC_AHB1Periph_GPIOC, ENABLE);	                   //PC port clock enable
+    GPIO_InitStructure.GPIO_Pin   = GPIO_Pin_13;                             //Initialize PD0~12
+    GPIO_InitStructure.GPIO_Mode  = GPIO_Mode_OUT;
+    GPIO_InitStructure.GPIO_OType = GPIO_OType_PP;
+    GPIO_InitStructure.GPIO_Speed = GPIO_Speed_100MHz;
+    GPIO_InitStructure.GPIO_PuPd  = GPIO_PuPd_UP;
+    GPIO_Init(GPIOC, &GPIO_InitStructure);	
+	
 	Serial_Init();
 	Serial_Printf("Init Finish!\r\n");
 	
 	AD9959_Init();
 	AD9959_Set_Fre(CH0,outBaseFre*MHz_);
-	AD9959_Set_Amp(CH0,(int)(Vpp2Num(outBaseAmp,CH0)*1.414));
+	AD9959_Set_Amp(CH0,(int)(Vpp2Num(outBaseAmp,CH0)));
 	AD9959_Set_Phase(CH0,0);
 	
 	AD9959_Set_Fre(CH1,outAmFre*MHz_);
@@ -39,7 +51,7 @@ int main()
 	AD9959_Set_Phase(CH1,0);
 	
 	AD9959_Set_Fre(CH2,outBaseFre*MHz_);
-	AD9959_Set_Amp(CH2,(int)(Vpp2Num(outBaseAmp,CH2)*1.414));
+	AD9959_Set_Amp(CH2,(int)(Vpp2Num(outBaseAmp,CH2)));
 	AD9959_Set_Phase(CH2,Angle2Num(outPha));
 	
 	AD9959_Set_Fre(CH3,outAmFre*MHz_);
@@ -88,11 +100,11 @@ int main()
 			}
 			
 			AD9959_Set_Fre(CH0,outBaseFre*MHz_);
-			AD9959_Set_Amp(CH0,(int)(Vpp2Num(outBaseAmp,CH0)*1.414));
+			AD9959_Set_Amp(CH0,(int)(Vpp2Num(outBaseAmp,CH0)));
 			AD9959_Set_Phase(CH0,0);
 			
 			AD9959_Set_Fre(CH2,outBaseFre*MHz_);
-			AD9959_Set_Amp(CH2,(int)(Vpp2Num(outBaseAmp,CH2)*1.414));
+			AD9959_Set_Amp(CH2,(int)(Vpp2Num(outBaseAmp,CH2)));
 			AD9959_Set_Phase(CH2,Angle2Num(outPha));
 			
 			IO_Update();
@@ -101,22 +113,22 @@ int main()
 		}
 		if(baseAmpAdjust!=0)
 		{	
-			outBaseAmp += baseAmpAdjust*100;  // NEED TO CHANGE
-			if(outBaseAmp < 100)
+			outBaseAmp += baseAmpAdjust*40;  // NEED TO CHANGE
+			if(outBaseAmp < 40)
 			{
-				outBaseAmp = 100;
+				outBaseAmp = 40;
 			}
-			else if(outBaseAmp > 300)
+			else if(outBaseAmp > 400)
 			{
-				outBaseAmp = 300;
+				outBaseAmp = 400;
 			}
-			
+
 			AD9959_Set_Fre(CH0,outBaseFre*MHz_);
-			AD9959_Set_Amp(CH0,(int)(Vpp2Num(outBaseAmp,CH0)*1.414));
+			AD9959_Set_Amp(CH0,(int)(Vpp2Num(outBaseAmp,CH0)));
 			AD9959_Set_Phase(CH0,0);
 			
 			AD9959_Set_Fre(CH2,outBaseFre*MHz_);
-			AD9959_Set_Amp(CH2,(int)(Vpp2Num(outBaseAmp,CH2)*1.414));
+			AD9959_Set_Amp(CH2,(int)(Vpp2Num(outBaseAmp,CH2)));
 			AD9959_Set_Phase(CH2,Angle2Num(outPha));
 			
 			IO_Update();
@@ -156,7 +168,7 @@ int main()
 				outPha -= 360;
 			}
 			AD9959_Set_Fre(CH2,outBaseFre*MHz_);
-			AD9959_Set_Amp(CH2,(int)(Vpp2Num(outBaseAmp,CH2)*1.414));
+			AD9959_Set_Amp(CH2,(int)(Vpp2Num(outBaseAmp,CH2)));
 			AD9959_Set_Phase(CH2,Angle2Num(outPha));
 			
 			AD9959_Set_Fre(CH3,outAmFre*MHz_);
@@ -177,7 +189,7 @@ int main()
 				outPha -= 360;
 			}
 			AD9959_Set_Fre(CH2,outBaseFre*MHz_);
-			AD9959_Set_Amp(CH2,(int)(Vpp2Num(outBaseAmp,CH2)*1.414));
+			AD9959_Set_Amp(CH2,(int)(Vpp2Num(outBaseAmp,CH2)));
 			AD9959_Set_Phase(CH2,Angle2Num(outPha));
 			
 			AD9959_Set_Fre(CH3,outAmFre*MHz_);
