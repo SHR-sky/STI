@@ -1865,9 +1865,9 @@
       <ActiveTab>0</ActiveTab>
       <Doc>
         <Name>..\..\User\main.c</Name>
-        <ColumnNumber>13</ColumnNumber>
-        <TopLine>152</TopLine>
-        <CurrentLine>60</CurrentLine>
+        <ColumnNumber>12</ColumnNumber>
+        <TopLine>145</TopLine>
+        <CurrentLine>161</CurrentLine>
         <Folding>1</Folding>
         <ContractedFolders></ContractedFolders>
         <PaneID>0</PaneID>
@@ -1928,9 +1928,9 @@
       </Doc>
       <Doc>
         <Name>..\..\Hardware\Serial.c</Name>
-        <ColumnNumber>5</ColumnNumber>
-        <TopLine>137</TopLine>
-        <CurrentLine>185</CurrentLine>
+        <ColumnNumber>31</ColumnNumber>
+        <TopLine>149</TopLine>
+        <CurrentLine>157</CurrentLine>
         <Folding>1</Folding>
         <ContractedFolders></ContractedFolders>
         <PaneID>0</PaneID>

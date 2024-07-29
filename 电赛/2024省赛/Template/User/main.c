@@ -146,7 +146,7 @@ int main()
 		}
 		if(delayTime!=0)
 		{
-			outPha += delayTime*30*2*PI*outBaseAmp*MHz_ / 1000000000;
+			outPha += delayTime*30.0/(1000.0/(outBaseFre*1.0))*360.0;
 			if(outPha < 0)
 			{
 				outPha = outPha + 360;
