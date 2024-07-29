@@ -9,6 +9,7 @@
 #include "stm32_dsp.h"
 #include "AD9959.h"
 #include "DAC.h"
+#include "nop_delay.h"
 
 
 // //0,不支持ucos

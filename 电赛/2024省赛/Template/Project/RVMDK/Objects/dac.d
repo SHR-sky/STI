@@ -48,3 +48,4 @@
 .\objects\dac.o: ..\..\User\fft\inc\stm32_dsp.h
 .\objects\dac.o: ..\..\Hardware\AD9959.h
 .\objects\dac.o: ..\..\Hardware\DAC.h
+.\objects\dac.o: ..\..\Hardware\nop_delay.h

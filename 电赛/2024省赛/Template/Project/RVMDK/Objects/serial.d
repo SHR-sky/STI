@@ -48,4 +48,5 @@
 .\objects\serial.o: ..\..\User\fft\inc\stm32_dsp.h
 .\objects\serial.o: ..\..\Hardware\AD9959.h
 .\objects\serial.o: ..\..\Hardware\DAC.h
+.\objects\serial.o: ..\..\Hardware\nop_delay.h
 .\objects\serial.o: E:\SoftLib\Keil_v5\ARM\ARMCC\Bin\..\include\stdarg.h

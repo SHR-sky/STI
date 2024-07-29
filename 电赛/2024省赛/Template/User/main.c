@@ -26,17 +26,21 @@ int Angle2Num(int angle);
 
 #define RELAY_CTR PCout(13)
 
+// PC13 ¼ÌµçÆ÷
+// PC12 DIS
+// __nop() 5.95ns
+
 int main()
 {
-	
 	GPIO_InitTypeDef  GPIO_InitStructure;
 	RCC_AHB1PeriphClockCmd(RCC_AHB1Periph_GPIOC, ENABLE);	                   //PC port clock enable
-    GPIO_InitStructure.GPIO_Pin   = GPIO_Pin_13;                             //Initialize PD0~12
+    GPIO_InitStructure.GPIO_Pin   = GPIO_Pin_13|GPIO_Pin_12;                             //Initialize PD0~12
     GPIO_InitStructure.GPIO_Mode  = GPIO_Mode_OUT;
     GPIO_InitStructure.GPIO_OType = GPIO_OType_PP;
     GPIO_InitStructure.GPIO_Speed = GPIO_Speed_100MHz;
     GPIO_InitStructure.GPIO_PuPd  = GPIO_PuPd_UP;
     GPIO_Init(GPIOC, &GPIO_InitStructure);	
+	
 	
 	Serial_Init();
 	Serial_Printf("Init Finish!\r\n");
@@ -50,6 +54,9 @@ int main()
 	AD9959_Set_Amp(CH1,(int)(Vpp2Num(outAmAmp,CH1)));
 	AD9959_Set_Phase(CH1,0);
 	
+	outPha = 50*(1000.0/(outBaseFre*1.0))*360.0;
+	PCout(12) = 0;
+	
 	AD9959_Set_Fre(CH2,outBaseFre*MHz_);
 	AD9959_Set_Amp(CH2,(int)(Vpp2Num(outBaseAmp,CH2)));
 	AD9959_Set_Phase(CH2,Angle2Num(outPha));
@@ -59,6 +66,10 @@ int main()
 	AD9959_Set_Phase(CH3,Angle2Num(outPha));
 	
 	IO_Update();
+	
+	nop_delay(50);
+	PCout(12) = 1; // ¿ªÆôÔØ²¨
+	
 	
 	/*
 	while(1)
@@ -242,6 +253,7 @@ int Vpp2Num(int vpp, uint8_t Channel)
 		else
 			return (int)(vpp*1.880);
 	}
+	return (int)(vpp*2.144);
 }
 
 int Angle2Num(int angle)

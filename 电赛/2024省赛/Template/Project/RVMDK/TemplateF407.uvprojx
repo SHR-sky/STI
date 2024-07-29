@@ -858,6 +858,16 @@
               <FileType>5</FileType>
               <FilePath>..\..\Hardware\AD9959.h</FilePath>
             </File>
+            <File>
+              <FileName>nop_delay.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\Hardware\nop_delay.c</FilePath>
+            </File>
+            <File>
+              <FileName>nop_delay.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>..\..\Hardware\nop_delay.h</FilePath>
+            </File>
           </Files>
         </Group>
         <Group>
