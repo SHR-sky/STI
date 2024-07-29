@@ -19,8 +19,10 @@ int outBaseFre = 35; // ÔØ²¨ÆµÂÊ
 int outAmFre = 2; // AMÆµÂÊ
 int outBaseAmp = 200; // ÔØ²¨vpp
 int outAmAmp = 50; // AMvpp
+int outPha = 0;
 
-int Vpp2Num(int num);
+int Vpp2Num(int vpp, uint8_t Channel);
+int Angle2Num(int angle);
 
 int main()
 {
@@ -29,23 +31,48 @@ int main()
 	
 	AD9959_Init();
 	AD9959_Set_Fre(CH0,outBaseFre*MHz_);
-	AD9959_Set_Amp(CH0,(int)(Vpp2Num(outBaseAmp)*1.414));
+	AD9959_Set_Amp(CH0,(int)(Vpp2Num(outBaseAmp,CH0)*1.414));
 	AD9959_Set_Phase(CH0,0);
 	
 	AD9959_Set_Fre(CH1,outAmFre*MHz_);
-	AD9959_Set_Amp(CH1,(int)(Vpp2Num(outAmAmp)));
+	AD9959_Set_Amp(CH1,(int)(Vpp2Num(outAmAmp,CH1)));
 	AD9959_Set_Phase(CH1,0);
 	
 	AD9959_Set_Fre(CH2,outBaseFre*MHz_);
-	AD9959_Set_Amp(CH2,(int)(Vpp2Num(outBaseAmp)*1.414));
-	AD9959_Set_Phase(CH2,0);
+	AD9959_Set_Amp(CH2,(int)(Vpp2Num(outBaseAmp,CH2)*1.414));
+	AD9959_Set_Phase(CH2,Angle2Num(outPha));
 	
 	AD9959_Set_Fre(CH3,outAmFre*MHz_);
-	AD9959_Set_Amp(CH3,(int)(Vpp2Num(outAmAmp))); 
-	AD9959_Set_Phase(CH3,0);
+	AD9959_Set_Amp(CH3,(int)(Vpp2Num(outAmAmp,CH3))); 
+	AD9959_Set_Phase(CH3,Angle2Num(outPha));
 	
 	IO_Update();
-
+	
+	/*
+	while(1)
+	{
+		if(baseFreAdjust!=0)
+		{
+			outBaseAmp += baseFreAdjust*10;
+			if(outBaseAmp < 10)
+			{
+				outBaseAmp = 10;
+			}
+			else if(outBaseAmp > 400)
+			{ 
+				outBaseAmp = 400;
+			}
+			
+			AD9959_Set_Fre(CH2,outBaseFre*MHz_);
+			AD9959_Set_Amp(CH2,(int)(Vpp2Num(outBaseAmp,CH2)));
+			Serial_Printf("%d\r\n",outBaseAmp);
+			AD9959_Set_Phase(CH2,0);
+			IO_Update();
+			baseFreAdjust = 0;
+		}
+	}
+	*/
+	
 	while(1)
 	{
 		if(baseFreAdjust!=0)
@@ -61,84 +88,105 @@ int main()
 			}
 			
 			AD9959_Set_Fre(CH0,outBaseFre*MHz_);
-			AD9959_Set_Amp(CH0,(int)(Vpp2Num(outBaseAmp)*1.414));
+			AD9959_Set_Amp(CH0,(int)(Vpp2Num(outBaseAmp,CH0)*1.414));
 			AD9959_Set_Phase(CH0,0);
 			
 			AD9959_Set_Fre(CH2,outBaseFre*MHz_);
-			AD9959_Set_Amp(CH2,(int)(Vpp2Num(outBaseAmp)*1.414));
-			AD9959_Set_Phase(CH2,0);
+			AD9959_Set_Amp(CH2,(int)(Vpp2Num(outBaseAmp,CH2)*1.414));
+			AD9959_Set_Phase(CH2,Angle2Num(outPha));
 			
 			IO_Update();
 			
 			baseFreAdjust = 0;
 		}
 		if(baseAmpAdjust!=0)
-		{
-			baseAmpAdjust = 0;
-			
-			outBaseAmp += baseFre;
-			if(outBaseFre < 30)
+		{	
+			outBaseAmp += baseAmpAdjust*100;  // NEED TO CHANGE
+			if(outBaseAmp < 100)
 			{
-				outBaseFre = 30;
+				outBaseAmp = 100;
 			}
-			else if(outBaseFre > 40)
+			else if(outBaseAmp > 300)
 			{
-				outBaseFre = 40;
+				outBaseAmp = 300;
 			}
 			
 			AD9959_Set_Fre(CH0,outBaseFre*MHz_);
-			AD9959_Set_Amp(CH0,(int)(Vpp2Num(outBaseAmp)*1.414));
+			AD9959_Set_Amp(CH0,(int)(Vpp2Num(outBaseAmp,CH0)*1.414));
 			AD9959_Set_Phase(CH0,0);
 			
 			AD9959_Set_Fre(CH2,outBaseFre*MHz_);
-			AD9959_Set_Amp(CH2,(int)(Vpp2Num(outBaseAmp)*1.414));
-			AD9959_Set_Phase(CH2,0);
+			AD9959_Set_Amp(CH2,(int)(Vpp2Num(outBaseAmp,CH2)*1.414));
+			AD9959_Set_Phase(CH2,Angle2Num(outPha));
 			
 			IO_Update();
+			baseAmpAdjust = 0;
 		}
 		if(AmAmpAdjust!=0)
-		{
+		{	
+			outAmAmp += AmAmpAdjust*10;
+			if(outAmAmp < 30)
+			{
+				outAmAmp = 30;
+			}
+			else if(outAmAmp > 90)
+			{
+				outAmAmp = 90;
+			}
+			
+			AD9959_Set_Fre(CH1,outAmFre*MHz_);
+			AD9959_Set_Amp(CH1,(int)(Vpp2Num(outAmAmp,CH1)));
+			AD9959_Set_Phase(CH1,0);
+			
+			AD9959_Set_Fre(CH3,outAmFre*MHz_);
+			AD9959_Set_Amp(CH3,(int)(Vpp2Num(outAmAmp,CH3))); 
+			AD9959_Set_Phase(CH3,Angle2Num(outPha));
 			AmAmpAdjust = 0;
+			IO_Update();
 		}
 		if(delayTime!=0)
 		{
-			delayTime = 0;
+			outPha += delayTime*30*2*PI*outBaseAmp*MHz_ / 1000000000;
+			if(outPha < 0)
+			{
+				outPha = outPha + 360;
+			}
+			else if(outPha > 360)
+			{
+				outPha -= 360;
+			}
+			AD9959_Set_Fre(CH2,outBaseFre*MHz_);
+			AD9959_Set_Amp(CH2,(int)(Vpp2Num(outBaseAmp,CH2)*1.414));
+			AD9959_Set_Phase(CH2,Angle2Num(outPha));
+			
+			AD9959_Set_Fre(CH3,outAmFre*MHz_);
+			AD9959_Set_Amp(CH3,(int)(Vpp2Num(outAmAmp,CH3))); 
+			AD9959_Set_Phase(CH3,Angle2Num(outPha));
+			IO_Update();
+			delayTime = 0; // 30ns
 		}
 		if(pha!=0)
 		{
+			outPha += 10*pha;
+			if(outPha < 0)
+			{
+				outPha = outPha + 360;
+			}
+			else if(outPha > 360)
+			{
+				outPha -= 360;
+			}
+			AD9959_Set_Fre(CH2,outBaseFre*MHz_);
+			AD9959_Set_Amp(CH2,(int)(Vpp2Num(outBaseAmp,CH2)*1.414));
+			AD9959_Set_Phase(CH2,Angle2Num(outPha));
+			
+			AD9959_Set_Fre(CH3,outAmFre*MHz_);
+			AD9959_Set_Amp(CH3,(int)(Vpp2Num(outAmAmp,CH3))); 
+			AD9959_Set_Phase(CH3,Angle2Num(outPha));
+			IO_Update();
 			pha = 0;
 		}
 	}
-	for(int i=0; i<100; i++);
-	
-	IO_Update();
-	/*
-	for(int i=0;i<10; i++)
-	{
-		delay_s(1);
-		AD9959_Set_Phase(CH1,i*1000);
-		IO_Update();
-	}*/
-	//delay_s(1);
-	//AD9959_Set_Phase(CH1,2000);
-	
-	/*
-	for(int i=0; i<DA1_Value_Length; i++)
-	{
-		meDA1_Value[i] = 2000;
-	}
-	DA1_Init();
-	TIM4_Init();
-	TIM_Cmd(TIM4, ENABLE);
-	DA2_Init();
-	TIM6_Init();
-	TIM_Cmd(TIM6, ENABLE);
-
-	while(1)
-	{
-		delay_s(1);
-		Serial_Printf("Circle:1 \r\n");
-	}*/
 }
 
 /*
@@ -147,12 +195,44 @@ void TIM2_IRQHandler(void)
 	if (TIM_GetITStatus(TIM2, TIM_IT_Update) != RESET)  
 	{
 		TIM_ClearITPendingBit(TIM2, TIM_IT_Update);
-		TIM_Cmd(TIM2,ENABLE);
-	}
+		TIMp_Cmd(TIM2,ENABLE);
+	} 
 }
 */
 
-int Vpp2Num(int vpp)
+int Vpp2Num(int vpp, uint8_t Channel)
 {
-	return (int)(vpp*2.156);
+	if(Channel == CH0)
+	{
+		if(vpp<100)
+			return (int)(vpp*2.144);
+		else
+			return (int)(vpp*2.169);
+	}
+	else if(Channel == CH1)
+	{
+		if(vpp<300)
+			return (int)(vpp*1.865);
+		else
+			return (int)(vpp*1.880);
+	}
+	else if(Channel == CH2)
+	{
+		if(vpp<100)
+			return (int)(vpp*2.144);
+		else
+			return (int)(vpp*2.169);
+	}
+	else if(Channel == CH3)
+	{
+		if(vpp<300)
+			return (int)(vpp*1.865);
+		else
+			return (int)(vpp*1.880);
+	}
+}
+
+int Angle2Num(int angle)
+{
+	return (int)(angle*16384.0/360.0);
 }
