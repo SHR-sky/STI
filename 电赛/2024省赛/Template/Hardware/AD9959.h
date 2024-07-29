@@ -5,7 +5,7 @@
 
 #define SCLK        PDout(0)
 #define CS          PDout(1)
-#define UPDATE      PDout(2)
+#define UPDATE      PGout(10) // CHANGE // PG10 // PD2
 #define SDIO0       PDout(3)
 
 #define PS0         PDout(4)
@@ -13,9 +13,9 @@
 #define PS2         PDout(6)
 #define PS3         PDout(7)
 
-#define SDIO1       PDout(8)
-#define SDIO2       PDout(9)
-#define SDIO3       PDout(10)
+#define SDIO1       PFout(0) // CHANGE // PF0 // PD8
+#define SDIO2       PFout(9) // CHANGE // PF9 // PD9
+#define SDIO3       PGout(9) // CHANGE // PG9 // PD10
 #define AD9959_PWR  PDout(15)
 #define RESET       PDout(14)
 

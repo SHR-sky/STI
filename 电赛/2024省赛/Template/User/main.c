@@ -6,13 +6,16 @@ int main()
 {
 	Serial_Init();
 	Serial_Printf("Init Finish!\r\n");
-
 	AD9959_Init();
 	AD9959_Set_Fre(CH0,35000000);
 	AD9959_Set_Amp(CH0,1000);
 	AD9959_Set_Phase(CH0,0);
 	AD9959_Set_Fre(CH1,35000000);
 	AD9959_Set_Amp(CH1,1000);
+	AD9959_Set_Fre(CH2,35000000);
+	AD9959_Set_Amp(CH2,800);
+	AD9959_Set_Fre(CH3,35000000);
+	AD9959_Set_Amp(CH3,700);
 	AD9959_Set_Phase(CH1,00); 
 	IO_Update();
 	for(int i=0;i<10; i++)

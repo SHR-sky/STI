@@ -66,15 +66,20 @@ void AD9959_Init(void)
 	GPIO_Init(GPIOC, &GPIO_InitStructure);					 //根据设定参数初始化GPIOC
 	*/
     RCC_AHB1PeriphClockCmd(RCC_AHB1Periph_GPIOD, ENABLE);	                   //PD port clock enable
-
-    GPIO_InitStructure.GPIO_Pin   = (0xC7FF << 0);                             //Initialize PD0~12
+	RCC_AHB1PeriphClockCmd(RCC_AHB1Periph_GPIOF, ENABLE);
+	RCC_AHB1PeriphClockCmd(RCC_AHB1Periph_GPIOG, ENABLE);
+    GPIO_InitStructure.GPIO_Pin   = (0xC0FB << 0);                             //Initialize PD0~12
     GPIO_InitStructure.GPIO_Mode  = GPIO_Mode_OUT;
     GPIO_InitStructure.GPIO_OType = GPIO_OType_PP;
     GPIO_InitStructure.GPIO_Speed = GPIO_Speed_100MHz;
     GPIO_InitStructure.GPIO_PuPd  = GPIO_PuPd_UP;
     GPIO_Init(GPIOD, &GPIO_InitStructure);	
+	GPIO_InitStructure.GPIO_Pin   = (0x201 << 0); // F
+	GPIO_Init(GPIOF, &GPIO_InitStructure);	
+	GPIO_InitStructure.GPIO_Pin   = (0x600 << 0); // G
+	GPIO_Init(GPIOG, &GPIO_InitStructure);
 	Intserve();  //IO口电平状态初始化
-  IntReset();  //AD9959复位  
+	IntReset();  //AD9959复位  
 	
 	//初始化功能寄存器
   AD9959_WriteData(FR1_ADD,3,FR1_DATA);//写功能寄存器1
