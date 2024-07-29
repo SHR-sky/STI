@@ -49,3 +49,5 @@
 .\objects\delay.o: ..\..\Hardware\ADCDMA.h
 .\objects\delay.o: ..\..\Hardware\DAC.h
 .\objects\delay.o: ..\..\Hardware\ADS8688.h
+.\objects\delay.o: ..\..\Hardware\AD9959Serial.h
+.\objects\delay.o: E:\SoftLib\Keil_v5\ARM\ARMCC\Bin\..\include\stdarg.h

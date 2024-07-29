@@ -127,6 +127,12 @@ uint8_t Serial_LookUpData(void)
 	return 0;
 }
 
+extern int baseFreAdjust; // 载波频率
+extern int baseAmpAdjust;  // 载波可调
+extern int AmAmpAdjust;  // AM波可调
+extern int delayTime; // 延迟时间
+extern int pha; // 延迟相位
+
 short Res;
 void USART2_IRQHandler(void)
 {
@@ -134,6 +140,46 @@ void USART2_IRQHandler(void)
 	{
 		Res = USART_ReceiveData(USART2);
 		//Serial_Printf("%x \r\n",Res);
+		if(Res == 0x1) // 载波加1MHz
+		{
+			baseFreAdjust = 1;
+		}
+		else if(Res == 0x2) // 载波减1MHz
+		{
+			baseFreAdjust = -1;
+		}
+		else if(Res == 0x3) // 载波幅度100mv增加
+		{
+			baseAmpAdjust = 1;
+		}
+		else if(Res == 0x4) // 载波幅度100mv减小
+		{
+			baseAmpAdjust = -1;
+		}
+		else if(Res == 0x5) // AM幅度10mv增加
+		{
+			AmAmpAdjust = 1;
+		}
+		else if(Res == 0x6) // AM幅度10mv减小
+		{
+			AmAmpAdjust = -1;
+		}
+		else if(Res == 0x7) // 延时时间加30ns
+		{
+			delayTime = 1;
+		}
+		else if(Res == 0x8)
+		{
+			delayTime = -1;
+		}
+		else if(Res == 0x9)
+		{
+			pha = 1;
+		}
+		else if(Res == 0xa)
+		{
+			pha = -1;
+		}
 		Serial_SendByte(Res);
 		USART_ClearITPendingBit(USART2, USART_IT_RXNE);
 	}

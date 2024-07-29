@@ -49,3 +49,5 @@
 .\objects\ads8688.o: ..\..\Hardware\ADCDMA.h
 .\objects\ads8688.o: ..\..\Hardware\DAC.h
 .\objects\ads8688.o: ..\..\Hardware\ADS8688.h
+.\objects\ads8688.o: ..\..\Hardware\AD9959Serial.h
+.\objects\ads8688.o: E:\SoftLib\Keil_v5\ARM\ARMCC\Bin\..\include\stdarg.h

@@ -49,3 +49,5 @@
 .\objects\wavejudge.o: ..\..\Hardware\ADCDMA.h
 .\objects\wavejudge.o: ..\..\Hardware\DAC.h
 .\objects\wavejudge.o: ..\..\Hardware\ADS8688.h
+.\objects\wavejudge.o: ..\..\Hardware\AD9959Serial.h
+.\objects\wavejudge.o: E:\SoftLib\Keil_v5\ARM\ARMCC\Bin\..\include\stdarg.h

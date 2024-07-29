@@ -10,6 +10,7 @@
 #include "ADCDMA.h"
 #include "DAC.h"
 #include "ADS8688.h"
+#include "AD9959Serial.h"
 
 
 // //0,不支持ucos

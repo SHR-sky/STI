@@ -78,6 +78,11 @@ void AD9959_WriteAmp(u8 ch, u32 amp)
     AD9959_Printf("*Write_Amplitude(%d,%d)", ch, amp);
 }
 
+void AD9959_WritePha(u8 ch, u32 pha)
+{
+	AD9959_Printf("*Write_Phase(%d,%d)", ch, pha);
+}
+
 void AD9959_Sweep(u8 ch, u32 Start_freq, u32 End_freq, u32 step, u32 unitTime)
 {
     for (u32 i = Start_freq; i <= End_freq; i += step)
