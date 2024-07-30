@@ -48,6 +48,7 @@
 ".\objects\dac.o"
 ".\objects\ad9959.o"
 ".\objects\nop_delay.o"
+".\objects\pe4302.o"
 ".\objects\main.o"
 ".\objects\stm32f4xx_it.o"
 ".\objects\cr4_fft_64_stm32.o"

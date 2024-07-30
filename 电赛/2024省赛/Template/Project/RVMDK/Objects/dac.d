@@ -49,3 +49,4 @@
 .\objects\dac.o: ..\..\Hardware\AD9959.h
 .\objects\dac.o: ..\..\Hardware\DAC.h
 .\objects\dac.o: ..\..\Hardware\nop_delay.h
+.\objects\dac.o: ..\..\Hardware\PE4302.h

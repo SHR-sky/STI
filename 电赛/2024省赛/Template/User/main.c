@@ -20,7 +20,7 @@ int outAmFre = 2; // AMÆµÂÊ
 int outBaseAmp = 200; // ÔØ²¨vpp
 int outAmAmp = 50; // AMvpp
 int outPha = 0;
-
+int Db2Num(int DB);
 int Vpp2Num(int vpp, uint8_t Channel);
 int Angle2Num(int angle);
 
@@ -41,9 +41,12 @@ int main()
     GPIO_InitStructure.GPIO_PuPd  = GPIO_PuPd_UP;
     GPIO_Init(GPIOC, &GPIO_InitStructure);	
 	
+	PE_GPIO_Init();
 	
 	Serial_Init();
 	Serial_Printf("Init Finish!\r\n");
+	
+	PE4302_0_Set(0);
 	
 	AD9959_Init();
 	AD9959_Set_Fre(CH0,outBaseFre*MHz_);
@@ -124,14 +127,14 @@ int main()
 		}
 		if(baseAmpAdjust!=0)
 		{	
-			outBaseAmp += baseAmpAdjust*40;  // NEED TO CHANGE
-			if(outBaseAmp < 40)
+			outBaseAmp += baseAmpAdjust*10;  // NEED TO CHANGE
+			if(outBaseAmp < 10)
 			{
-				outBaseAmp = 40;
+				outBaseAmp = 10;
 			}
-			else if(outBaseAmp > 400)
+			else if(outBaseAmp > 100)
 			{
-				outBaseAmp = 400;
+				outBaseAmp = 100;
 			}
 
 			AD9959_Set_Fre(CH0,outBaseFre*MHz_);
@@ -260,3 +263,32 @@ int Angle2Num(int angle)
 {
 	return (int)(angle*16384.0/360.0);
 }
+
+int Db2Num(int DB)
+{
+	if(DB==2)
+		return 0;
+	else if(DB==4)
+		return 5;
+	else if(DB==6)
+		return 9;
+	else if(DB==8)
+		return 13;
+	else if(DB==10)
+		return 17;
+	else if(DB==12)
+		return 22;
+	else if(DB==14)
+		return 26;
+	else if(DB==16)
+		return 30;
+	else if(DB==18)
+		return 33;
+	else if(DB==20)
+		return 37;
+	else if(DB==0)
+		return 0; // FIXME
+	else 
+		return 0;
+}
+

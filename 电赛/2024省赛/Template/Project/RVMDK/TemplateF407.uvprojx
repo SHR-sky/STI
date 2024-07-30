@@ -868,6 +868,16 @@
               <FileType>5</FileType>
               <FilePath>..\..\Hardware\nop_delay.h</FilePath>
             </File>
+            <File>
+              <FileName>PE4302.C</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\Hardware\PE4302.C</FilePath>
+            </File>
+            <File>
+              <FileName>PE4302.H</FileName>
+              <FileType>5</FileType>
+              <FilePath>..\..\Hardware\PE4302.H</FilePath>
+            </File>
           </Files>
         </Group>
         <Group>

@@ -10,6 +10,7 @@
 #include "AD9959.h"
 #include "DAC.h"
 #include "nop_delay.h"
+#include "PE4302.h"
 
 
 // //0,不支持ucos
