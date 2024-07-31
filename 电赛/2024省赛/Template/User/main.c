@@ -69,6 +69,8 @@ int main()
 	TIM4_Init();
 	TIM_Cmd(TIM4, ENABLE);
 	
+	
+	
 	PE_GPIO_Init();
 	
 	Serial_Init();

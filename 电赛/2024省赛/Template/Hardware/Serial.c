@@ -200,6 +200,65 @@ void USART2_IRQHandler(void)
 		{
 			DBAdjust = -1;
 		}
+		// 接口
+		else 
+		{
+			switch(Res)
+			{
+				case 0x0f: {	
+					break;
+				}
+				case 0x10: {	
+					break;
+				}
+				case 0x11: {	
+					break;
+				}
+				case 0x12: {	
+					break;
+				}
+				case 0x13: {	
+					break;
+				}
+				case 0x14: {	
+					break;
+				}
+				case 0x15: {	
+					break;
+				}
+				case 0x16: {	
+					break;
+				}
+				case 0x17: {	
+					break;
+				}
+				case 0x18: {	
+					break;
+				}
+				case 0x19: {	
+					break;
+				}
+				case 0x1a: {	
+					break;
+				}
+				case 0x1b: {	
+					break;
+				}
+				case 0x1c: {	
+					break;
+				}
+				case 0x1d: {	
+					break;
+				}
+				case 0x1e: {	
+					break;
+				}
+				case 0x1f: {	
+					break;
+				}
+				
+			}
+		}
 		Serial_SendByte(Res);
 		USART_ClearITPendingBit(USART2, USART_IT_RXNE);
 	}
