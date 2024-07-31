@@ -22,7 +22,7 @@ int delayTime = 0; // 延迟时间
 int pha = 0; // 延迟相位
 int DBAdjust = 0;
 
-int CWorAM = 1;
+int CWorAM = 0;
 
 int outBaseFre = 35; // 载波频率m
 int outAmFre = 2; // AM频率
@@ -91,7 +91,7 @@ int main()
 		AD9959_Set_Phase(CH1,0);		
 	}
 	
-	outPha = 325;
+	outPha = 0;
 	//outPha = 50*(1000.0/(outBaseFre*1.0))*360.0;
 	PCout(12) = 0;
 	
@@ -150,10 +150,11 @@ int main()
 			
 			if(baseAmpAdjust!=0)
 			{	
-				outBaseAmp += baseAmpAdjust*10;
+				outBaseAmp += baseAmpAdjust;
 
 				//outBaseAmp += baseAmpAdjust*10;  // NEED TO CHANGE
 				
+				/*
 				if(outBaseAmp < 10)
 				{
 					outBaseAmp = 10;
@@ -162,14 +163,14 @@ int main()
 				{
 					outBaseAmp = 100;
 				}
-				
+				*/
 
 				AD9959_Set_Fre(CH0,outBaseFre*MHz_);
-				AD9959_Set_Amp(CH0,Vpp2Num_CHO(outBaseAmp));
+				AD9959_Set_Amp(CH0,outBaseAmp);
 				AD9959_Set_Phase(CH0,0);
 				Serial_Printf("Amp:%d\r\n",outBaseAmp);
 				AD9959_Set_Fre(CH3,outBaseFre*MHz_);
-				AD9959_Set_Amp(CH3,Vpp2Num_CH3(outBaseAmp));
+				AD9959_Set_Amp(CH3,outBaseAmp);
 				AD9959_Set_Phase(CH3,Angle2Num(outPha));
 				
 				IO_Update();
@@ -245,7 +246,7 @@ int main()
 			}
 			if(pha!=0)
 			{
-				outPha -= 10*pha;
+				outPha -= pha;
 				if(outPha < 0)
 				{
 					outPha = outPha + 360;
@@ -257,11 +258,11 @@ int main()
 				Serial_Printf("Pha:%d\r\n",outPha);
 				AD9959_Set_Fre(CH3,outBaseFre*MHz_);
 				AD9959_Set_Amp(CH3,(int)(Vpp2Num(outBaseAmp,CH3)));
-				AD9959_Set_Phase(CH3,Angle2Num(outPha));
+				AD9959_Set_Phase(CH3,Angle2Num(outPha)); // 
 			
 				AD9959_Set_Fre(CH2,outAmFre*MHz_);
 				AD9959_Set_Amp(CH2,(int)(Vpp2Num(outAmAmp,CH2))); 
-				AD9959_Set_Phase(CH2,Angle2Num(outPha));
+				AD9959_Set_Phase(CH2,Angle2Num(outPha)); //Angle2Num(outPha)
 				IO_Update();
 				pha = 0;
 			}
@@ -484,10 +485,70 @@ int Vpp2Num(int vpp, uint8_t Channel)
 
 int Angle2Num(int angle)
 {
-	return (int)(angle*16384.0/360.0);
+	if(angle == 0)
+		return 16383-80;
+	else if(angle == 30)
+		return ((int)(327*16384.0/360.0)-80)%16383;
+	else if(angle == 60)
+		return ((int)(297*16384.0/360.0)-80)%16383;
+	else if(angle == 90)
+		return ((int)(267*16384.0/360.0)-80)%16383;
+	else if(angle == 120)
+		return ((int)(237*16384.0/360.0)-80)%16383;
+	else if(angle == 150)
+		return ((int)(206*16384.0/360.0)-80)%16383;
+	else if(angle == 180)
+		return ((int)(176*16384.0/360.0)-80)%16383;
+	else
+		return ((int)((360-angle-3)*16384.0/360.0)-80)%16383;
 }
 
 int Vpp2Num_CHO(int vpp)
+{
+	if(vpp==10)
+	{
+		return 15;
+	}
+	else if(vpp == 20)
+	{
+		return 30;
+	}
+	else if(vpp == 30)
+	{
+		return 45;
+	}
+	else if(vpp == 40)
+	{
+		return 60;
+	}
+	else if(vpp == 50)
+	{
+		return 75;
+	}
+	else if(vpp == 60)
+	{
+		return 89;
+	}
+	else if(vpp == 70)
+	{
+		return 104;
+	}
+	else if(vpp == 80)
+	{
+		return 118;
+	}
+	else if(vpp == 90)
+	{
+		return 133;
+	}
+	else if(vpp == 100)
+	{
+		return 148;
+	}
+	return 75;
+}
+
+int Vpp2Num_CH3(int vpp)
 {
 	if(vpp==10)
 	{
@@ -499,82 +560,37 @@ int Vpp2Num_CHO(int vpp)
 	}
 	else if(vpp == 30)
 	{
-		return 59;
+		return 58;
 	}
 	else if(vpp == 40)
 	{
-		return 78;
+		return 76;
 	}
 	else if(vpp == 50)
 	{
-		return 99;
+		return 94;
 	}
 	else if(vpp == 60)
 	{
-		return 118;
+		return 113;
 	}
 	else if(vpp == 70)
 	{
-		return 138;
+		return 132;
 	}
 	else if(vpp == 80)
 	{
-		return 157;
+		return 150;
 	}
 	else if(vpp == 90)
 	{
-		return 178;
+		return 169;
 	}
 	else if(vpp == 100)
 	{
-		return 198;
+		return 188;
 	}
-	return 99;
-}
-
-int Vpp2Num_CH3(int vpp)
-{
-	if(vpp==10)
-	{
-		return 20;
-	}
-	else if(vpp == 20)
-	{
-		return 41;
-	}
-	else if(vpp == 30)
-	{
-		return 60;
-	}
-	else if(vpp == 40)
-	{
-		return 80;
-	}
-	else if(vpp == 50)
-	{
-		return 100;
-	}
-	else if(vpp == 60)
-	{
-		return 120;
-	}
-	else if(vpp == 70)
-	{
-		return 140;
-	}
-	else if(vpp == 80)
-	{
-		return 160;
-	}
-	else if(vpp == 90)
-	{
-		return 181;
-	}
-	else if(vpp == 100)
-	{
-		return 201;
-	}
-	return 100;
+	return 95;
 }
 
 int Vpp2Num_CH1(int vpp)

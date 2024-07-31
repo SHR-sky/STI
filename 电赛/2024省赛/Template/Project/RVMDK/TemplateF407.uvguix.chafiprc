@@ -1865,11 +1865,11 @@
       <ActiveTab>0</ActiveTab>
       <Doc>
         <Name>..\..\User\main.c</Name>
-        <ColumnNumber>19</ColumnNumber>
-        <TopLine>377</TopLine>
-        <CurrentLine>438</CurrentLine>
+        <ColumnNumber>24</ColumnNumber>
+        <TopLine>485</TopLine>
+        <CurrentLine>490</CurrentLine>
         <Folding>1</Folding>
-        <ContractedFolders>126,151</ContractedFolders>
+        <ContractedFolders></ContractedFolders>
         <PaneID>0</PaneID>
       </Doc>
       <Doc>
@@ -1928,9 +1928,9 @@
       </Doc>
       <Doc>
         <Name>..\..\Hardware\Serial.c</Name>
-        <ColumnNumber>5</ColumnNumber>
-        <TopLine>196</TopLine>
-        <CurrentLine>205</CurrentLine>
+        <ColumnNumber>14</ColumnNumber>
+        <TopLine>37</TopLine>
+        <CurrentLine>187</CurrentLine>
         <Folding>1</Folding>
         <ContractedFolders></ContractedFolders>
         <PaneID>0</PaneID>
@@ -1938,8 +1938,8 @@
       <Doc>
         <Name>..\..\Hardware\AD9959.c</Name>
         <ColumnNumber>50</ColumnNumber>
-        <TopLine>361</TopLine>
-        <CurrentLine>373</CurrentLine>
+        <TopLine>397</TopLine>
+        <CurrentLine>403</CurrentLine>
         <Folding>1</Folding>
         <ContractedFolders></ContractedFolders>
         <PaneID>0</PaneID>
@@ -1947,7 +1947,7 @@
       <Doc>
         <Name>..\..\Hardware\AD9959.h</Name>
         <ColumnNumber>0</ColumnNumber>
-        <TopLine>9</TopLine>
+        <TopLine>66</TopLine>
         <CurrentLine>21</CurrentLine>
         <Folding>1</Folding>
         <ContractedFolders></ContractedFolders>
