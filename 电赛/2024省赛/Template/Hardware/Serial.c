@@ -133,6 +133,7 @@ extern int AmAmpAdjust;  // AM波可调
 extern int delayTime; // 延迟时间
 extern int pha; // 延迟相位
 extern int CWorAM;
+extern int DBAdjust;
 
 #define RELAY_CTR PCout(13)
 
@@ -190,6 +191,14 @@ void USART2_IRQHandler(void)
 		else if(Res == 0xc) // AM
 		{
 			CWorAM = 1;
+		}
+		else if(Res == 0xd) // DB+
+		{
+			DBAdjust = 1;
+		}
+		else if(Res == 0xe) // DB- 
+		{
+			DBAdjust = -1;
 		}
 		Serial_SendByte(Res);
 		USART_ClearITPendingBit(USART2, USART_IT_RXNE);
