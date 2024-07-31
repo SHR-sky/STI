@@ -1,6 +1,7 @@
 #include "sys.h"
 
 extern uint16_t meDA1_Value[DA1_Value_Length];
+extern uint16_t meDA2_Value[DA2_Value_Length];
 
 // CH0 直达信号载波
 // CH1 直达信号AM
@@ -69,10 +70,15 @@ int main()
 	TIM4_Init();
 	TIM_Cmd(TIM4, ENABLE);
 	
-	
-	
+	for(int i=0; i<DA2_Value_Length; i++)
+	{
+		meDA2_Value[i] = 150;
+	}
+	DA2_Init();
+	TIM6_Init();
+	TIM_Cmd(TIM6, ENABLE);
 	PE_GPIO_Init();
-	
+
 	Serial_Init();
 	Serial_Printf("Init Finish!\r\n");
 	
@@ -91,8 +97,8 @@ int main()
 	}
 	else if(CWorAM==0)
 	{
-		AD9959_Set_Fre(CH1,outAmFre*MHz_);
-		AD9959_Set_Amp(CH1,0);
+		AD9959_Set_Fre(CH1,1);
+		AD9959_Set_Amp(CH1,1);
 		AD9959_Set_Phase(CH1,0);		
 	}
 	
@@ -112,12 +118,11 @@ int main()
 	}
 	else if(CWorAM==0)
 	{
-		AD9959_Set_Fre(CH2,outAmFre*MHz_);
-		AD9959_Set_Amp(CH2,0); 
+		AD9959_Set_Fre(CH2,1);
+		AD9959_Set_Amp(CH2,1); 
 		AD9959_Set_Phase(CH2,Angle2Num(outPha));		
 	}
 	IO_Update();
-	
 	//PE4302_0_Set(Db2Num(20));
 	
 	nop_delay(50);
@@ -126,6 +131,7 @@ int main()
 	
 	while(1)
 	{
+		PE4302_0_Set(0);
 		if(CWorAM == 0) // CW
 		{
 			if(baseFreAdjust!=0)
@@ -155,10 +161,10 @@ int main()
 			
 			if(baseAmpAdjust!=0)
 			{	
-				outBaseAmp += baseAmpAdjust;
+				outBaseAmp += 10*baseAmpAdjust;
 
 				//outBaseAmp += baseAmpAdjust*10;  // NEED TO CHANGE
-				/*
+				
 				if(outBaseAmp < 10)
 				{
 					outBaseAmp = 10;
@@ -167,13 +173,18 @@ int main()
 				{
 					outBaseAmp = 100;
 				}
-				*/
+				
 				AD9959_Set_Fre(CH0,outBaseFre*MHz_);
 				AD9959_Set_Amp(CH0,Vpp2Num_CHO(outBaseAmp));
 				AD9959_Set_Phase(CH0,0);
 				Serial_Printf("Amp:%d\r\n",outBaseAmp);
 				AD9959_Set_Fre(CH3,outBaseFre*MHz_);
-				Vpp2Num_CHO(40);
+				
+				for(int i=0; i<DA2_Value_Length; i++)
+				{
+					meDA2_Value[i] = 200;
+				}
+				
 				AD9959_Set_Amp(CH3,outBaseAmp);
 				AD9959_Set_Phase(CH3,Angle2Num(outPha));
 				
@@ -206,12 +217,12 @@ int main()
 				}
 				else if(CWorAM==0) // CW
 				{
-					AD9959_Set_Fre(CH1,outAmFre*MHz_);
-					AD9959_Set_Amp(CH1,0);
+					AD9959_Set_Fre(CH1,1);
+					AD9959_Set_Amp(CH1,1);
 					AD9959_Set_Phase(CH1,0);
 			
-					AD9959_Set_Fre(CH2,outAmFre*MHz_);
-					AD9959_Set_Amp(CH2,0); 
+					AD9959_Set_Fre(CH2,1);
+					AD9959_Set_Amp(CH2,1); 
 					AD9959_Set_Phase(CH2,Angle2Num(outPha));
 				}
 				
@@ -291,6 +302,7 @@ int main()
 			for(int i=0; i<DA1_Value_Length; i++)
 			{
 				meDA1_Value[i] = DCValue;
+				meDA2_Value[i] = DCValue;
 			}
 			if(baseFreAdjust!=0)
 			{
@@ -369,12 +381,12 @@ int main()
 				}
 				else if(CWorAM==0) // CW
 				{
-					AD9959_Set_Fre(CH1,outAmFre*MHz_);
-					AD9959_Set_Amp(CH1,0);
+					AD9959_Set_Fre(CH1,1);
+					AD9959_Set_Amp(CH1,1);
 					AD9959_Set_Phase(CH1,0);
 			
-					AD9959_Set_Fre(CH2,outAmFre*MHz_);
-					AD9959_Set_Amp(CH2,0); 
+					AD9959_Set_Fre(CH2,1);
+					AD9959_Set_Amp(CH2,1); 
 					AD9959_Set_Phase(CH2,Angle2Num(outPha));
 				}
 				
@@ -512,6 +524,44 @@ int Angle2Num(int angle)
 		return ((int)((360-angle-3)*16384.0/360.0)-80)%16383;
 }
 
+short CH0_10mv = 60;
+short CH0_20mv = 121;
+short CH0_30mv = 63;
+short CH0_40mv = 63;
+short CH0_50mv = 78;
+short CH0_60mv = 94;
+short CH0_70mv = 110;
+short CH0_80mv = 126;
+short CH0_90mv = 142;
+short CH0_100mv = 157;
+
+short CH3_10mv;
+short CH3_20mv;
+short CH3_30mv;
+short CH3_40mv;
+short CH3_50mv;
+short CH3_60mv;
+short CH3_70mv;
+short CH3_80mv;
+short CH3_90mv;
+short CH3_100mv;
+
+short CH1_30mv;
+short CH1_40mv;
+short CH1_50mv;
+short CH1_60mv;
+short CH1_70mv;
+short CH1_80mv;
+short CH1_90mv;
+
+short CH2_30mv;
+short CH2_40mv;
+short CH2_50mv;
+short CH2_60mv;
+short CH2_70mv;
+short CH2_80mv;
+short CH2_90mv;
+
 int Vpp2Num_CHO(int vpp)
 {
 	if(vpp==10)
@@ -521,7 +571,7 @@ int Vpp2Num_CHO(int vpp)
 		{
 			meDA1_Value[i] = 150;
 		}
-		return 60;
+		return CH0_10mv;
 	}
 	else if(vpp == 20)
 	{
@@ -530,7 +580,7 @@ int Vpp2Num_CHO(int vpp)
 		{
 			meDA1_Value[i] = 150;
 		}
-		return 121;
+		return CH0_20mv;
 	}
 	else if(vpp == 30)
 	{
@@ -539,7 +589,7 @@ int Vpp2Num_CHO(int vpp)
 		{
 			meDA1_Value[i] = 250;
 		}
-		return 63;
+		return CH0_30mv;
 	}
 	else if(vpp == 40)
 	{
@@ -548,7 +598,7 @@ int Vpp2Num_CHO(int vpp)
 		{
 			meDA1_Value[i] = 300;
 		}		
-		return 63;
+		return CH0_40mv;
 	}
 	else if(vpp == 50)
 	{
@@ -557,7 +607,7 @@ int Vpp2Num_CHO(int vpp)
 		{
 			meDA1_Value[i] = 300;
 		}	
-		return 78;
+		return CH0_50mv;
 	}
 	else if(vpp == 60)
 	{
@@ -566,7 +616,7 @@ int Vpp2Num_CHO(int vpp)
 		{
 			meDA1_Value[i] = 300;
 		}
-		return 94;
+		return CH0_60mv;
 	}
 	else if(vpp == 70)
 	{
@@ -575,7 +625,7 @@ int Vpp2Num_CHO(int vpp)
 		{
 			meDA1_Value[i] = 300;
 		}
-		return 110;
+		return CH0_70mv;
 	}
 	else if(vpp == 80)
 	{
@@ -584,7 +634,7 @@ int Vpp2Num_CHO(int vpp)
 		{
 			meDA1_Value[i] = 300;
 		}
-		return 126;
+		return CH0_80mv;
 	}
 	else if(vpp == 90)
 	{
@@ -593,7 +643,7 @@ int Vpp2Num_CHO(int vpp)
 		{
 			meDA1_Value[i] = 300;
 		}
-		return 142;
+		return CH0_90mv;
 	}
 	else if(vpp == 100)
 	{
@@ -602,7 +652,7 @@ int Vpp2Num_CHO(int vpp)
 		{
 			meDA1_Value[i] = 300;
 		}
-		return 157;
+		return CH0_100mv;
 	}
 	return 75;
 }
@@ -611,43 +661,68 @@ int Vpp2Num_CH3(int vpp)
 {
 	if(vpp==10)
 	{
-		return 91;
+		if(CWorAM==0)
+		for(int i=0; i<DA2_Value_Length; i++)
+		{
+			meDA2_Value[i] = 150;
+		}
+		return 12;
 	}
 	else if(vpp == 20)
 	{
-		return 172;
+		return 56;
 	}
 	else if(vpp == 30)
 	{
-		return 58;
+		return 94;
 	}
 	else if(vpp == 40)
 	{
-		return 144;
+		return 14;
 	}
 	else if(vpp == 50)
 	{
-		return 94;
+		return 19;
 	}
 	else if(vpp == 60)
 	{
-		return 214;
+		for(int i=0; i<DA2_Value_Length; i++)
+		{
+			meDA2_Value[i] = 150;
+		}
+		return 23;
 	}
 	else if(vpp == 70)
 	{
-		return 132;
+		for(int i=0; i<DA2_Value_Length; i++)
+		{
+			meDA2_Value[i] = 150;
+		}
+		return 27;
 	}
 	else if(vpp == 80)
 	{
-		return 150;
+		for(int i=0; i<DA2_Value_Length; i++)
+		{
+			meDA2_Value[i] = 150;
+		}
+		return 30;
 	}
 	else if(vpp == 90)
 	{
-		return 169;
+		for(int i=0; i<DA2_Value_Length; i++)
+		{
+			meDA2_Value[i] = 150;
+		}
+		return 34;
 	}
 	else if(vpp == 100)
 	{
-		return 188;
+		for(int i=0; i<DA2_Value_Length; i++)
+		{
+			meDA2_Value[i] = 150;
+		}
+		return 38;
 	}
 	return 95;
 }
