@@ -13,7 +13,7 @@ extern uint16_t meDA1_Value[DA1_Value_Length];
 
 #define REF_VCC_100mv 116
 
-#define REF_VCC_1000mv 358 // 368
+#define REF_VCC_1000mv 300 // 368
 
 int baseFreAdjust = 0;
 int baseAmpAdjust = 0;  // ÔØ²¨¿Éµ÷
@@ -40,6 +40,9 @@ int Angle2Num(int angle);
 
 int DCValue = 623;
 
+int CW_DC1Value = 150;
+int CW_DC2Value = 300;
+
 #define RELAY_CTR PCout(13)
 
 // PC13 ¼ÌµçÆ÷
@@ -48,7 +51,7 @@ int DCValue = 623;
 
 int main()
 {
-	DCValue = 160;
+	DCValue = REF_VCC_1000mv;
 	GPIO_InitTypeDef  GPIO_InitStructure;
 	RCC_AHB1PeriphClockCmd(RCC_AHB1Periph_GPIOC, ENABLE);	                   //PC port clock enable
     GPIO_InitStructure.GPIO_Pin   = GPIO_Pin_13|GPIO_Pin_12;                             //Initialize PD0~12
@@ -60,7 +63,7 @@ int main()
 	
 	for(int i=0; i<DA1_Value_Length; i++)
 	{
-		meDA1_Value[i] = DCValue;
+		meDA1_Value[i] = CW_DC2Value;
 	}
 	DA1_Init();
 	TIM4_Init();
@@ -153,7 +156,6 @@ int main()
 				outBaseAmp += baseAmpAdjust;
 
 				//outBaseAmp += baseAmpAdjust*10;  // NEED TO CHANGE
-				
 				/*
 				if(outBaseAmp < 10)
 				{
@@ -164,12 +166,12 @@ int main()
 					outBaseAmp = 100;
 				}
 				*/
-
 				AD9959_Set_Fre(CH0,outBaseFre*MHz_);
-				AD9959_Set_Amp(CH0,outBaseAmp);
+				AD9959_Set_Amp(CH0,Vpp2Num_CHO(outBaseAmp));
 				AD9959_Set_Phase(CH0,0);
 				Serial_Printf("Amp:%d\r\n",outBaseAmp);
 				AD9959_Set_Fre(CH3,outBaseFre*MHz_);
+				Vpp2Num_CHO(40);
 				AD9959_Set_Amp(CH3,outBaseAmp);
 				AD9959_Set_Phase(CH3,Angle2Num(outPha));
 				
@@ -283,6 +285,11 @@ int main()
 		}
 		else if(CWorAM==1)
 		{
+			DCValue = REF_VCC_100mv;
+			for(int i=0; i<DA1_Value_Length; i++)
+			{
+				meDA1_Value[i] = DCValue;
+			}
 			if(baseFreAdjust!=0)
 			{
 				outBaseFre += baseFreAdjust;
@@ -507,43 +514,93 @@ int Vpp2Num_CHO(int vpp)
 {
 	if(vpp==10)
 	{
-		return 15;
+		if(CWorAM==0)
+		for(int i=0; i<DA1_Value_Length; i++)
+		{
+			meDA1_Value[i] = 150;
+		}
+		return 60;
 	}
 	else if(vpp == 20)
 	{
-		return 30;
+		if(CWorAM==0)
+		for(int i=0; i<DA1_Value_Length; i++)
+		{
+			meDA1_Value[i] = 150;
+		}
+		return 121;
 	}
 	else if(vpp == 30)
 	{
-		return 45;
+		if(CWorAM==0)
+		for(int i=0; i<DA1_Value_Length; i++)
+		{
+			meDA1_Value[i] = 250;
+		}
+		return 63;
 	}
 	else if(vpp == 40)
 	{
-		return 60;
+		if(CWorAM==0)
+		for(int i=0; i<DA1_Value_Length; i++)
+		{
+			meDA1_Value[i] = 300;
+		}		
+		return 63;
 	}
 	else if(vpp == 50)
 	{
-		return 75;
+		if(CWorAM==0)
+		for(int i=0; i<DA1_Value_Length; i++)
+		{
+			meDA1_Value[i] = 300;
+		}	
+		return 78;
 	}
 	else if(vpp == 60)
 	{
-		return 89;
+		if(CWorAM==0)
+		for(int i=0; i<DA1_Value_Length; i++)
+		{
+			meDA1_Value[i] = 300;
+		}
+		return 94;
 	}
 	else if(vpp == 70)
 	{
-		return 104;
+		if(CWorAM==0)
+		for(int i=0; i<DA1_Value_Length; i++)
+		{
+			meDA1_Value[i] = 300;
+		}
+		return 110;
 	}
 	else if(vpp == 80)
 	{
-		return 118;
+		if(CWorAM==0)
+		for(int i=0; i<DA1_Value_Length; i++)
+		{
+			meDA1_Value[i] = 300;
+		}
+		return 126;
 	}
 	else if(vpp == 90)
 	{
-		return 133;
+		if(CWorAM==0)
+		for(int i=0; i<DA1_Value_Length; i++)
+		{
+			meDA1_Value[i] = 300;
+		}
+		return 142;
 	}
 	else if(vpp == 100)
 	{
-		return 148;
+		if(CWorAM==0)
+		for(int i=0; i<DA1_Value_Length; i++)
+		{
+			meDA1_Value[i] = 300;
+		}
+		return 157;
 	}
 	return 75;
 }
@@ -552,11 +609,11 @@ int Vpp2Num_CH3(int vpp)
 {
 	if(vpp==10)
 	{
-		return 20;
+		return 91;
 	}
 	else if(vpp == 20)
 	{
-		return 39;
+		return 172;
 	}
 	else if(vpp == 30)
 	{
@@ -564,7 +621,7 @@ int Vpp2Num_CH3(int vpp)
 	}
 	else if(vpp == 40)
 	{
-		return 76;
+		return 144;
 	}
 	else if(vpp == 50)
 	{
@@ -572,7 +629,7 @@ int Vpp2Num_CH3(int vpp)
 	}
 	else if(vpp == 60)
 	{
-		return 113;
+		return 214;
 	}
 	else if(vpp == 70)
 	{
