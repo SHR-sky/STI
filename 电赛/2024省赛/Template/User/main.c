@@ -28,15 +28,23 @@ int outBaseFre = 35; // ÔØ²¨ÆµÂÊm
 int outAmFre = 2; // AMÆµÂÊ
 int outBaseAmp = 50; // ÔØ²¨vpp
 int outAmAmp = 60; // AMvpp
+int outDelayBase = 0;
+int outDelayAM = 0;
 int outPha = 0;
 int outDB = 0;
 int Db2Num(int DB);
-int Vpp2Num_CHO(int vpp);
+int Vpp2Num_CH0(int vpp);
 int Vpp2Num_CH3(int vpp);
 int Vpp2Num_CH1(int vpp);
 int Vpp2Num_CH2(int vpp);
 int Vpp2Num(int vpp, uint8_t Channel);
 int Angle2Num(int angle);
+double DB2Time(int DB);
+
+double CH0_Manual = 1.50;
+double CH1_Manual = 1.0;
+double CH2_Manual = 1.0;
+double CH3_Manual = 1.0;
 
 int DCValue = 623;
 
@@ -97,19 +105,19 @@ int main()
 	
 	AD9959_Set_Fre(CH3,outBaseFre*MHz_);
 	AD9959_Set_Amp(CH3,(int)(Vpp2Num_CH3(outBaseAmp)));
-	AD9959_Set_Phase(CH3,Angle2Num(outPha));
+	AD9959_Set_Phase(CH3,Angle2Num(outPha+outDelayBase));
 	
 	if(CWorAM==1)
 	{
 		AD9959_Set_Fre(CH2,outAmFre*MHz_);
 		AD9959_Set_Amp(CH2,(int)(Vpp2Num(outAmAmp,CH2))); 
-		AD9959_Set_Phase(CH2,Angle2Num(outPha));
+		AD9959_Set_Phase(CH2,Angle2Num(outPha+outDelayAM));
 	}
 	else if(CWorAM==0)
 	{
 		AD9959_Set_Fre(CH2,outAmFre*MHz_);
 		AD9959_Set_Amp(CH2,0); 
-		AD9959_Set_Phase(CH2,Angle2Num(outPha));		
+		AD9959_Set_Phase(CH2,Angle2Num(outPha+outDelayAM));		
 	}
 	IO_Update();
 	
@@ -138,12 +146,12 @@ int main()
 				}
 			
 				AD9959_Set_Fre(CH0,outBaseFre*MHz_);
-				AD9959_Set_Amp(CH0,(int)(Vpp2Num(outBaseAmp,CH0)));
+				AD9959_Set_Amp(CH0,(int)(Vpp2Num_CH0(outBaseAmp)*1.0*CH0_Manual));
 				AD9959_Set_Phase(CH0,0);
 			
 				AD9959_Set_Fre(CH3,outBaseFre*MHz_);
-				AD9959_Set_Amp(CH3,(int)(Vpp2Num(outBaseAmp,CH3)));
-				AD9959_Set_Phase(CH3,Angle2Num(outPha));
+				AD9959_Set_Amp(CH3,(int)(Vpp2Num_CH3(outBaseAmp)*1.0*CH3_Manual/DB2Time(outDB)));
+				AD9959_Set_Phase(CH3,Angle2Num(outPha+outDelayBase));
 			
 				IO_Update();
 			
@@ -152,11 +160,11 @@ int main()
 			
 			if(baseAmpAdjust!=0)
 			{	
-				outBaseAmp += baseAmpAdjust;
+				outBaseAmp += 10*baseAmpAdjust;
 
 				//outBaseAmp += baseAmpAdjust*10;  // NEED TO CHANGE
 				
-				/*
+				
 				if(outBaseAmp < 10)
 				{
 					outBaseAmp = 10;
@@ -165,22 +173,22 @@ int main()
 				{
 					outBaseAmp = 100;
 				}
-				*/
+				
 
 				AD9959_Set_Fre(CH0,outBaseFre*MHz_);
-				AD9959_Set_Amp(CH0,outBaseAmp);
+				AD9959_Set_Amp(CH0,Vpp2Num_CH0(outBaseAmp)*1.0*CH0_Manual);
 				AD9959_Set_Phase(CH0,0);
 				Serial_Printf("Amp:%d\r\n",outBaseAmp);
 				AD9959_Set_Fre(CH3,outBaseFre*MHz_);
-				AD9959_Set_Amp(CH3,outBaseAmp);
-				AD9959_Set_Phase(CH3,Angle2Num(outPha));
+				AD9959_Set_Amp(CH3,Vpp2Num_CH3(outBaseAmp)*1.0*CH3_Manual);
+				AD9959_Set_Phase(CH3,Angle2Num(outPha+outDelayBase));
 				
 				IO_Update();
 				baseAmpAdjust = 0;
 			}
 			if(AmAmpAdjust!=0)
 			{	
-				outAmAmp += AmAmpAdjust;
+				outAmAmp += 10*AmAmpAdjust;
 				/*
 				if(outAmAmp < 30)
 				{	
@@ -190,7 +198,7 @@ int main()
 				{
 					outAmAmp = 90;
 				}
-				*/
+				
 				Serial_Printf("outAmAmp:%d\r\n",outAmAmp);
 				if(CWorAM==1) // AM
 				{
@@ -212,36 +220,36 @@ int main()
 					AD9959_Set_Amp(CH2,0); 
 					AD9959_Set_Phase(CH2,Angle2Num(outPha));
 				}
-				
+				*/
 				AmAmpAdjust = 0;
-				IO_Update();
+				//IO_Update();
 			}
 			if(delayTime!=0)
 			{
-				outPha += delayTime*30.0/(1000.0/(outBaseFre*1.0))*360.0;
-				if(outPha < 0)
+				outDelayBase -= delayTime*30.0/(1000.0/(outBaseFre*1.0))*360.0;
+				if(outDelayBase < 0)
 				{
-					outPha = outPha + 360;
+					outDelayBase = outDelayBase + 360;
 				}
-				else if(outPha > 360)
+				else if(outDelayBase > 360)
 				{
-					outPha -= 360;
+					outDelayBase -= 360;
 				}
 				AD9959_Set_Fre(CH3,outBaseFre*MHz_);
-				AD9959_Set_Amp(CH3,(int)(Vpp2Num(outBaseAmp,CH3)));
-				AD9959_Set_Phase(CH3,Angle2Num(outPha));
+				AD9959_Set_Amp(CH3,(int)(Vpp2Num_CH3(outBaseAmp)*1.0*CH3_Manual/DB2Time(outDB)));
+				AD9959_Set_Phase(CH3,Angle2Num(outPha+outDelayBase));
 			
 				if(CWorAM == 1)
 				{
 					AD9959_Set_Fre(CH2,outAmFre*MHz_);
-					AD9959_Set_Amp(CH2,(int)(Vpp2Num(outAmAmp,CH2))); 
-					AD9959_Set_Phase(CH2,Angle2Num(outPha));
+					AD9959_Set_Amp(CH2,(int)(Vpp2Num_CH2(outAmAmp))*1.0*CH2_Manual); 
+					AD9959_Set_Phase(CH2,Angle2Num(outPha+outDelayAM));
 				}
 				else if(CWorAM == 0)
 				{
 					AD9959_Set_Fre(CH2,outAmFre*MHz_);
 					AD9959_Set_Amp(CH2,0); 
-					AD9959_Set_Phase(CH2,Angle2Num(outPha));
+					AD9959_Set_Phase(CH2,Angle2Num(outPha+outDelayAM));
 				}
 				IO_Update();
 				delayTime = 0; // 30ns
@@ -259,12 +267,12 @@ int main()
 				}
 				Serial_Printf("Pha:%d\r\n",outPha);
 				AD9959_Set_Fre(CH3,outBaseFre*MHz_);
-				AD9959_Set_Amp(CH3,(int)(Vpp2Num(outBaseAmp,CH3)));
-				AD9959_Set_Phase(CH3,Angle2Num(outPha)); // 
+				AD9959_Set_Amp(CH3,(int)(Vpp2Num_CH3(outBaseAmp)*1.0*CH3_Manual/DB2Time(outDB)));
+				AD9959_Set_Phase(CH3,Angle2Num(outPha+outDelayBase)); // 
 			
 				AD9959_Set_Fre(CH2,outAmFre*MHz_);
-				AD9959_Set_Amp(CH2,(int)(Vpp2Num(outAmAmp,CH2))); 
-				AD9959_Set_Phase(CH2,Angle2Num(outPha)); //Angle2Num(outPha)
+				AD9959_Set_Amp(CH2,(int)(Vpp2Num_CH2(outAmAmp)*1.0*CH2_Manual)); 
+				AD9959_Set_Phase(CH2,Angle2Num(outPha+outDelayAM)); //Angle2Num(outPha)
 				IO_Update();
 				pha = 0;
 			}
@@ -279,7 +287,11 @@ int main()
 				{
 					outDB = 20;
 				}
-				PE4302_0_Set(Db2Num(outDB));
+				Serial_Printf("outDB:%d\r\n",outDB);
+				AD9959_Set_Fre(CH3,outBaseFre*MHz_);
+				AD9959_Set_Amp(CH3,(int)(Vpp2Num_CH3(outBaseAmp)*1.0*CH3_Manual/DB2Time(outDB)));
+				Serial_Printf("Amp:%d\r\n",(int)(Vpp2Num_CH3(outBaseAmp)*1.0*CH3_Manual/DB2Time(outDB)));
+				AD9959_Set_Phase(CH3,Angle2Num(outPha+outDelayBase)); // 
 				DBAdjust = 0;
 			}
 		}
@@ -300,12 +312,12 @@ int main()
 				}
 			
 				AD9959_Set_Fre(CH0,outBaseFre*MHz_);
-				AD9959_Set_Amp(CH0,(int)(Vpp2Num(outBaseAmp,CH0)));
+				AD9959_Set_Amp(CH0,(int)(Vpp2Num_CH0(outBaseAmp)*1.0*CH0_Manual));
 				AD9959_Set_Phase(CH0,0);
 			
 				AD9959_Set_Fre(CH3,outBaseFre*MHz_);
-				AD9959_Set_Amp(CH3,(int)(Vpp2Num(outBaseAmp,CH3)));
-				AD9959_Set_Phase(CH3,Angle2Num(outPha));
+				AD9959_Set_Amp(CH3,(int)(Vpp2Num_CH3(outBaseAmp)*1.0*CH3_Manual));
+				AD9959_Set_Phase(CH3,Angle2Num(outPha+outDelayBase));
 			
 				IO_Update();
 			
@@ -328,20 +340,20 @@ int main()
 				
 
 				AD9959_Set_Fre(CH0,outBaseFre*MHz_);
-				AD9959_Set_Amp(CH0,Vpp2Num_CHO(outBaseAmp));
+				AD9959_Set_Amp(CH0,Vpp2Num_CH0(outBaseAmp));
 				AD9959_Set_Phase(CH0,0);
 				Serial_Printf("Amp:%d\r\n",outBaseAmp);
 				AD9959_Set_Fre(CH3,outBaseFre*MHz_);
 				AD9959_Set_Amp(CH3,Vpp2Num_CH3(outBaseAmp));
-				AD9959_Set_Phase(CH3,Angle2Num(outPha));
+				AD9959_Set_Phase(CH3,Angle2Num(outPha+outDelayBase));
 				
 				IO_Update();
 				baseAmpAdjust = 0;
 			}
 			if(AmAmpAdjust!=0)
 			{	
-				outAmAmp += AmAmpAdjust;
-				/*
+				outAmAmp += 10*AmAmpAdjust;
+				
 				if(outAmAmp < 30)
 				{	
 					outAmAmp = 30;
@@ -350,27 +362,17 @@ int main()
 				{
 					outAmAmp = 90;
 				}
-				*/
+				
 				Serial_Printf("outAmAmp:%d\r\n",outAmAmp);
 				if(CWorAM==1) // AM
 				{
 					AD9959_Set_Fre(CH1,outAmFre*MHz_);
-					AD9959_Set_Amp(CH1,(outAmAmp));
+					AD9959_Set_Amp(CH1,Vpp2Num_CH1(outAmAmp));
 					AD9959_Set_Phase(CH1,0);
 				
 					AD9959_Set_Fre(CH2,outAmFre*MHz_);
-					AD9959_Set_Amp(CH2,(outAmAmp)); 
-					AD9959_Set_Phase(CH2,Angle2Num(outPha));
-				}
-				else if(CWorAM==0) // CW
-				{
-					AD9959_Set_Fre(CH1,outAmFre*MHz_);
-					AD9959_Set_Amp(CH1,0);
-					AD9959_Set_Phase(CH1,0);
-			
-					AD9959_Set_Fre(CH2,outAmFre*MHz_);
-					AD9959_Set_Amp(CH2,0); 
-					AD9959_Set_Phase(CH2,Angle2Num(outPha));
+					AD9959_Set_Amp(CH2,Vpp2Num_CH2(outAmAmp)); 
+					AD9959_Set_Phase(CH2,Angle2Num(outPha+outDelayAM));
 				}
 				
 				AmAmpAdjust = 0;
@@ -378,30 +380,39 @@ int main()
 			}
 			if(delayTime!=0)
 			{
-				outPha += delayTime*30.0/(1000.0/(outBaseFre*1.0))*360.0;
-				if(outPha < 0)
+				outDelayAM -= delayTime*30.0/(1000.0/(outAmFre*1.0))*360.0;
+				outDelayBase -= delayTime*30.0/(1000.0/(outBaseFre*1.0))*360.0;
+				if(outDelayAM < 0)
 				{
-					outPha = outPha + 360;
+					outDelayAM = outDelayAM + 360;
 				}
-				else if(outPha > 360)
+				else if(outDelayAM > 360)
 				{
-					outPha -= 360;
+					outDelayAM -= 360;
+				}
+				if(outDelayBase < 0)
+				{
+					outDelayBase = outDelayBase + 360;
+				}
+				else if(outDelayBase > 360)
+				{
+					outDelayBase -= 360;
 				}
 				AD9959_Set_Fre(CH3,outBaseFre*MHz_);
-				AD9959_Set_Amp(CH3,(int)(Vpp2Num(outBaseAmp,CH3)));
-				AD9959_Set_Phase(CH3,Angle2Num(outPha));
+				AD9959_Set_Amp(CH3,(int)(Vpp2Num_CH3(outBaseAmp)));
+				AD9959_Set_Phase(CH3,Angle2Num(outPha+outDelayBase));
 			
 				if(CWorAM == 1)
 				{
 					AD9959_Set_Fre(CH2,outAmFre*MHz_);
-					AD9959_Set_Amp(CH2,(int)(Vpp2Num(outAmAmp,CH2))); 
-					AD9959_Set_Phase(CH2,Angle2Num(outPha));
+					AD9959_Set_Amp(CH2,(int)(Vpp2Num_CH2(outAmAmp))); 
+					AD9959_Set_Phase(CH2,Angle2Num(outPha+outDelayAM));
 				}
 				else if(CWorAM == 0)
 				{
 					AD9959_Set_Fre(CH2,outAmFre*MHz_);
 					AD9959_Set_Amp(CH2,0); 
-					AD9959_Set_Phase(CH2,Angle2Num(outPha));
+					AD9959_Set_Phase(CH2,Angle2Num(outPha+outDelayAM));
 				}
 				IO_Update();
 				delayTime = 0; // 30ns
@@ -420,11 +431,11 @@ int main()
 				Serial_Printf("Pha:%d\r\n",outPha);
 				AD9959_Set_Fre(CH3,outBaseFre*MHz_);
 				AD9959_Set_Amp(CH3,(int)(Vpp2Num(outBaseAmp,CH3)));
-				AD9959_Set_Phase(CH3,Angle2Num(outPha));
+				AD9959_Set_Phase(CH3,Angle2Num(outPha+outDelayBase));
 			
 				AD9959_Set_Fre(CH2,outAmFre*MHz_);
 				AD9959_Set_Amp(CH2,(int)(Vpp2Num(outAmAmp,CH2))); 
-				AD9959_Set_Phase(CH2,Angle2Num(outPha));
+				AD9959_Set_Phase(CH2,Angle2Num(outPha+outDelayAM));
 				IO_Update();
 				pha = 0;
 			}
@@ -507,7 +518,7 @@ int Angle2Num(int angle)
 		return ((int)((360-angle-3)*16384.0/360.0)-80)%16383;
 }
 
-int Vpp2Num_CHO(int vpp)
+int Vpp2Num_CH0(int vpp)
 {
 	if(vpp==10)
 	{
@@ -691,3 +702,57 @@ int Db2Num(int DB)
 		return 0;
 }
 
+double DB2Time(int DB)
+{
+	switch(DB)
+	{
+		case 0:
+		{
+			return 1.0;
+		}
+		case 2:
+		{
+			return 1.259;
+		}
+		case 4:
+		{
+			return 1.585;
+		}
+		case 6:
+		{
+			return 1.995;
+		}
+		case 8:
+		{
+			return 2.512;
+		}
+		case 10:
+		{
+			return 3.162;
+		}
+		case 12:
+		{
+			return 3.981;
+		}
+		case 14:
+		{
+			return 5.012;
+		}
+		case 16:
+		{
+			return 6.310;
+		}
+		case 18:
+		{
+			return 7.943;
+		}
+		case 20:
+		{
+			return 10.0;
+		}
+		default :
+		{
+			return 1;
+		}
+	}
+}
