@@ -151,6 +151,7 @@ extern int phaManual;
 
 extern int Manual_Update_DB;
 extern int DbManual;
+extern int AD9959_Update_Reset;
 
 #define RELAY_CTR PCout(13)
 
@@ -224,11 +225,15 @@ void USART2_IRQHandler(void)
 			{
 				case 0x0f: {	
 					CH0_Manual += 0.01;
+					Serial_Printf("t1.txt=\"CH0:%lf\"",CH0_Manual);
+					Serial_End();
 					Manual_Update_CH0 = 1;
 					break;
 				}
 				case 0x10: {	
 					CH0_Manual -= 0.01;
+					Serial_Printf("t1.txt=\"CH0:%lf\"",CH0_Manual);
+					Serial_End();
 					Manual_Update_CH0 = 1;
 					break;
 				}
@@ -254,11 +259,15 @@ void USART2_IRQHandler(void)
 				}
 				case 0x15: {	
 					CH3_Manual += 0.01;
+					Serial_Printf("t4.txt=\"CH3:%lf\"",CH3_Manual);
+					Serial_End();
 					Manual_Update_CH3 = 1;
 					break;
 				}
 				case 0x16: {	
 					CH3_Manual -= 0.01;
+					Serial_Printf("t4.txt=\"CH3:%lf\"",CH3_Manual);
+					Serial_End();
 					Manual_Update_CH3 = 1;
 					break;
 				}
@@ -281,10 +290,17 @@ void USART2_IRQHandler(void)
 				case 0x1b: {
 					Manual_Update_DB = 1;	
 					DbManual += 1;
+					break;
 				}
 				case 0x1c: {
 					Manual_Update_DB = 1;
-				}   DbManual -= 1;
+					DbManual -= 1;
+					break;
+				}
+				case 0x1d: {
+					AD9959_Update_Reset = 1;
+					break;
+				}
 			}
 		}
 		//Serial_SendByte(Res);

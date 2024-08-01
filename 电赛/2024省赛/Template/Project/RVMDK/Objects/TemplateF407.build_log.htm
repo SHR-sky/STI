@@ -3,22 +3,22 @@
 <pre>
 <h1>礦ision Build Log</h1>
 <h2>Tool Versions:</h2>
-IDE-Version: μVision V5.38.0.0
-Copyright (C) 2022 ARM Ltd and ARM Germany GmbH. All rights reserved.
+IDE-Version: μVision V(null)
+(null)
 License Information: 1 chafiprc, 1, LIC=UJWP0-BI3PY-SBREJ-U3MEX-Q06QB-SPNED
  
 Tool Versions:
-Toolchain:       MDK-ARM Plus  Version: 5.38.0.0
+Toolchain:       MDK-ARM Plus  Version: <unknown>
 Toolchain Path:  E:\SoftLib\Keil_v5\ARM\ARMCC\Bin
-C Compiler:      Armcc.exe V5.06 update 7 (build 960)
-Assembler:       Armasm.exe V5.06 update 7 (build 960)
-Linker/Locator:  ArmLink.exe V5.06 update 7 (build 960)
-Library Manager: ArmAr.exe V5.06 update 7 (build 960)
-Hex Converter:   FromElf.exe V5.06 update 7 (build 960)
-CPU DLL:         SARMCM3.DLL V5.38.0.0
-Dialog DLL:      DCM.DLL V1.17.5.0
-Target DLL:      STLink\ST-LINKIII-KEIL_SWO.dll V3.1.0.0
-Dialog DLL:      TCM.DLL V1.56.4.0
+C Compiler:      Armcc.exe
+Assembler:       Armasm.exe
+Linker/Locator:  ArmLink.exe
+Library Manager: ArmAr.exe
+Hex Converter:   FromElf.exe
+CPU DLL:         SARMCM3.DLL
+Dialog DLL:      DCM.DLL
+    Target DLL: STLink\ST-LINKIII-KEIL_SWO.dll
+Dialog DLL:      TCM.DLL
  
 <h2>Project:</h2>
 D:\SoftLib\Code\STM32\STI\电赛\2024省赛\Template\Project\RVMDK\TemplateF407.uvprojx
@@ -26,12 +26,28 @@ Project File Date:  07/30/2024
 
 <h2>Output:</h2>
 *** Using Compiler 'V5.06 update 7 (build 960)', folder: 'E:\SoftLib\Keil_v5\ARM\ARMCC\Bin'
-Build target 'Control'
-compiling main.c...
+Rebuild target 'Control'
+assembling startup_stm32f40xx.s...
+*** Error: CreateProcess failed, Command: '"E:\SoftLib\Keil_v5\ARM\ARMCC\Bin\ArmAsm" --via ".\objects\startup_stm32f40xx._ia"'
+compiling stm32f4xx_adc.c...
+*** Error: CreateProcess failed, Command: '"E:\SoftLib\Keil_v5\ARM\ARMCC\Bin\ArmCC" --via ".\objects\stm32f4xx_adc.__i"'
+compiling stm32f4xx_cryp.c...
+*** Error: CreateProcess failed, Command: '"E:\SoftLib\Keil_v5\ARM\ARMCC\Bin\ArmCC" --via ".\objects\stm32f4xx_cryp.__i"'
+compiling stm32f4xx_can.c...
+*** Error: CreateProcess failed, Command: '"E:\SoftLib\Keil_v5\ARM\ARMCC\Bin\ArmCC" --via ".\objects\stm32f4xx_can.__i"'
+compiling stm32f4xx_cec.c...
+*** Error: CreateProcess failed, Command: '"E:\SoftLib\Keil_v5\ARM\ARMCC\Bin\ArmCC" --via ".\objects\stm32f4xx_cec.__i"'
+compiling stm32f4xx_crc.c...
+*** Error: CreateProcess failed, Command: '"E:\SoftLib\Keil_v5\ARM\ARMCC\Bin\ArmCC" --via ".\objects\stm32f4xx_crc.__i"'
+compiling stm32f4xx_cryp_aes.c...
+*** Error: CreateProcess failed, Command: '"E:\SoftLib\Keil_v5\ARM\ARMCC\Bin\ArmCC" --via ".\objects\stm32f4xx_cryp_aes.__i"'
+compiling misc.c...
+*** Error: CreateProcess failed, Command: '"E:\SoftLib\Keil_v5\ARM\ARMCC\Bin\ArmCC" --via ".\objects\misc.__i"'
+compiling stm32f4xx_cryp_des.c...
+*** Error: CreateProcess failed, Command: '"E:\SoftLib\Keil_v5\ARM\ARMCC\Bin\ArmCC" --via ".\objects\stm32f4xx_cryp_des.__i"'
 linking...
-Program Size: Code=16152 RO-data=424 RW-data=1012 ZI-data=36868  
-FromELF: creating hex file...
-".\Objects\TemplateF407.axf" - 0 Error(s), 0 Warning(s).
+--- Error: failed to execute 'E:\SoftLib\Keil_v5\ARM\ARMCC\Bin\ArmLink'
+".\Objects\TemplateF407.axf" - 1 Error(s), 0 Warning(s).
 
 <h2>Software Packages used:</h2>
 
@@ -44,7 +60,8 @@ Package Vendor: Keil
   E:/SoftLib/Keil_Arm_pack/Keil/STM32F4xx_DFP/2.17.1/Drivers/CMSIS/Device/ST/STM32F4xx/Include
 
 <h2>Collection of Component Files used:</h2>
-Build Time Elapsed:  00:00:01
+Target not created.
+Build Time Elapsed:  00:00:00
 </pre>
 </body>
 </html>
