@@ -2503,13 +2503,13 @@ Symbol: NPT
    Definitions
       At line 46 in file ..\..\User\fft\src\asm\arm\cr4_fft_1024_stm32.s
    Uses
-      At line 136 in macro 0ÌkOPT
+      At line 136 in macro `àf€«eOPT
       at line 228 in file ..\..\User\fft\src\asm\arm\cr4_fft_1024_stm32.s
-      At line 139 in macro 0ÌkOPT
+      At line 139 in macro `àf€«eOPT
       at line 228 in file ..\..\User\fft\src\asm\arm\cr4_fft_1024_stm32.s
-      At line 142 in macro 0ÌkOPT
+      At line 142 in macro `àf€«eOPT
       at line 228 in file ..\..\User\fft\src\asm\arm\cr4_fft_1024_stm32.s
-      At line 145 in macro 0ÌkOPT
+      At line 145 in macro `àf€«eOPT
       at line 228 in file ..\..\User\fft\src\asm\arm\cr4_fft_1024_stm32.s
 
 1 symbol

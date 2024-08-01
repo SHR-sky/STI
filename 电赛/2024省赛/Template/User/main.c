@@ -41,9 +41,14 @@ int Vpp2Num(int vpp, uint8_t Channel);
 int Angle2Num(int angle);
 double DB2Time(int DB);
 
+int Manual_Update_CH0 = 1;
+int Manual_Update_CH1 = 1;
+int Manual_Update_CH2 = 1;
+int Manual_Update_CH3 = 1;
+
 double CH0_Manual = 1.50;
 double CH1_Manual = 1.0;
-double CH2_Manual = 1.0;
+double CH2_Manual = 0.7;
 double CH3_Manual = 1.0;
 
 int DCValue = 623;
@@ -158,7 +163,7 @@ int main()
 				baseFreAdjust = 0;
 			}
 			
-			if(baseAmpAdjust!=0)
+			if(baseAmpAdjust!=0||Manual_Update_CH0 ==1||Manual_Update_CH3 ==1)
 			{	
 				outBaseAmp += 10*baseAmpAdjust;
 
@@ -185,6 +190,8 @@ int main()
 				
 				IO_Update();
 				baseAmpAdjust = 0;
+				Manual_Update_CH0 =0;
+				Manual_Update_CH3 =0;
 			}
 			if(AmAmpAdjust!=0)
 			{	
@@ -256,7 +263,7 @@ int main()
 			}
 			if(pha!=0)
 			{
-				outPha -= pha;
+				outPha -= 30*pha;
 				if(outPha < 0)
 				{
 					outPha = outPha + 360;
@@ -323,7 +330,7 @@ int main()
 			
 				baseFreAdjust = 0;
 			}
-			if(baseAmpAdjust!=0)
+			if(baseAmpAdjust!=0||Manual_Update_CH0 ==1||Manual_Update_CH3 ==1)
 			{	
 				outBaseAmp += baseAmpAdjust*10;
 
@@ -340,17 +347,19 @@ int main()
 				
 
 				AD9959_Set_Fre(CH0,outBaseFre*MHz_);
-				AD9959_Set_Amp(CH0,Vpp2Num_CH0(outBaseAmp));
+				AD9959_Set_Amp(CH0,(int)(Vpp2Num_CH0(outBaseAmp)*1.0*CH0_Manual));
 				AD9959_Set_Phase(CH0,0);
 				Serial_Printf("Amp:%d\r\n",outBaseAmp);
 				AD9959_Set_Fre(CH3,outBaseFre*MHz_);
-				AD9959_Set_Amp(CH3,Vpp2Num_CH3(outBaseAmp));
+				AD9959_Set_Amp(CH3,(int)(Vpp2Num_CH3(outBaseAmp)*1.0*CH3_Manual));
 				AD9959_Set_Phase(CH3,Angle2Num(outPha+outDelayBase));
 				
 				IO_Update();
 				baseAmpAdjust = 0;
+				Manual_Update_CH0 =0;
+				Manual_Update_CH3 =0;
 			}
-			if(AmAmpAdjust!=0)
+			if(AmAmpAdjust!=0||Manual_Update_CH1 ==1||Manual_Update_CH2 ==1)
 			{	
 				outAmAmp += 10*AmAmpAdjust;
 				
@@ -367,15 +376,17 @@ int main()
 				if(CWorAM==1) // AM
 				{
 					AD9959_Set_Fre(CH1,outAmFre*MHz_);
-					AD9959_Set_Amp(CH1,Vpp2Num_CH1(outAmAmp));
+					AD9959_Set_Amp(CH1,(int)(Vpp2Num_CH1(outAmAmp)*1.0*CH1_Manual));
 					AD9959_Set_Phase(CH1,0);
 				
 					AD9959_Set_Fre(CH2,outAmFre*MHz_);
-					AD9959_Set_Amp(CH2,Vpp2Num_CH2(outAmAmp)); 
+					AD9959_Set_Amp(CH2,(int)(Vpp2Num_CH2(outAmAmp)*1.0*CH2_Manual)); 
 					AD9959_Set_Phase(CH2,Angle2Num(outPha+outDelayAM));
 				}
 				
 				AmAmpAdjust = 0;
+				Manual_Update_CH1 =0;
+				Manual_Update_CH2 =0;
 				IO_Update();
 			}
 			if(delayTime!=0)
@@ -399,19 +410,13 @@ int main()
 					outDelayBase -= 360;
 				}
 				AD9959_Set_Fre(CH3,outBaseFre*MHz_);
-				AD9959_Set_Amp(CH3,(int)(Vpp2Num_CH3(outBaseAmp)));
+				AD9959_Set_Amp(CH3,(int)(Vpp2Num_CH3(outBaseAmp)*1.0*CH3_Manual));
 				AD9959_Set_Phase(CH3,Angle2Num(outPha+outDelayBase));
 			
 				if(CWorAM == 1)
 				{
 					AD9959_Set_Fre(CH2,outAmFre*MHz_);
-					AD9959_Set_Amp(CH2,(int)(Vpp2Num_CH2(outAmAmp))); 
-					AD9959_Set_Phase(CH2,Angle2Num(outPha+outDelayAM));
-				}
-				else if(CWorAM == 0)
-				{
-					AD9959_Set_Fre(CH2,outAmFre*MHz_);
-					AD9959_Set_Amp(CH2,0); 
+					AD9959_Set_Amp(CH2,(int)(Vpp2Num_CH2(outAmAmp)*1.0*CH2_Manual)); 
 					AD9959_Set_Phase(CH2,Angle2Num(outPha+outDelayAM));
 				}
 				IO_Update();
@@ -419,7 +424,7 @@ int main()
 			}
 			if(pha!=0)
 			{
-				outPha += 5*pha;
+				outPha += 30*pha;
 				if(outPha < 0)
 				{
 					outPha = outPha + 360;
@@ -430,18 +435,18 @@ int main()
 				}
 				Serial_Printf("Pha:%d\r\n",outPha);
 				AD9959_Set_Fre(CH3,outBaseFre*MHz_);
-				AD9959_Set_Amp(CH3,(int)(Vpp2Num(outBaseAmp,CH3)));
+				AD9959_Set_Amp(CH3,(int)(Vpp2Num_CH3(outBaseAmp)*1.0*CH3_Manual));
 				AD9959_Set_Phase(CH3,Angle2Num(outPha+outDelayBase));
 			
 				AD9959_Set_Fre(CH2,outAmFre*MHz_);
-				AD9959_Set_Amp(CH2,(int)(Vpp2Num(outAmAmp,CH2))); 
+				AD9959_Set_Amp(CH2,(int)(Vpp2Num_CH2(outAmAmp)*1.0*CH2_Manual)); 
 				AD9959_Set_Phase(CH2,Angle2Num(outPha+outDelayAM));
 				IO_Update();
 				pha = 0;
 			}
 			if(DBAdjust != 0)
 			{
-				outDB += DBAdjust;
+				outDB += 2*DBAdjust;
 				Serial_Printf("DB:%d",outDB);
 				/*
 				if(outDB <= 0)
@@ -452,7 +457,7 @@ int main()
 				{
 					outDB = 20;
 				}*/
-				PE4302_0_Set(outDB);
+				PE4302_0_Set(Db2Num(outDB));
 				DBAdjust = 0;
 			}
 		}

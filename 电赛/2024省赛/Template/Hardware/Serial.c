@@ -135,6 +135,15 @@ extern int pha; // 延迟相位
 extern int CWorAM;
 extern int DBAdjust;
 
+extern double CH0_Manual;
+extern double CH1_Manual;
+extern double CH2_Manual;
+extern double CH3_Manual;
+
+extern int Manual_Update_CH0;
+extern int Manual_Update_CH1;
+extern int Manual_Update_CH2;
+extern int Manual_Update_CH3;
 #define RELAY_CTR PCout(13)
 
 short Res;
@@ -206,27 +215,43 @@ void USART2_IRQHandler(void)
 			switch(Res)
 			{
 				case 0x0f: {	
+					CH0_Manual += 0.01;
+					Manual_Update_CH0 = 1;
 					break;
 				}
 				case 0x10: {	
+					CH0_Manual -= 0.01;
+					Manual_Update_CH0 = 1;
 					break;
 				}
 				case 0x11: {	
+					CH1_Manual += 0.01;
+					Manual_Update_CH1 = 1;
 					break;
 				}
 				case 0x12: {	
+					CH1_Manual -= 0.01;
+					Manual_Update_CH1 = 1;
 					break;
 				}
 				case 0x13: {	
+					CH2_Manual += 0.01;
+					Manual_Update_CH2 = 1;
 					break;
 				}
 				case 0x14: {	
+					CH2_Manual -= 0.01;
+					Manual_Update_CH2 = 1;
 					break;
 				}
 				case 0x15: {	
+					CH3_Manual += 0.01;
+					Manual_Update_CH3 = 1;
 					break;
 				}
 				case 0x16: {	
+					CH3_Manual -= 0.01;
+					Manual_Update_CH3 = 1;
 					break;
 				}
 				case 0x17: {	
