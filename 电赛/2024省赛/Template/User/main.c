@@ -52,10 +52,13 @@ double CH2_Manual = 0.7;
 double CH3_Manual = 1.0;
 
 int delayManual = 0;
-
 int phaManual = 0;
 
+int Manual_Update_DB = 0;
+int DbManual = 0;
+
 int DCValue = 623;
+
 
 #define RELAY_CTR PCout(13)
 
@@ -86,7 +89,7 @@ int main()
 	PE_GPIO_Init();
 	
 	Serial_Init();
-	Serial_Printf("Init Finish!\r\n");
+	//Serial_Printf("Init Finish!\r\n");
 	
 	PE4302_0_Set(0);
 	
@@ -153,7 +156,8 @@ int main()
 				{
 					outBaseFre = 40;
 				}
-			
+				Serial_Printf("n0.val=%d",outBaseFre);
+				Serial_End();
 				AD9959_Set_Fre(CH0,outBaseFre*MHz_);
 				AD9959_Set_Amp(CH0,(int)(Vpp2Num_CH0(outBaseAmp)*1.0*CH0_Manual));
 				AD9959_Set_Phase(CH0,0);
@@ -170,7 +174,8 @@ int main()
 			if(baseAmpAdjust!=0||Manual_Update_CH0 ==1||Manual_Update_CH3 ==1)
 			{	
 				outBaseAmp += 10*baseAmpAdjust;
-
+				Serial_Printf("n1.val=%d",outBaseAmp*10);
+				Serial_End();
 				//outBaseAmp += baseAmpAdjust*10;  // NEED TO CHANGE
 				
 				
@@ -187,7 +192,7 @@ int main()
 				AD9959_Set_Fre(CH0,outBaseFre*MHz_);
 				AD9959_Set_Amp(CH0,Vpp2Num_CH0(outBaseAmp)*1.0*CH0_Manual);
 				AD9959_Set_Phase(CH0,0);
-				Serial_Printf("Amp:%d\r\n",outBaseAmp);
+				//Serial_Printf("Amp:%d\r\n",outBaseAmp);
 				AD9959_Set_Fre(CH3,outBaseFre*MHz_);
 				AD9959_Set_Amp(CH3,Vpp2Num_CH3(outBaseAmp)*1.0*CH3_Manual);
 				AD9959_Set_Phase(CH3,Angle2Num(outPha+outDelayBase));
@@ -279,7 +284,7 @@ int main()
 				{
 					outPha -= 360;
 				}
-				Serial_Printf("Pha:%d\r\n",outPha);
+				//Serial_Printf("Pha:%d\r\n",outPha);
 				AD9959_Set_Fre(CH3,outBaseFre*MHz_);
 				AD9959_Set_Amp(CH3,(int)(Vpp2Num_CH3(outBaseAmp)*1.0*CH3_Manual/DB2Time(outDB)));
 				AD9959_Set_Phase(CH3,Angle2Num(outPha+outDelayBase)); // 
@@ -302,10 +307,10 @@ int main()
 				{
 					outDB = 20;
 				}
-				Serial_Printf("outDB:%d\r\n",outDB);
+				//Serial_Printf("outDB:%d\r\n",outDB);
 				AD9959_Set_Fre(CH3,outBaseFre*MHz_);
 				AD9959_Set_Amp(CH3,(int)(Vpp2Num_CH3(outBaseAmp)*1.0*CH3_Manual/DB2Time(outDB)));
-				Serial_Printf("Amp:%d\r\n",(int)(Vpp2Num_CH3(outBaseAmp)*1.0*CH3_Manual/DB2Time(outDB)));
+				//Serial_Printf("Amp:%d\r\n",(int)(Vpp2Num_CH3(outBaseAmp)*1.0*CH3_Manual/DB2Time(outDB)));
 				AD9959_Set_Phase(CH3,Angle2Num(outPha+outDelayBase)); // 
 				DBAdjust = 0;
 			}
@@ -317,6 +322,8 @@ int main()
 			if(baseFreAdjust!=0)
 			{
 				outBaseFre += baseFreAdjust;
+				Serial_Printf("n0.val=%d",outBaseFre);
+				Serial_End();
 				if(outBaseFre < 30)
 				{
 					outBaseFre = 30;
@@ -341,7 +348,8 @@ int main()
 			if(baseAmpAdjust!=0||Manual_Update_CH0 ==1||Manual_Update_CH3 ==1)
 			{	
 				outBaseAmp += baseAmpAdjust*10;
-
+				Serial_Printf("n1.val=%d",outBaseAmp*10);
+				Serial_End();
 				//outBaseAmp += baseAmpAdjust*10;  // NEED TO CHANGE
 				
 				if(outBaseAmp < 10)
@@ -357,7 +365,7 @@ int main()
 				AD9959_Set_Fre(CH0,outBaseFre*MHz_);
 				AD9959_Set_Amp(CH0,(int)(Vpp2Num_CH0(outBaseAmp)*1.0*CH0_Manual));
 				AD9959_Set_Phase(CH0,0);
-				Serial_Printf("Amp:%d\r\n",outBaseAmp);
+				//Serial_Printf("Amp:%d\r\n",outBaseAmp);
 				AD9959_Set_Fre(CH3,outBaseFre*MHz_);
 				AD9959_Set_Amp(CH3,(int)(Vpp2Num_CH3(outBaseAmp)*1.0*CH3_Manual));
 				AD9959_Set_Phase(CH3,Angle2Num(outPha+outDelayBase));
@@ -370,7 +378,8 @@ int main()
 			if(AmAmpAdjust!=0||Manual_Update_CH1 ==1||Manual_Update_CH2 ==1)
 			{	
 				outAmAmp += 10*AmAmpAdjust;
-				
+				Serial_Printf("n2.val=%d",outAmAmp);
+				Serial_End();
 				if(outAmAmp < 30)
 				{	
 					outAmAmp = 30;
@@ -380,7 +389,7 @@ int main()
 					outAmAmp = 90;
 				}
 				
-				Serial_Printf("outAmAmp:%d\r\n",outAmAmp);
+				//Serial_Printf("outAmAmp:%d\r\n",outAmAmp);
 				if(CWorAM==1) // AM
 				{
 					AD9959_Set_Fre(CH1,outAmFre*MHz_);
@@ -444,7 +453,7 @@ int main()
 				{
 					outPha -= 360;
 				}
-				Serial_Printf("Pha:%d\r\n",outPha);
+				//Serial_Printf("Pha:%d\r\n",outPha);
 				AD9959_Set_Fre(CH3,outBaseFre*MHz_);
 				AD9959_Set_Amp(CH3,(int)(Vpp2Num_CH3(outBaseAmp)*1.0*CH3_Manual));
 				AD9959_Set_Phase(CH3,Angle2Num(outPha+outDelayBase));
@@ -456,10 +465,10 @@ int main()
 				pha = 0;
 				phaManual = 0;
 			}
-			if(DBAdjust != 0)
+			if(DBAdjust != 0||Manual_Update_DB!=1)
 			{
 				outDB += 2*DBAdjust;
-				Serial_Printf("DB:%d",outDB);
+				//Serial_Printf("DB:%d",outDB);
 				/*
 				if(outDB <= 0)
 				{
@@ -469,8 +478,14 @@ int main()
 				{
 					outDB = 20;
 				}*/
-				PE4302_0_Set(Db2Num(outDB));
+				if(Db2Num(outDB)+DbManual<0)
+					PE4302_0_Set(0);
+				else if(Db2Num(outDB)+DbManual>63)
+					PE4302_0_Set(63);
+				else
+					PE4302_0_Set(Db2Num(outDB)+DbManual);
 				DBAdjust = 0;
+				Manual_Update_DB = 0;
 			}
 		}
 		

@@ -149,6 +149,9 @@ extern int Manual_Update_CH3;
 extern int delayManual;
 extern int phaManual;
 
+extern int Manual_Update_DB;
+extern int DbManual;
+
 #define RELAY_CTR PCout(13)
 
 short Res;
@@ -275,9 +278,16 @@ void USART2_IRQHandler(void)
 					phaManual = -1;				
 					break;
 				}
+				case 0x1b: {
+					Manual_Update_DB = 1;	
+					DbManual += 1;
+				}
+				case 0x1c: {
+					Manual_Update_DB = 1;
+				}   DbManual -= 1;
 			}
 		}
-		Serial_SendByte(Res);
+		//Serial_SendByte(Res);
 		USART_ClearITPendingBit(USART2, USART_IT_RXNE);
 	}
 }
