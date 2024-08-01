@@ -144,6 +144,11 @@ extern int Manual_Update_CH0;
 extern int Manual_Update_CH1;
 extern int Manual_Update_CH2;
 extern int Manual_Update_CH3;
+
+
+extern int delayManual;
+extern int phaManual;
+
 #define RELAY_CTR PCout(13)
 
 short Res;
@@ -254,34 +259,22 @@ void USART2_IRQHandler(void)
 					Manual_Update_CH3 = 1;
 					break;
 				}
-				case 0x17: {	
+				case 0x17: {
+					delayManual = 1;
 					break;
 				}
 				case 0x18: {	
+					delayManual = -1;
 					break;
 				}
-				case 0x19: {	
+				case 0x19: {
+					phaManual = 1;
 					break;
 				}
-				case 0x1a: {	
+				case 0x1a: {
+					phaManual = -1;				
 					break;
 				}
-				case 0x1b: {	
-					break;
-				}
-				case 0x1c: {	
-					break;
-				}
-				case 0x1d: {	
-					break;
-				}
-				case 0x1e: {	
-					break;
-				}
-				case 0x1f: {	
-					break;
-				}
-				
 			}
 		}
 		Serial_SendByte(Res);

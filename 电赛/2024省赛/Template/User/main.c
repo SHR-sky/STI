@@ -51,6 +51,10 @@ double CH1_Manual = 1.0;
 double CH2_Manual = 0.7;
 double CH3_Manual = 1.0;
 
+int delayManual = 0;
+
+int phaManual = 0;
+
 int DCValue = 623;
 
 #define RELAY_CTR PCout(13)
@@ -231,9 +235,10 @@ int main()
 				AmAmpAdjust = 0;
 				//IO_Update();
 			}
-			if(delayTime!=0)
+			if(delayTime!=0||delayManual!=0)
 			{
 				outDelayBase -= delayTime*30.0/(1000.0/(outBaseFre*1.0))*360.0;
+				outDelayBase -= delayManual/(1000.0/(outBaseFre*1.0))*360.0;
 				if(outDelayBase < 0)
 				{
 					outDelayBase = outDelayBase + 360;
@@ -260,10 +265,12 @@ int main()
 				}
 				IO_Update();
 				delayTime = 0; // 30ns
+				delayManual = 0;
 			}
-			if(pha!=0)
+			if(pha!=0||phaManual!=0)
 			{
 				outPha -= 30*pha;
+				outPha -= phaManual;
 				if(outPha < 0)
 				{
 					outPha = outPha + 360;
@@ -282,6 +289,7 @@ int main()
 				AD9959_Set_Phase(CH2,Angle2Num(outPha+outDelayAM)); //Angle2Num(outPha)
 				IO_Update();
 				pha = 0;
+				phaManual = 0;
 			}
 			if(DBAdjust != 0)
 			{
@@ -389,10 +397,12 @@ int main()
 				Manual_Update_CH2 =0;
 				IO_Update();
 			}
-			if(delayTime!=0)
+			if(delayTime!=0||delayManual!=0)
 			{
 				outDelayAM -= delayTime*30.0/(1000.0/(outAmFre*1.0))*360.0;
 				outDelayBase -= delayTime*30.0/(1000.0/(outBaseFre*1.0))*360.0;
+				outDelayAM -= delayManual/(1000.0/(outAmFre*1.0))*360.0;
+				outDelayBase -= delayManual/(1000.0/(outBaseFre*1.0))*360.0;
 				if(outDelayAM < 0)
 				{
 					outDelayAM = outDelayAM + 360;
@@ -422,9 +432,10 @@ int main()
 				IO_Update();
 				delayTime = 0; // 30ns
 			}
-			if(pha!=0)
+			if(pha!=0||phaManual!=0)
 			{
 				outPha += 30*pha;
+				outPha -= phaManual;
 				if(outPha < 0)
 				{
 					outPha = outPha + 360;
@@ -443,6 +454,7 @@ int main()
 				AD9959_Set_Phase(CH2,Angle2Num(outPha+outDelayAM));
 				IO_Update();
 				pha = 0;
+				phaManual = 0;
 			}
 			if(DBAdjust != 0)
 			{
