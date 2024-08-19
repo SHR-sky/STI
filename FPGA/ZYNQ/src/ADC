@@ -1,0 +1,36 @@
+`timescale 1ns / 1ps
+//////////////////////////////////////////////////////////////////////////////////
+// Company: 
+// Engineer: 
+// 
+// Create Date: 2024/08/13 11:18:31
+// Design Name: 
+// Module Name: ADC
+// Project Name: 
+// Target Devices: 
+// Tool Versions: 
+// Description: 
+// 
+// Dependencies: 
+// 
+// Revision:
+// Revision 0.01 - File Created
+// Additional Comments:
+// 
+//////////////////////////////////////////////////////////////////////////////////
+
+
+module ADC(
+    input sys_clk,
+    input signed [11:0]ACD_in,
+
+    output clk_p,
+    output clk_n
+    );
+
+    assign clk_p = sys_clk;
+    assign clk_n =~sys_clk;
+
+    
+
+endmodule
